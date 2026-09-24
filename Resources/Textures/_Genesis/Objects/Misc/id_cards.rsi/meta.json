@@ -1,0 +1,117 @@
+{
+  "version": 1,
+  "license": "CLA",
+  "copyright": "Debiloid3000",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "silver"
+    },
+    {
+      "name": "silver-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "silver-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "default"
+    },
+    {
+      "name": "default-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "default-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "gold"
+    },
+    {
+      "name": "gold-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "gold-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "blue"
+    },
+    {
+      "name": "blue-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "blue-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "orange"
+    },
+    {
+      "name": "orange-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "orange-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "idblueshield"
+    },
+    {
+      "name": "nyanogladiator"
+    },
+    {
+      "name": "nyanomailcarrier"
+    },
+    {
+      "name": "nyanomantis"
+    },
+    {
+      "name": "nyanomartialartist"
+    },
+    {
+      "name": "nyanoprisoner"
+    },
+    {
+      "name": "nyanoprisonguard"
+    },
+    {
+      "name": "idchaplain"
+    },
+    {
+      "name": "idchiefjustice"
+    },
+    {
+      "name": "idclerk"
+    },
+    {
+      "name": "idlawyer"
+    },
+    {
+      "name": "idmagistrat"
+    },
+    {
+      "name": "idprosecutor"
+    },
+    {
+      "name": "idseniorservice"
+    },
+    {
+      "name": "idseniorshaft"
+    },
+    {
+      "name": "idsalvage"
+    },
+    {
+      "name": "idjedint"
+    }
+  ]
+}

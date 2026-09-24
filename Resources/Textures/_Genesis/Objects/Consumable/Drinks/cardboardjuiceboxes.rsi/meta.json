@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by Astr0naut and greedl_",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "icon_open"
+    },
+    {
+      "name": "label-apple"
+    },
+    {
+      "name": "label-banana"
+    },
+    {
+      "name": "label-berry"
+    },
+    {
+      "name": "label-carrot"
+    },
+    {
+      "name": "label-catdespair"
+    },
+    {
+      "name": "label-lemon"
+    },
+    {
+      "name": "label-moff"
+    },
+    {
+      "name": "label-pineapple"
+    },
+    {
+      "name": "label-syndi"
+    },
+    {
+      "name": "label-weh"
+    },
+    {
+      "name": "label-orange"
+    },
+    {
+      "name": "label-sec"
+    },
+    {
+      "name": "label-watermelon"
+    }
+  ]
+}

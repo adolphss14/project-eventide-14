@@ -1,0 +1,242 @@
+{
+  "version": 1,
+  "license": "CLA",
+  "copyright": "Debiloid3000",
+  "size": {
+    "x": 8,
+    "y": 8
+  },
+  "states": [
+    {
+      "name": "BlueShield"
+    },
+    {
+      "name": "MindShield",
+      "delays": [
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "name": "NSCC"
+    },
+    {
+      "name": "NTCombatant"
+    },
+    {
+      "name": "NTEngineerOfficer"
+    },
+    {
+      "name": "NTMedic"
+    },
+    {
+      "name": "NTMedicalOfficer"
+    },
+    {
+      "name": "NTSpecOpsOfficer"
+    },
+    {
+      "name": "nyanoMailCarrier"
+    },
+    {
+      "name": "nyanoMantis"
+    },
+    {
+      "name": "nyanoMartialArtist"
+    },
+    {
+      "name": "nyanoPrisonGuard"
+    },
+    {
+      "name": "OCC"
+    },
+    {
+      "name": "OfficerCC"
+    },
+    {
+      "name": "Prosecutor"
+    },
+    {
+      "name": "SCC"
+    },
+    {
+      "name": "slave"
+    },
+    {
+      "name": "USSPCombatant"
+    },
+    {
+      "name": "USSPEngineerOfficer"
+    },
+    {
+      "name": "USSPMarshal"
+    },
+    {
+      "name": "USSPMedic"
+    },
+    {
+      "name": "USSPMedicalOfficer"
+    },
+    {
+      "name": "Chaplain"
+    },
+    {
+      "name": "ChiefJustice"
+    },
+    {
+      "name": "Clerk"
+    },
+    {
+      "name": "DCC"
+    },
+    {
+      "name": "ECC"
+    },
+    {
+      "name": "IOTCombatant"
+    },
+    {
+      "name": "IOTCommand"
+    },
+    {
+      "name": "IOTEngineerOfficer"
+    },
+    {
+      "name": "IOTMedic"
+    },
+    {
+      "name": "IOTMedicalOfficer"
+    },
+    {
+      "name": "Lawyer"
+    },
+    {
+      "name": "master"
+    },
+    {
+      "name": "MCC"
+    },
+    {
+      "name": "MedicalBorg"
+    },
+    {
+      "name": "nyanoGladiator"
+    },
+    {
+      "name": "SecurityOfficer"
+    },
+    {
+      "name": "SecurityBorg"
+    },
+    {
+      "name": "SecurityCombatBorg"
+    },
+    {
+      "name": "ServiceBorg"
+    },
+    {
+      "name": "ClownBorg"
+    },
+    {
+      "name": "EngineerBorg"
+    },
+    {
+      "name": "HeadOfPrison"
+    },
+    {
+      "name": "JanitorBorg"
+    },
+    {
+      "name": "Magistrat"
+    },
+    {
+      "name": "MinerBorg"
+    },
+    {
+      "name": "PeaceBorg"
+    },
+    {
+      "name": "PrisonChef"
+    },
+    {
+      "name": "PrisonDoctor"
+    },
+    {
+      "name": "PrisonEngineer"
+    },
+    {
+      "name": "PrisonGuard"
+    },
+    {
+      "name": "PrisonPilot"
+    },
+    {
+      "name": "PrisonWorker"
+    },
+    {
+      "name": "HeadOfSecurity"
+    },
+    {
+      "name": "SeniorSalvage"
+    },
+    {
+      "name": "SeniorService"
+    },
+    {
+      "name": "Salvage"
+    },
+    {
+      "name": "Empire"
+    },
+    {
+      "name": "JediNtSecurity"
+    },
+    {
+      "name": "HypnotizedEmpire"
+    },
+    {
+      "name": "taipan_botanist"
+    },
+    {
+      "name": "taipan_cargo_technician"
+    },
+    {
+      "name": "taipan_chef"
+    },
+    {
+      "name": "taipan_engineering"
+    },
+    {
+      "name": "taipan_medical_doctor"
+    },
+    {
+      "name": "taipan_scientist"
+    },
+    {
+      "name": "CCCargo"
+    },
+    {
+      "name": "DeathSquadron"
+    },
+    {
+      "name": "Nanotrasen"
+    },
+    {
+      "name": "NanotrasenEngi"
+    },
+    {
+      "name": "Nanotrasenjanitor"
+    },
+    {
+      "name": "NanotrasenMed"
+    },
+    {
+      "name": "NanotrasenOSO"
+    },
+    {
+      "name": "NanotrasenSec"
+    }
+  ]
+}

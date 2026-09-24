@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "license": null,
+  "copyright": "Debiloid3000",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "b1_droid",
+      "directions": 4
+    },
+    {
+      "name": "b2_droid",
+      "directions": 4
+    },
+    {
+      "name": "R4_Astromech",
+      "directions": 4
+    },
+    {
+      "name": "R2_Astromech",
+      "directions": 4
+    }
+  ]
+}

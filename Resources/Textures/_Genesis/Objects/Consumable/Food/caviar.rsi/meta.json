@@ -1,0 +1,77 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "By ss14nekow (discord) for ss14 server Мёртвый Космос",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+    {
+      "name": "bread-slice"
+    },
+    {
+      "name": "black"
+    },
+    {
+      "name": "black-on-bread"
+    },
+    {
+      "name": "green"
+    },
+    {
+      "name": "green-on-bread"
+    },
+    {
+      "name": "magic"
+    },
+    {
+      "name": "magic-on-bread"
+    },
+    {
+      "name": "white"
+    },
+    {
+      "name": "white-on-bread"
+    },
+    {
+      "name": "holo",
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "holo-on-bread",
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
+    }
+  ]
+}

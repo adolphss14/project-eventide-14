@@ -1,0 +1,170 @@
+{
+  "version": 1,
+  "license": null,
+  "copyright": "Debiloid3000",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "hos"
+    },
+    {
+      "name": "lawyer"
+    },
+    {
+      "name": "mobster"
+    },
+    {
+      "name": "mystagogue"
+    },
+    {
+      "name": "nanotrasenadmiral"
+    },
+    {
+      "name": "nanotrasendiplomat"
+    },
+    {
+      "name": "nyanogladiator"
+    },
+    {
+      "name": "nyanomailcarrier"
+    },
+    {
+      "name": "nyanomantis"
+    },
+    {
+      "name": "nyanomartialartist"
+    },
+    {
+      "name": "nyanoprisonguard"
+    },
+    {
+      "name": "prosecutor"
+    },
+    {
+      "name": "qm"
+    },
+    {
+      "name": "rd"
+    },
+    {
+      "name": "salvagespecialist"
+    },
+    {
+      "name": "scientist"
+    },
+    {
+      "name": "security_cadet"
+    },
+    {
+      "name": "security_officer"
+    },
+    {
+      "name": "warden"
+    },
+    {
+      "name": "blueshield"
+    },
+    {
+      "name": "blueshield2"
+    },
+    {
+      "name": "brigmedic"
+    },
+    {
+      "name": "captain"
+    },
+    {
+      "name": "ce"
+    },
+    {
+      "name": "centcommfieldofficer"
+    },
+    {
+      "name": "centcommofficer"
+    },
+    {
+      "name": "centcommoperativesrt"
+    },
+    {
+      "name": "chemist"
+    },
+    {
+      "name": "chiefjustice"
+    },
+    {
+      "name": "clerk"
+    },
+    {
+      "name": "cmo"
+    },
+    {
+      "name": "consultant"
+    },
+    {
+      "name": "courier"
+    },
+    {
+      "name": "deathsquad"
+    },
+    {
+      "name": "DeathSquadOfficer"
+    },
+    {
+      "name": "detective"
+    },
+    {
+      "name": "green"
+    },
+    {
+      "name": "hop"
+    },
+    {
+      "name": "blueshield_helmet"
+    },
+    {
+      "name": "blueshield3"
+    },
+    {
+      "name": "cargo_tech"
+    },
+    {
+      "name": "centcommember"
+    },
+    {
+      "name": "centcomoperator"
+    },
+    {
+      "name": "hos2"
+    },
+    {
+      "name": "magistrat"
+    },
+    {
+      "name": "miner"
+    },
+    {
+      "name": "seniorengineer"
+    },
+    {
+      "name": "seniorofficer"
+    },
+    {
+      "name": "seniorphysician"
+    },
+    {
+      "name": "seniorsalvage"
+    },
+    {
+      "name": "atmospherics"
+    },
+    {
+      "name": "pilot"
+    },
+    {
+      "name": "jedint"
+    }
+  ]
+}

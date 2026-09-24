@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Debiloid3000 and SS220",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "admiral"
+    },
+    {
+      "name": "blueshield"
+    },
+    {
+      "name": "diplomat"
+    },
+    {
+      "name": "field_officer_centcom"
+    },
+    {
+      "name": "officer_centcom"
+    },
+    {
+      "name": "qm"
+    },
+    {
+      "name": "senior_scientist"
+    },
+    {
+      "name": "zombie"
+    }
+  ]
+}
