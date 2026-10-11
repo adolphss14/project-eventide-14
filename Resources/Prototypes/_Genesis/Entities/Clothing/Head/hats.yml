@@ -6,6 +6,8 @@
   components:
   - type: Sprite
     sprite: _Genesis/Clothing/Head/Hats/beret_blueshield.rsi
+    layers:
+    - state: icon
   - type: Clothing
     sprite: _Genesis/Clothing/Head/Hats/beret_blueshield.rsi
   - type: Tag
@@ -74,6 +76,8 @@
   components:
   - type: Sprite
     sprite: _Genesis/Clothing/Head/Hats/pilothelmet.rsi
+    layers:
+    - state: icon
   - type: Clothing
     sprite: _Genesis/Clothing/Head/Hats/pilothelmet.rsi
 
@@ -104,6 +108,8 @@
   components:
   - type: Sprite
     sprite: _Genesis/Clothing/Head/Hats/beret_salvage.rsi
+    layers:
+    - state: icon
   - type: Clothing
     sprite: _Genesis/Clothing/Head/Hats/beret_salvage.rsi
   - type: Tag
@@ -142,6 +148,8 @@
   components:
   - type: Sprite
     sprite: _Genesis/Clothing/Head/Hats/beret_jedi_nt.rsi
+    layers:
+    - state: icon
   - type: Clothing
     sprite: _Genesis/Clothing/Head/Hats/beret_jedi_nt.rsi
   - type: Tag
@@ -161,6 +169,8 @@
   components:
   - type: Sprite
     sprite: _Genesis/Clothing/Head/Hats/blueshield_hat.rsi
+    layers:
+    - state: icon
   - type: Clothing
     sprite: _Genesis/Clothing/Head/Hats/blueshield_hat.rsi
   - type: Tag
@@ -180,6 +190,8 @@
   components:
   - type: Sprite
     sprite: _Genesis/Clothing/Head/Hats/jedi_nt_hat.rsi
+    layers:
+    - state: icon
   - type: Clothing
     sprite: _Genesis/Clothing/Head/Hats/jedi_nt_hat.rsi
   - type: Tag
@@ -197,10 +209,12 @@
   name: witch hunter's hat
   description: Hat of a hunter of mythical creatures, namely witches in the style of the Middle Ages.
   components:
-    - type: Sprite
-      sprite: _Genesis/Clothing/Head/Hats/witch_hunter_hat.rsi
-    - type: Clothing
-      sprite: _Genesis/Clothing/Head/Hats/witch_hunter_hat.rsi
+  - type: Sprite
+    sprite: _Genesis/Clothing/Head/Hats/witch_hunter_hat.rsi
+    layers:
+    - state: icon
+  - type: Clothing
+    sprite: _Genesis/Clothing/Head/Hats/witch_hunter_hat.rsi
 
 - type: entity
   parent: ClothingHeadHelmetBasic
@@ -210,6 +224,8 @@
   components:
   - type: Sprite
     sprite: _Genesis/Clothing/Head/Hats/centcom_military_beret.rsi
+    layers:
+    - state: icon
   - type: Clothing
     sprite: _Genesis/Clothing/Head/Hats/centcom_military_beret.rsi
   - type: Tag

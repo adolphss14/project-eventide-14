@@ -13,6 +13,7 @@
   name: department-Law
   description: department-Law-description
   color: "#FF5297"
+  primary: false
   roles:
   - Magistrat
   - IAA

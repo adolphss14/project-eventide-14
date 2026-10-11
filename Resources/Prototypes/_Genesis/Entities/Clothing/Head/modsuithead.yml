@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
+  parent: [ ClothingHeadHardsuitBaseOld, ClothingHeadSuitWithLightBaseOld ]
   id: ClothingHeadHelmetModsuitBase
   abstract: true
   name: base MOD helmet
@@ -33,7 +33,7 @@
       toggleable-clothing: !type:ContainerSlot {}
 
 - type: entity
-  parent: ClothingHeadHelmetHardsuitSyndie
+  parent: [ ClothingHeadHardsuitBaseOld, ClothingHeadSuitWithLightBaseOld ]
   id: ClothingHeadHelmetModsuitBlueShield
   name: blueshield modsuit helmet
   description: A helmet for a MODsuit. A fancy, high-tech suit for Nanotrasen's high ranking officers.
@@ -222,7 +222,7 @@
     color: "#ffeead"
 
 - type: entity
-  parent: ClothingHeadHardsuitBase
+  parent: ClothingHeadHardsuitBaseOld
   id: ClothingHeadHelmetModsuitCaptain
   name: captain modsuit helmet
   components:
@@ -234,7 +234,7 @@
     unequipSound: /Audio/_Genesis/Items/ballout.ogg
 
 - type: entity
-  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
+  parent: [ ClothingHeadHardsuitBaseOld, ClothingHeadSuitWithLightBaseOld ]
   id: ClothingHeadHelmetModsuitCE
   name: chief engineer modsuit helmet
   description: A helmet for a MODsuit. An atmospheric-resistant suit by Nakamura Engineering, offering extreme heat resistance compared to the engineer suit.
@@ -265,7 +265,7 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingHeadHelmetHardsuitRd
+  parent: [ ClothingHeadHardsuitBaseOld, ClothingHeadSuitWithLightBaseOld ]
   id: ClothingHeadHelmetModsuitRD
   name: research director modsuit helmet
   description: A helmet for a MODsuit.

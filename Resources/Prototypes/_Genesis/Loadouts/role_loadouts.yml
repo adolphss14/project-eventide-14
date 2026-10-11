@@ -79,7 +79,6 @@
   - SecurityGloves
   - SecurityShoes
   - SecurityBelt
-  - SecurityShoes
   - SecurityPocket
   - SecurityPocket2
   - SurvivalSecurity
@@ -194,20 +193,6 @@
 
 # Security
 - type: roleLoadout
-  id: JobBrigmedic
-  groups:
-  - GroupTankHarness
-  - BrigmedicHead
-  - BrigmedicMask
-  - BrigmedicJumpsuit
-  - MedicalGloves
-  - BrigmedicBackpack
-  - BrigmedicOuterClothing
-  - SecurityShoes
-  - Trinkets
-  - GroupSpeciesBreathTool
-
-- type: roleLoadout
   id: JobPrisoner
   groups:
   - GroupTankHarness
@@ -216,70 +201,6 @@
   - GroupSpeciesBreathTool
 
 # Senior
-- type: roleLoadout
-  id: JobSeniorOfficer
-  groups:
-  - GroupTankHarness
-  - SecurityHead
-  - SeniorOfficerJumpsuit
-  - SecurityBackpack
-  - SecurityOuterClothing
-  - SecurityShoes
-  - SecurityGloves
-  - SecurityBelt
-  - SecurityShoes
-  - SecurityPocket
-  - SecurityPocket2
-  - SurvivalSecurity
-  - Trinkets
-  - GroupSpeciesBreathTool
-
-- type: roleLoadout
-  id: JobSeniorResearcher
-  groups:
-  - GroupTankHarness
-  - SeniorResearcherHead
-  - ScientistNeck
-  - SeniorResearcherJumpsuit
-  - ScientistBackpack
-  - SeniorResearcherOuterClothing
-  - ScientistGloves
-  - ScientistShoes
-  - Glasses
-  - Survival
-  - Trinkets
-  - GroupSpeciesBreathTool
-
-- type: roleLoadout
-  id: JobSeniorPhysician
-  groups:
-  - GroupTankHarness
-  - SeniorPhysicianHead
-  - MedicalMask
-  - SeniorPhysicianJumpsuit
-  - MedicalGloves
-  - MedicalBackpack
-  - SeniorPhysicianOuterClothing
-  - MedicalShoes
-  - SurvivalMedical
-  - Trinkets
-  - Glasses
-  - GroupSpeciesBreathTool
-
-- type: roleLoadout
-  id: JobSeniorEngineer
-  groups:
-  - GroupTankHarness
-  - SeniorEngineerHead
-  - SeniorEngineerJumpsuit
-  - StationEngineerBackpack
-  - StationEngineerOuterClothing
-  - ChiefEngineerGloves
-  - StationEngineerShoes
-  - SurvivalExtended
-  - Trinkets
-  - GroupSpeciesBreathTool
-
 - type: roleLoadout
   id: JobSeniorSalvage
   groups:

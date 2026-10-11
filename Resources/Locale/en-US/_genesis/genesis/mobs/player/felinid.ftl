@@ -1,3 +1,3 @@
-ent-MobFelenid = Urist McCat
-    .desc = { ent-BaseMobFelinid.desc }
+ent-MobFelinid = Urist McCat
+    .desc = { ent-MobFelinidBase.desc }
     .suffix = { "" }

@@ -16,6 +16,7 @@
     Passenger: 0
     Bartender: 0
     Botanist: 0
+    Boxer: 0 # Restored upstream role
     Chaplain: 0
     Chef: 0
     Clown: 0
@@ -44,6 +45,8 @@
     Scientist: 0
     Detective: 0
     HeadOfSecurity: 10
+    BlueShield: 20 # Genesis
+    HeadOfSecurityCentCom: 10 # Genesis
     SecurityCadet: 0
     SecurityOfficer: 0
     Warden: 5
@@ -55,3 +58,38 @@
     SeniorResearcher: 4 # Corvax
     IAA: 9 # Corvax
     Magistrate: 9 # Corvax
+
+    # Genesis role IDs are assigned weights in Eventide's job-weight profile.
+    CentralCommandAssistant: 0 # Genesis
+    CentComConsultant: 0 # Genesis
+    CentralCommandEngineer: 0 # Genesis
+    CentComOfficial: 0 # Genesis
+    CentComOperator: 0 # Genesis
+    HeadOfStaffCentCom: 0 # Genesis
+    CentralCommandMedicalDoctor: 0 # Genesis
+    CentralCommandSecurityOfficer: 0 # Genesis
+    ERTLeaderGamma: 0 # Genesis
+    ERTEngineerGamma: 0 # Genesis
+    ERTSecurityGamma: 0 # Genesis
+    ERTMedicalGamma: 0 # Genesis
+    ERTJanitorGamma: 0 # Genesis
+    ERTLeaderDelta: 0 # Genesis
+    ERTEngineerDelta: 0 # Genesis
+    ERTSecurityDelta: 0 # Genesis
+    ERTMedicalDelta: 0 # Genesis
+    ERTJanitorDelta: 0 # Genesis
+    ERTLeaderBravo: 0 # Genesis
+    ERTEngineerBravo: 0 # Genesis
+    ERTSecurityBravo: 0 # Genesis
+    ERTMedicalBravo: 0 # Genesis
+    ERTJanitorBravo: 0 # Genesis
+    ERTLeaderCharlie: 0 # Genesis
+    ERTEngineerCharlie: 0 # Genesis
+    ERTSecurityCharlie: 0 # Genesis
+    ERTMedicalCharlie: 0 # Genesis
+    ERTJanitorCharlie: 0 # Genesis
+    SeniorService: 0 # Genesis
+    JediNT: 0 # Genesis
+    Magistrat: 0 # Genesis
+    Brigmedic: 0 # Genesis
+    Prisoner: 0 # Genesis

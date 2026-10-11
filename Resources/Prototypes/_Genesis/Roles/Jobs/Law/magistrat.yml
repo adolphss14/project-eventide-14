@@ -13,7 +13,6 @@
   startingGear: MagistratGear
   icon: "JobIconMagistrat"
   supervisors: job-supervisors-service
-  canBeAntag: false
   setPreference: true
   access:
   - Bar

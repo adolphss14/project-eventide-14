@@ -11,6 +11,40 @@
   - ERTMedical
   - ERTJanitor
   - CBURN
+  - CentComOfficial
+  - CentComConsultant
+  - CentComOperator
+  - CentralCommandAssistant
+  - CentralCommandEngineer
+  - CentralCommandMedicalDoctor
+  - CentralCommandSecurityOfficer
+  - HeadOfSecurityCentCom
+  - HeadOfStaffCentCom
+  - ERTLeaderGamma
+  - ERTEngineerGamma
+  - ERTSecurityGamma
+  - ERTMedicalGamma
+  - ERTJanitorGamma
+  - ERTLeaderDelta
+  - ERTEngineerDelta
+  - ERTSecurityDelta
+  - ERTMedicalDelta
+  - ERTJanitorDelta
+  - ERTLeaderBravo
+  - ERTEngineerBravo
+  - ERTSecurityBravo
+  - ERTMedicalBravo
+  - ERTJanitorBravo
+  - ERTLeaderCharlie
+  - ERTEngineerCharlie
+  - ERTSecurityCharlie
+  - ERTMedicalCharlie
+  - ERTJanitorCharlie
+  - BlueShield
+  - JediNT
+  - Magistrat
+  - Prisoner
+  - SeniorService
   blacklist:
     components:
     - AntagImmune

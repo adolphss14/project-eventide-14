@@ -13,12 +13,10 @@
     - !type:RoleTimeRequirement
       role: JobCentralCommandSecurityOfficer
       time: 9000  # ?
-  weight: 10
   startingGear: HoSCentComGear
   icon: "JobIconHeadOfSecurity"
   requireAdminNotify: true
   supervisors: job-supervisors-centcom
-  canBeAntag: false
   access:
   - HeadOfSecurity
   - Command

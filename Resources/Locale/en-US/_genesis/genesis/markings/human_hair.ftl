@@ -1,0 +1,26 @@
+# Genesis hairstyles
+marking-HumanHairlongBedheadD = Long bedhead (D)
+marking-HumanHairRick = Rick
+marking-HumanHairMorty = Morty
+marking-HumanHairClassicMessy = Classic messy
+marking-HumanHairClassicSpiky = Classic spiky
+marking-HumanHairModernClassic = Modern classic
+marking-HairBasarab = Basarab
+marking-HairCrayfish = Crayfish
+marking-HairHank = Hank
+marking-HairHonor = Honor
+marking-HairMadScientist = Mad scientist
+marking-HairMonday = Monday
+marking-HairNemesida = Nemesida
+marking-HairPunk = Punk
+marking-HairTuranga = Turanga
+marking-HairAyanami = Ayanami
+marking-HairBubbleGum = Bubble gum
+marking-HairMavis = Mavis
+marking-HairCloud = Cloud
+marking-HairMorningHairstyle = Morning hairstyle
+marking-HairMorningHairstyle2 = Morning hairstyle (style 2)
+marking-HairPonytail = Ponytail
+marking-HairPrinceCharming = Prince Charming
+marking-HairShavedFemale = Shaved (female)
+marking-HairShavedFemaleUnisex = Shaved (unisex)

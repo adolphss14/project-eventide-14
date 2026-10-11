@@ -76,3 +76,9 @@
     proto: SeniorOfficer
   equipment:
     gloves: ClothingHandsTacticalSecurity
+
+# Optional medal for CentCom security roles
+- type: loadout
+  id: SecurityStar
+  equipment:
+    neck: ClothingNeckSecuritymedal

@@ -370,7 +370,6 @@
       name: energy-gun-lethal
       state: lethal
   - type: BatterySelfRecharger
-    autoRecharge: true
     autoRechargeRate: 40
   - type: Appearance
   - type: StaticPrice

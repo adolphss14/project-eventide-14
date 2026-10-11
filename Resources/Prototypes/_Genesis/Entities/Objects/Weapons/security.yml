@@ -44,7 +44,7 @@
     sprite: _Genesis/Objects/Weapons/Melee/telescopic.rsi
     size: Small
   - type: Appearance
-  - type: ToggleableLightVisuals
+  - type: ToggleableVisuals
     spriteLayer: blade
     inhandVisuals:
       left:

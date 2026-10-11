@@ -45,7 +45,9 @@
   - type: Sprite
     layers:
     - state: default
-    - state: idroboticist
+    - sprite: Interface/Misc/job_icons.rsi
+      offset: -0.09375, 0.0625
+      state: Roboticist
   - type: PresetIdCard
     job: Roboticist
 
@@ -83,7 +85,9 @@
   - type: Sprite
     layers:
     - state: default
-    - state: idshaftminer
+    - sprite: Interface/Misc/job_icons.rsi
+      offset: -0.09375, 0.0625
+      state: ShaftMiner
   - type: PresetIdCard
     job: Miner
 
@@ -152,7 +156,9 @@
   - type: Sprite
     layers:
     - state: silver
-    - state: idchiefengineer
+    - sprite: Interface/Misc/job_icons.rsi
+      offset: -0.09375, 0.0625
+      state: ChiefEngineer
   - type: Item
     heldPrefix: silver
   - type: PresetIdCard
@@ -166,7 +172,9 @@
   - type: Sprite
     layers:
     - state: silver
-    - state: idchiefmedicalofficer
+    - sprite: Interface/Misc/job_icons.rsi
+      offset: -0.09375, 0.0625
+      state: MedicalDoctor
   - type: Item
     heldPrefix: silver
   - type: PresetIdCard

@@ -15,7 +15,6 @@
       hypospray:
         maxVol: 15
   - type: SolutionRegeneration
-    solution: hypospray
     generated:
       reagents:
       - ReagentId: Epinephrine
@@ -68,7 +67,6 @@
   categories: [ HideSpawnMenu ]
   components:
     - type: SolutionRegeneration
-      solution: spray
       generated:
         reagents:
         - ReagentId: Water

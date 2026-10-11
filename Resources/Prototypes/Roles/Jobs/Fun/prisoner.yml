@@ -16,6 +16,7 @@
 
 - type: chameleonOutfit
   id: PrisonerChameleonOutfit
+  job: Prisoner
   loadoutName: job-name-prisoner
   name: job-name-prisoner
   icon: "JobIconPrisoner"

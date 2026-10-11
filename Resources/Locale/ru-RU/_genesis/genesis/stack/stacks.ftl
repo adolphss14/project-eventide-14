@@ -8,5 +8,5 @@ stack-dragon-sinew =
     { $amount ->
         [1] драконья жила
         [few] драконьи жилы
-       *[other] драконьх жил
+       *[other] драконьих жил
     }

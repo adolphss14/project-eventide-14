@@ -51,7 +51,7 @@
 - type: loadout
   id: SyndiAgentPDA
   equipment:
-    id: SyndiAgentPDA
+    id: SyndiOperativePDA
 
 - type: loadout
   id: SyndiPDA

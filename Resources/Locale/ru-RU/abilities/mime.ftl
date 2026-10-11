@@ -4,3 +4,6 @@ mime-invisible-wall-popup-others = { CAPITALIZE($mime) } упирается в �
 mime-invisible-wall-failed = Вы не можете создать здесь невидимую стену.
 mime-not-ready-repent = Вы ещё не готовы покаяться за нарушенный обет.
 mime-ready-to-repent = Вы чувствуете, что готовы снова дать обет молчания.
+
+ent-ActionMimeInvisibleWall = Создать невидимую стену
+    .desc = Создаёт перед вами невидимую стену, если в этом месте её можно поставить.

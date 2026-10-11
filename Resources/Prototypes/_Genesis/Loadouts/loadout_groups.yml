@@ -97,20 +97,19 @@
   name: loadout-group-head
   minLimit: 0
   loadouts:
-  - CentComAdmiralHead
+  - HeadHatCentcomcap
 
 - type: loadoutGroup
   id: HeadOfStaffCentComJumpsuit
   name: loadout-group-jumpsuit
   loadouts:
-  - CentComAdmiralJumpsuit
+  - CentComOfficialJumpsuit
 
 - type: loadoutGroup
   id: HeadOfStaffCentComNeck
   name: loadout-group-neck
   minLimit: 0
   loadouts:
-  - CentComAdmiralCloak
   - CentcomCloak
 
 # BlueShield
@@ -255,43 +254,6 @@
 # Security
 # Brigmedic
 - type: loadoutGroup
-  id: BrigmedicHead
-  name: loadout-group-head
-  minLimit: 0
-  loadouts:
-  - BrigmedicHead
-
-- type: loadoutGroup
-  id: BrigmedicMask
-  name: loadout-group-mask
-  minLimit: 0
-  loadouts:
-  - SterileMask
-  - SecurityMask
-
-- type: loadoutGroup
-  id: BrigmedicJumpsuit
-  name: loadout-group-jumpsuit
-  loadouts:
-  - BrigmedicJumpsuit
-  - BrigmedicJumpskirt
-
-- type: loadoutGroup
-  id: BrigmedicBackpack
-  name: loadout-group-backpack
-  loadouts:
-  - BrigmedicBackpack
-  - BrigmedicSatchel
-  - BrigmedicDuffel
-
-- type: loadoutGroup
-  id: BrigmedicOuterClothing
-  name: loadout-group-outerclothing
-  minLimit: 0
-  loadouts:
-  - BrigmedicOuterClothing
-
-- type: loadoutGroup
   id: HeadOfSecurityBackpack
   name: loadout-group-backpack
   loadouts:
@@ -308,6 +270,13 @@
   - SecuritySatchel
   - SecurityDuffel
   - WardenModSuit
+
+- type: loadoutGroup
+  id: SecurityStar
+  name: loadout-group-neck
+  minLimit: 0
+  loadouts:
+  - SecurityStar
 
 - type: loadoutGroup
   id: SecurityPocket
@@ -391,40 +360,6 @@
 
 # Senior
 - type: loadoutGroup
-  id: SeniorResearcherHead
-  name: loadout-group-head
-  minLimit: 0
-  loadouts:
-  - RoboticistCap
-  - SkullBandana
-  - SeniorResearcherBeret
-  - SeniorResearcherBeretAlt
-
-- type: loadoutGroup
-  id: SeniorPhysicianHead
-  name: loadout-group-head
-  minLimit: 0
-  loadouts:
-  - MedicalBeret
-  - MedicalHeadMirror
-  - BlueSurgeryCap
-  - GreenSurgeryCap
-  - PurpleSurgeryCap
-  - NurseHat
-  - SeniorPhysicianBeret
-
-- type: loadoutGroup
-  id: SeniorEngineerHead
-  name: loadout-group-head
-  minLimit: 0
-  loadouts:
-  - StationEngineerHardhatYellow
-  - StationEngineerHardhatOrange
-  - StationEngineerHardhatRed
-  - ChiefEngineerHead
-  - SeniorEngineerBeret
-
-- type: loadoutGroup
   id: SeniorSalvageHead
   name: loadout-group-head
   minLimit: 0
@@ -439,60 +374,11 @@
   - MinerCloak
 
 - type: loadoutGroup
-  id: SeniorOfficerJumpsuit
-  name: loadout-group-jumpsuit
-  loadouts:
-  - JumpsuitSeniorOfficer
-  - JumpskirtSeniorOfficer
-  - SecuritySpecialJumpsuit
-
-- type: loadoutGroup
-  id: SeniorResearcherJumpsuit
-  name: loadout-group-jumpsuit
-  loadouts:
-  - JumpsuitSeniorResearcher
-  - JumpskirtSeniorResearcher
-
-- type: loadoutGroup
-  id: SeniorPhysicianJumpsuit
-  name: loadout-group-jumpsuit
-  loadouts:
-  - JumpsuitSeniorPhysician
-  - JumpskirtSeniorPhysician
-
-- type: loadoutGroup
-  id: SeniorEngineerJumpsuit
-  name: loadout-group-jumpsuit
-  loadouts:
-  - JumpsuitSeniorEngineer
-  - JumpskirtSeniorEngineer
-
-- type: loadoutGroup
   id: SeniorSalvageJumpsuit
   name: loadout-group-jumpsuit
   loadouts:
   - JumpsuitSeniorSalvage
 
-- type: loadoutGroup
-  id: SeniorResearcherOuterClothing
-  name: loadout-group-outerclothing
-  loadouts:
-  - RegularLabCoat
-  - ScienceLabCoat
-  - SeniorResearcherLabCoat
-  - ScienceWintercoat
-  - RoboticistLabCoat
-  - RoboticistWintercoat
-
-- type: loadoutGroup
-  id: SeniorPhysicianOuterClothing
-  name: loadout-group-outerclothing
-  loadouts:
-  - RegularLabCoat
-  - SeniorPhysicianLabCoat
-  - MedicalDoctorWintercoat
-
-# Science
 - type: loadoutGroup
   id: RoboticistJumpsuit
   name: loadout-group-jumpsuit
@@ -569,15 +455,6 @@
   - MiningWebbingBelt
 
 # Engineering
-- type: loadoutGroup
-  id: ChiefEngineerBackpack
-  name: loadout-group-backpack
-  loadouts:
-  - ChiefEngineerBackpack
-  - ChiefEngineerSatchel
-  - ChiefEngineerDuffel
-  - ChiefEngineerModSuit
-
 - type: loadoutGroup
   id: EngineeringGloves
   name: loadout-group-gloves

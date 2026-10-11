@@ -18,7 +18,7 @@
 - type: loadout
   id: CaptainBeret
   equipment:
-    head: ClothingHeadHatCaptainBeret
+    head: ClothingHeadHatCaptainBeretCorvax
 
 - type: loadout
   id: CaptainBicorn

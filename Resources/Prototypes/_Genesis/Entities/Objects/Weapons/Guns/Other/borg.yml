@@ -25,7 +25,6 @@
     - proto: BulletEnergyGunLaser
       fireCost: 100
   - type: BatterySelfRecharger
-    autoRecharge: true
     autoRechargeRate: 20
   - type: Appearance
 
@@ -37,7 +36,6 @@
   description: Электрошоковая дубинка для выведения людей из строя.
   components:
   - type: BatterySelfRecharger
-    autoRecharge: true
     autoRechargeRate: 10
 
 #Вспышка киборга

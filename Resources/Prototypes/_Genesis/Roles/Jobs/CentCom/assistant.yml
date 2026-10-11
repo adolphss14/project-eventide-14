@@ -6,7 +6,6 @@
   startingGear: CentComAssistantGear
   icon: "JobIconCentComService"
   supervisors: job-supervisors-centcom
-  canBeAntag: false
   access:
   - Service
   - Maintenance

@@ -2,7 +2,7 @@
   parent: JobIcon
   id: JobIconBlueShield
   icon:
-    sprite: /Textures/__Genesis/Interface/Misc/job_icons.rsi
+    sprite: /Textures/_Genesis/Interface/Misc/job_icons.rsi
     state: BlueShield
   jobName: job-name-blueshield
 
@@ -10,7 +10,7 @@
   parent: JobIcon
   id: JobIconMagistrat
   icon:
-    sprite: /Textures/__Genesis/Interface/Misc/job_icons.rsi
+    sprite: /Textures/_Genesis/Interface/Misc/job_icons.rsi
     state: Magistrat
   jobName: job-name-magistrat
 
@@ -18,7 +18,7 @@
   parent: JobIcon
   id: JobIconSeniorSalvage
   icon:
-    sprite: /Textures/__Genesis/Interface/Misc/job_icons.rsi
+    sprite: /Textures/_Genesis/Interface/Misc/job_icons.rsi
     state: SeniorSalvage
   jobName: job-name-senior-salvage
 
@@ -26,7 +26,7 @@
   parent: JobIcon
   id: JobIconSeniorService
   icon:
-    sprite: /Textures/__Genesis/Interface/Misc/job_icons.rsi
+    sprite: /Textures/_Genesis/Interface/Misc/job_icons.rsi
     state: SeniorService
   jobName: job-name-senior-service
 
@@ -34,7 +34,7 @@
   parent: JobIcon
   id: JobIconSalvage
   icon:
-    sprite: /Textures/__Genesis/Interface/Misc/job_icons.rsi
+    sprite: /Textures/_Genesis/Interface/Misc/job_icons.rsi
     state: Salvage
   jobName: job-name-salvagespec
 
@@ -42,7 +42,7 @@
   parent: JobIcon
   id: JobIconJediNT
   icon:
-    sprite: /Textures/__Genesis/Interface/Misc/job_icons.rsi
+    sprite: /Textures/_Genesis/Interface/Misc/job_icons.rsi
     state: JediNtSecurity
   jobName: job-name-jedi-nt
 
@@ -50,42 +50,42 @@
   parent: JobIcon
   id: JobIconEngineerBorg
   icon:
-    sprite: /Textures/__Genesis/Interface/Misc/job_icons.rsi
+    sprite: /Textures/_Genesis/Interface/Misc/job_icons.rsi
     state: EngineerBorg
 
 - type: jobIcon
   parent: JobIcon
   id: JobIconJanitorBorg
   icon:
-    sprite: /Textures/__Genesis/Interface/Misc/job_icons.rsi
+    sprite: /Textures/_Genesis/Interface/Misc/job_icons.rsi
     state: JanitorBorg
 
 - type: jobIcon
   parent: JobIcon
   id: JobIconMedicalBorg
   icon:
-    sprite: /Textures/__Genesis/Interface/Misc/job_icons.rsi
+    sprite: /Textures/_Genesis/Interface/Misc/job_icons.rsi
     state: MedicalBorg
 
 - type: jobIcon
   parent: JobIcon
   id: JobIconMinerBorg
   icon:
-    sprite: /Textures/__Genesis/Interface/Misc/job_icons.rsi
+    sprite: /Textures/_Genesis/Interface/Misc/job_icons.rsi
     state: MinerBorg
 
 - type: jobIcon
   parent: JobIcon
   id: JobIconSecurityBorg
   icon:
-    sprite: /Textures/__Genesis/Interface/Misc/job_icons.rsi
+    sprite: /Textures/_Genesis/Interface/Misc/job_icons.rsi
     state: SecurityBorg
 
 - type: jobIcon
   parent: JobIcon
   id: JobIconCentComOperator
   icon:
-    sprite: /Textures/__Genesis/Interface/Misc/job_icons.rsi
+    sprite: /Textures/_Genesis/Interface/Misc/job_icons.rsi
     state: OCC
   jobName: job-name-centcomop
 
@@ -93,7 +93,7 @@
   parent: JobIcon
   id: JobIconCentComMember
   icon:
-    sprite: /Textures/__Genesis/Interface/Misc/job_icons.rsi
+    sprite: /Textures/_Genesis/Interface/Misc/job_icons.rsi
     state: DCC
   jobName: job-name-centcomoff
 
@@ -101,7 +101,7 @@
   parent: JobIcon
   id: JobIconSecurityOfficerCentCom
   icon:
-    sprite: /Textures/__Genesis/Interface/Misc/job_icons.rsi
+    sprite: /Textures/_Genesis/Interface/Misc/job_icons.rsi
     state: OfficerCC
   jobName: job-name-security-centcom
 
@@ -109,7 +109,7 @@
   parent: JobIcon
   id: JobIconCentComEngineering
   icon:
-    sprite: /Textures/__Genesis/Interface/Misc/job_icons.rsi
+    sprite: /Textures/_Genesis/Interface/Misc/job_icons.rsi
     state: ECC
   jobName: job-name-centcom-engineering
 

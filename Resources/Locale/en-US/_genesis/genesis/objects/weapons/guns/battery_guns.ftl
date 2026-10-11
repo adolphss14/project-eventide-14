@@ -1,3 +1,25 @@
-ent-WeaponEnergyGunMultiphase = Mulphiase laser X-01
+ent-WeaponEnergyGunMultiphase = Multiphase laser X-01
     .desc = First attempt to remake the captain's antique laser pistol. Has an alternative shooting mode, but does not have a self-charging battery.
     .suffix = Pistol
+
+ent-WeaponEnergyGun = energy gun
+    .desc = A basic hybrid energy gun with two settings: disable and kill.
+ent-WeaponEnergyGunMini = miniature energy gun
+    .desc = A light version of the energy gun with a smaller capacity.
+ent-WeaponEnergyGunPistol = PDW-9 energy pistol
+    .desc = A military-grade sidearm used by many militia forces in the local sector.
+ent-WeaponGunLaserCarbineAutomatic = IK-60 laser carbine
+    .desc = A 20-round semi-automatic laser carbine.
+ent-WeaponIONRifle = ion rifle
+ent-WeaponCutter = cutter
+    .desc = A self-defense weapon that exhausts organic targets, weakening them until they collapse.
+ent-WeaponCutterAdv = advanced cutter
+    .desc = A self-defense weapon that exhausts organic targets, weakening them until they collapse.
+ent-WeaponAdvancedRevolver = advanced laser revolver
+    .desc = A powerful laser revolver designed to protect station command staff.
+ent-WeaponGunLaserCarbineDC15A = DC-15A blaster carbine
+    .desc = A blaster carbine variant of the DC-15 rifle.
+ent-WeaponGunLaserCarbineDC15S = DC-15S blaster rifle
+    .desc = A standard blaster rifle used by clone troopers.
+ent-WeaponGunLaserCarbineRepublicDC15S = Republic DC-15S blaster rifle
+    .desc = A standard blaster rifle used by clone troopers of the Republic.

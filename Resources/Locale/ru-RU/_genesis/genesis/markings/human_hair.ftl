@@ -1,0 +1,26 @@
+# Причёски Genesis
+marking-HumanHairlongBedheadD = Длинная растрёпанная причёска (D)
+marking-HumanHairRick = Рик
+marking-HumanHairMorty = Морти
+marking-HumanHairClassicMessy = Классическая растрёпанная причёска
+marking-HumanHairClassicSpiky = Классическая колючая причёска
+marking-HumanHairModernClassic = Современная классика
+marking-HairBasarab = Басараб
+marking-HairCrayfish = Рак
+marking-HairHank = Хэнк
+marking-HairHonor = Хонор
+marking-HairMadScientist = Безумный учёный
+marking-HairMonday = Понедельник
+marking-HairNemesida = Немезида
+marking-HairPunk = Панк
+marking-HairTuranga = Туранга
+marking-HairAyanami = Аянами
+marking-HairBubbleGum = Жевательная резинка
+marking-HairMavis = Мэвис
+marking-HairCloud = Облако
+marking-HairMorningHairstyle = Утренняя причёска
+marking-HairMorningHairstyle2 = Утренняя причёска (вариант 2)
+marking-HairPonytail = Хвостик
+marking-HairPrinceCharming = Прекрасный принц
+marking-HairShavedFemale = Женская выбритая причёска
+marking-HairShavedFemaleUnisex = Унисекс-причёска с выбритыми волосами

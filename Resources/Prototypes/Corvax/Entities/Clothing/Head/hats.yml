@@ -121,7 +121,7 @@
 
 - type: entity
   parent: ClothingHeadBase
-  id: ClothingHeadHatCaptainBeret
+  id: ClothingHeadHatCaptainBeretCorvax
   name: captain beret
   description: A blue beret made of durathread with a genuine golden badge, denoting its owner as a captain.
   components:

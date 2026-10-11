@@ -64,7 +64,7 @@
     spread: 75
   - type: UseDelay
     delay: 1
-  - type: ToggleableLightVisuals
+  - type: ToggleableVisuals
     spriteLayer: blade
     inhandVisuals:
       left:
@@ -139,6 +139,7 @@
     sprite: _Genesis/Objects/Weapons/Melee/e_sword_kylo_inhands.rsi
   - type: UseDelay
     delay: 1.0
+  - type: ItemTogglePointLight
   - type: PointLight
     enabled: false
     radius: 2
@@ -146,7 +147,7 @@
     color: white
     netsync: false
   - type: Appearance
-  - type: ToggleableLightVisuals
+  - type: ToggleableVisuals
     spriteLayer: blade
     inhandVisuals:
       left:

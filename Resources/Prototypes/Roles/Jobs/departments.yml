@@ -170,6 +170,7 @@
   weight: -100 # Displays after all other departments, since that makes them obviously distinct in the lobby's jobs list
   ignoreForDepartmentFallback: true
   roles:
+  - Boxer # Restored with the upstream Boxer role and loadouts
   - Reporter
   - Psychologist
   - TramDriver

@@ -1,5 +1,3 @@
-//using Content.Server.Disease.Components;
-//using Content.Server.Disease;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Popups;
@@ -11,7 +9,6 @@ using Content.Shared.Actions;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs;
 using Robust.Shared.Player;
-using Robust.Shared.Random;
 using System.Linq;
 using WoundLickingActionEvent = Content.Shared._Genesis.WoundLicking.WoundLickingActionEvent;
 using WoundLickingDoAfterEvent = Content.Shared._Genesis.WoundLicking.WoundLickingDoAfterEvent;
@@ -19,13 +16,12 @@ using WoundLickingDoAfterEvent = Content.Shared._Genesis.WoundLicking.WoundLicki
 namespace Content.Server._Genesis.Felinid
 {
     /// <summary>
-    /// "Lick your or other felinid wounds. Reduce bleeding, but unsanitary and can cause diseases."
+    /// Allows felinids to lick wounds to reduce bleeding.
     /// </summary>
     public sealed partial class WoundLickingSystem : EntitySystem
     {
         [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private PopupSystem _popupSystem = default!;
-//        [Dependency] private readonly DiseaseSystem _disease = default!;
         [Dependency] private SharedActionsSystem _actionsSystem = default!;
         [Dependency] private BloodstreamSystem _bloodstreamSystem = default!;
         [Dependency] private SolutionContainerSystem _solutionContainer = default!;
@@ -71,7 +67,7 @@ namespace Content.Server._Genesis.Felinid
                 return;
 
             // Check "CanApplyOnSelf" field
-            if (performer == target & !woundLicking.CanApplyOnSelf)
+            if (performer == target && !woundLicking.CanApplyOnSelf)
             {
                 _popupSystem.PopupEntity(Loc.GetString("lick-wounds-yourself-impossible"),
                     performer, Filter.Entities(performer), true);
@@ -79,7 +75,7 @@ namespace Content.Server._Genesis.Felinid
             }
 
             // Check "CanApplyOnOther" field
-            if (performer != target & !woundLicking.CanApplyOnOther)
+            if (performer != target && !woundLicking.CanApplyOnOther)
             {
                 _popupSystem.PopupEntity(Loc.GetString("lick-wounds-other-impossible"),
                     performer, Filter.Entities(performer), true);
@@ -157,26 +153,8 @@ namespace Content.Server._Genesis.Felinid
 
         private void LickWound(EntityUid performer, Entity<BloodstreamComponent> target, WoundLickingComponent comp)
         {
-            // The more you heal, the more is disease chance
-            // For 15 maxHeal and 50% diseaseChance
-            //  Heal 15 > chance 50%
-            //  Heal 7.5 > chance 25%
-            //  Heal 0 > chance 0%
-
             var bloodstream = target.Comp;
-            var healed = bloodstream.BleedAmount;
-            if (comp.MaxHeal - bloodstream.BleedAmount < 0) healed = comp.MaxHeal;
-/*            var chance = comp.DiseaseChance * (1 / comp.MaxHeal * healed);
-
-            if (comp.DiseaseChance > 0f & comp.PossibleDiseases.Any())
-            {
-                if (TryComp<DiseaseCarrierComponent>(target, out var disCarrier))
-                {
-                    var diseaseName = comp.PossibleDiseases[_random.Next(0, comp.PossibleDiseases.Count)];
-                    _disease.TryInfect(disCarrier, diseaseName, chance);
-                }
-            }
-*/
+            var healed = Math.Min(bloodstream.BleedAmount, comp.MaxHeal);
             _bloodstreamSystem.TryModifyBleedAmount((target.Owner, bloodstream), -healed);
 
             if (performer == target.Owner)

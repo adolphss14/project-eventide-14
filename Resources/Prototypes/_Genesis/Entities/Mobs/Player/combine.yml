@@ -1,7 +1,7 @@
 - type: entity
-  name: Урист Макбайн
+  name: Urist McBain
   parent: MobHuman
-  description: Жалкая кучка спецназа.
+  description: A pitiful squad of special forces.
   id: MobHumanCombine
   components:
   - type: Icon
@@ -11,7 +11,7 @@
     speechSounds: Combine
     soundCooldownTime: 0.1
   - type: Stamina
-    critThreshold: 250
+    baseCritThreshold: 250
   - type: MobState
   - type: MobThresholds
     thresholds:

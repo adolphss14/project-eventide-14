@@ -1,3 +1,19 @@
 ent-ClothingEyesGlassesSunglassesBlueShield = sunglasses blueshield officer
     .desc = Wait, they're just... Blue?
     .suffix = { "" }
+
+ent-ClothingEyesGlassesMed = medical sunglasses
+    .desc = Sunglasses that protect against flashes and display the health status of others. A field medic's best friend.
+    .suffix = { "" }
+ent-ClothingEyesMessonMedical = medical meson goggles
+    .desc = Meson goggles adapted for medical work.
+    .suffix = { "" }
+ent-ClothingEyesMessonSecurity = security meson HUD
+    .desc = A heads-up meson display that scans nearby humanoids and shows their ID status and security records.
+    .suffix = { "" }
+ent-ClothingEyesGlassesSunglassesModified = modified sunglasses
+    .desc = Sunglasses with modified HUD displays.
+    .suffix = { "" }
+ent-ClothingEyesVision = night vision device
+    .desc = A night vision device that provides an image of the terrain in low-light conditions.
+    .suffix = { "" }

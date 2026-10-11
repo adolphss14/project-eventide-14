@@ -70,3 +70,4 @@ job-description-ertsecurity = Ensure that any threats to the station are elimina
 
 # Misc.
 job-description-visitor = Enjoy your visit to the station!
+job-description-boxer = Fight your way to the top! Challenge the head of personnel and get brigged when you win.

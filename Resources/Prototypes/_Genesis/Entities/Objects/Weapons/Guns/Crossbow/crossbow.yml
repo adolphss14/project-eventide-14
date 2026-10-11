@@ -14,5 +14,4 @@
     proto: BulletMic
     fireCost: 900
   - type: BatterySelfRecharger
-    autoRecharge: true
     autoRechargeRate: 400

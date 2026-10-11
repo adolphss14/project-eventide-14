@@ -1,19 +1,25 @@
-﻿- type: entity
+- type: entity
+  parent: BaseAction
   id: ActionEatMouse
-  name: eat mouse
+  name: Eat mouse
   description: Take the mouse in your hand and remove the batteries and charger from it.
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
     checkCanInteract: false
-    icon: _Genesis/Icons/verbiconfangs.png
+  - type: Sprite
+    sprite: Mobs/Animals/mouse.rsi
+    layers:
+    - state: icon-0
+      map: ["enum.ActionVisuals.Icon"]
   - type: InstantAction
     event: !type:EatMouseActionEvent
 
 - type: entity
+  parent: BaseAction
   id: ActionHairball
-  name: cough up
-  description: Cleanse your digestive system and get a cool hairball to throw at people.
+  name: Cough up hairball
+  description: Cleanse your digestive system and get a hairball to throw at people.
   components:
   - type: LimitedCharges
     maxCharges: 1
@@ -21,20 +27,30 @@
     checkCanInteract: false
     #icon: { sprite: Backmen/Structures/web.rsi, state: web1 }
     useDelay: 30
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi
+    layers:
+    - state: stomach
+      map: ["enum.ActionVisuals.Icon"]
   - type: InstantAction
     event: !type:HairballActionEvent
 
 - type: entity
+  parent: BaseAction
   id: ActionWoundLicking
-  name: lick wound
-  description: Stop bleeding by licking your wounds
+  name: Lick wounds
+  description: Stop bleeding by licking your wounds.
   components:
   - type: Action
-    icon: { sprite: Mobs/Species/Human/organs.rsi, state: tongue }
     priority: -1
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi
+    layers:
+    - state: tongue
+      map: ["enum.ActionVisuals.Icon"]
   - type: TargetAction
   - type: EntityTargetAction
     whitelist:
       components:
-      - HumanoidAppearance
+      - HumanoidProfile
     event: !type:WoundLickingActionEvent

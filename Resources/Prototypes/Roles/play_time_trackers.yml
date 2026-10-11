@@ -17,6 +17,9 @@
   id: JobBotanist
 
 - type: playTimeTracker
+  id: JobBoxer
+
+- type: playTimeTracker
   id: JobCaptain
 
 - type: playTimeTracker

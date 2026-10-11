@@ -3,7 +3,3 @@
   parent: OrganReptilianStomach
   components:
   - type: Stomach
-  - type: SolutionContainerManager
-    solutions:
-      stomach:
-        maxVol: 20.0

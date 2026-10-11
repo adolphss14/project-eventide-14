@@ -50,8 +50,8 @@
   id: SeniorEngineerJumpsuit
   name: loadout-group-senior-engineer-jumpsuit
   loadouts:
-  - SeniorEngineerJumpsuit
-  - SeniorEngineerJumpskirt
+  - JumpsuitSeniorEngineer
+  - JumpskirtSeniorEngineer
 
 - type: loadoutGroup
   id: SeniorEngineerBackpack
@@ -92,8 +92,8 @@
   id: SeniorResearcherJumpsuit
   name: loadout-group-senior-researcher-jumpsuit
   loadouts:
-  - SeniorResearcherJumpsuit
-  - SeniorResearcherJumpskirt
+  - JumpsuitSeniorResearcher
+  - JumpskirtSeniorResearcher
 
 - type: loadoutGroup
   id: SeniorResearcherBackpack
@@ -216,8 +216,8 @@
   id: SeniorOfficerJumpsuit
   name: loadout-group-senior-officer-jumpsuit
   loadouts:
-  - SeniorOfficerJumpsuit
-  - SeniorOfficerJumpskirt
+  - JumpsuitSeniorOfficer
+  - JumpskirtSeniorOfficer
 
 - type: loadoutGroup
   id: SeniorOfficerBackpack
@@ -263,8 +263,8 @@
   id: SeniorPhysicianJumpsuit
   name: loadout-group-senior-physician-jumpsuit
   loadouts:
-  - SeniorPhysicianJumpsuit
-  - SeniorPhysicianJumpskirt
+  - JumpsuitSeniorPhysician
+  - JumpskirtSeniorPhysician
 
 - type: loadoutGroup
   id: SeniorPhysicianOuterClothing

@@ -6,7 +6,6 @@
   startingGear: SeniorServiceGear
   icon: "JobIconSeniorService"
   supervisors: job-supervisors-service
-  canBeAntag: false
   access:
   - Service
   - Maintenance

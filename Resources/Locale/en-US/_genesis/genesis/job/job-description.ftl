@@ -1,1 +1,20 @@
 job-description-blueshield = Don't let the command members die. You should not follow their orders, the goal is one - not to let them die until the end of the shift.
+
+job-description-centcom-assistant = Handle requests from senior Central Command staff and help with their day-to-day duties.
+job-description-centcom-cargotech = Fulfill Central Command supply requests, provide emergency supplies to stations, and handle special orders.
+job-description-consultant = Advise Central Command staff and help coordinate their work with station command.
+job-description-centcomop = Do not approve evacuations. Do not approve ERT deployments. Divide the station crew's salaries by zero.
+job-description-hos-centcom = Lead security at Central Command facilities and supervise officers responsible for maintaining order.
+job-description-centcom-admiral = Serve as a NanoTrasen admiral, balancing Central Command responsibilities with matters at the stations.
+job-description-security-centcom = Serve as a Central Command security officer; recruitment is selective and favors highly trained personnel.
+job-description-jedi-nt = Defend the station with your energy sword.
+job-description-magistrat = Uphold justice on the station and judge major violations of station law.
+job-description-miner = Mine resources and help salvage teams extract ore from asteroids.
+job-description-senior-engineer = Train junior engineers in station engines, repairs, atmospherics, and power systems.
+job-description-senior-physician = Train junior medical staff in patient care, chemistry, diagnosis, and morgue procedures.
+job-description-senior-researcher = Train junior scientists in item printing, artifact research, and anomalous-object studies.
+job-description-senior-salvage = Train new salvage specialists, coordinate salvage teams, and lead expeditions.
+job-description-senior-service = Train service staff in cleaning, bartending, cooking, and hydroponics.
+job-description-senior-officer = Train cadets in searches, arrests, prison procedures, and safe firearm use.
+job-description-prisoner = Serve your sentence and follow the rules of the prison facility.
+job-description-roboticist = Build and maintain robots and cyborgs, and support the station's robotics systems.

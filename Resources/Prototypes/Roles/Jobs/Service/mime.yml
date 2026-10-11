@@ -34,7 +34,7 @@
 - type: entity
   parent: BaseAction
   id: ActionMimeInvisibleWall
-  name: Create Invisible Wall
+  name: Create invisible wall
   description: Create an invisible wall in front of you, if placeable there.
   components:
   - type: Action
@@ -44,6 +44,7 @@
     sprite: Structures/Walls/solid.rsi
     layers:
     - state: full
+      map: ["enum.ActionVisuals.Icon"]
   - type: InstantAction
     event: !type:InvisibleWallActionEvent
 

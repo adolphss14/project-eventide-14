@@ -115,7 +115,7 @@ public sealed partial class FelinidSystem : EntitySystem
         }
 
         _popupSystem.PopupEntity(Loc.GetString("hairball-cough", ("name", Identity.Entity(uid, EntityManager))), uid);
-        _audio.PlayEntity("/Audio/Backmen/Effects/Species/hairball.ogg", Filter.Pvs(uid), uid, true, AudioHelpers.WithVariation(0.15f));
+        _audio.PlayEntity("/Audio/_Backmen/Effects/Species/hairball.ogg", Filter.Pvs(uid), uid, true, AudioHelpers.WithVariation(0.15f));
 
         EnsureComp<CoughingUpHairballComponent>(uid);
         args.Handled = true;
@@ -142,6 +142,9 @@ public sealed partial class FelinidSystem : EntitySystem
             _popupSystem.PopupEntity(Loc.GetString("hairball-mask", ("mask", maskUid)), uid, uid, Shared.Popups.PopupType.SmallCaution);
             return;
         }
+
+        // We have passed validation and are consuming the held mouse.
+        args.Handled = true;
 
         if (_actionsSystem.GetAction(component.HairballActionEntity) is { } action)
         {

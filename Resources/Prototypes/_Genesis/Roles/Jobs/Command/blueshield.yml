@@ -13,13 +13,11 @@
     - !type:RoleTimeRequirement
       role: JobChiefMedicalOfficer
       time: 18000 #5 hrs
-  weight: 20
   startingGear: BlueShieldGear
   icon: "JobIconBlueShield"
   requireAdminNotify: true
   joinNotifyCrew: true
   supervisors: job-supervisors-centcom
-  canBeAntag: false
   access:
   - Captain
   - Command

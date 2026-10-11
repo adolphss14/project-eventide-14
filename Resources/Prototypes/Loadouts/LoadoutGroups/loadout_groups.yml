@@ -1460,3 +1460,21 @@
   hidden: true
   loadouts:
   - LoadoutSpeciesBreathToolSecurity
+
+# Boxer
+
+- type: loadoutGroup
+  id: BoxerJumpsuit
+  name: loadout-group-jumpsuit
+  loadouts:
+  - BoxerShorts
+  - BoxerShortsWithTop
+
+- type: loadoutGroup
+  id: BoxerGloves
+  name: loadout-group-gloves
+  loadouts:
+  - RedBoxingGloves
+  - BlueBoxingGloves
+  - GreenBoxingGloves
+  - YellowBoxingGloves

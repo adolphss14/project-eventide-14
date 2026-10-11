@@ -9,17 +9,10 @@ namespace Content.Server._Genesis.Felinid
     public sealed partial class WoundLickingComponent : Component
     {
         [DataField("woundLickingAction")]
-        public EntProtoId<InstantActionComponent> WoundLickingAction = "ActionWoundLicking";
+        public EntProtoId<EntityTargetActionComponent> WoundLickingAction = "ActionWoundLicking";
 
         [DataField("woundLickingActionEntity")]
         public EntityUid? WoundLickingActionEntity;
-
-        /// <summary>
-        /// How frequent wound-licking will cause diseases. Scales with amount of reduced bleeding
-        /// </summary>
-        [DataField("diseaseChance")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float DiseaseChance { get; set; } = 0.25f;
 
         /// <summary>
         /// Max possible bleeding reduce. Human max bleeding is 20f, many weapons deals near 15f bleeding
@@ -49,20 +42,6 @@ namespace Content.Server._Genesis.Felinid
         [ViewVariables(VVAccess.ReadWrite)]
         public bool CanApplyOnOther { get; set; } = false;
 
-
-
-        /// <summary>
-        /// Which diseases can be caused because of wound-licking
-        /// </summary>
-        [DataField("possibleDiseases")]
-        public List<String> PossibleDiseases { get; set; } = new()
-        {
-            "Plague",
-            "BirdFlew",
-            "SpaceFlu",
-            "SpaceCold",
-            "VentCough"
-        };
 
         /// <summary>
         /// If Target's bloodstream don't use one of these reagents, then ability can't be performed on it.

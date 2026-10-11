@@ -1663,3 +1663,10 @@
 ## Y ##
 ## Z ##
 # ALPHABETICAL
+
+# Tags required by Genesis briefcase and katana prototypes.
+- type: Tag
+  id: Briefcase
+
+- type: Tag
+  id: Katana

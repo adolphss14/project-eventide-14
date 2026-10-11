@@ -16,7 +16,6 @@
   startingGear: JediNTGear
   icon: "JobIconJediNT"
   supervisors: job-supervisors-hos
-  canBeAntag: false
   access:
   - HeadOfSecurity
   - Command
