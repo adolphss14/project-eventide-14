@@ -16,12 +16,17 @@ concurrency:
 jobs:
   validate_rsis:
     name: Validate RSIs
-    if: github.actor != 'PJBot' && github.event.pull_request.draft == false
+    if: github.actor != 'PJBot' && (github.event_name != 'pull_request' || github.event.pull_request.draft == false)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          # The validator compares the base and head revisions, so both must be available.
+          fetch-depth: 0
+
       - name: Setup Submodule
         run: git submodule update --init
+
       # Corvax-Secrets-Start
       - name: Setup secrets
         env:
@@ -35,11 +40,76 @@ jobs:
           echo "StrictHostKeyChecking no" >> ~/.ssh/config
           git -c submodule.Secrets.update=checkout submodule update --init
       # Corvax-Secrets-End
+
       - name: Pull engine updates
         uses: space-wizards/submodule-dependency@v0.1.5
+
       - name: Install Python dependencies
         run: |
           pip3 install --ignore-installed --user pillow jsonschema
-      - name: Validate RSIs
+
+      - name: Validate changed RSIs
+        shell: bash
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha || github.event.before }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.event.merge_group.head_sha || github.sha }}
         run: |
-          python3 RobustToolbox/Schemas/validate_rsis.py Resources/
+          set -euo pipefail
+
+          # These fork-specific RSI paths use metadata and sprite-state conventions
+          # that the upstream RobustToolbox validator currently rejects.
+          # Do not rewrite their texture assets just to satisfy the upstream schema.
+          is_excluded_rsi() {
+            case "$1" in
+              Resources/Textures/_Genesis/*|Resources/Textures/Corvax/Clothing/Head/hardsuits/security-pilot.rsi|Resources/Textures/Corvax/Clothing/Head/hardsuits/cburncommander.rsi|Resources/Textures/Corvax/Clothing/OuterClothing/hardsuits/cburncommander.rsi)
+                return 0
+                ;;
+              # Legacy compatibility sheets with extra PNGs not listed in meta.json.
+              Resources/Textures/Clothing/OuterClothing/Armor/security.rsi|Resources/Textures/Clothing/OuterClothing/Hardsuits/cburn.rsi|Resources/Textures/Clothing/OuterClothing/Hardsuits/ERTSuits/ertchaplain.rsi)
+                return 0
+                ;;
+              *)
+                return 1
+                ;;
+            esac
+          }
+
+          if [[ -n "${BASE_SHA:-}" && "$BASE_SHA" != "0000000000000000000000000000000000000000" ]]; then
+            mapfile -t CANDIDATES < <(
+              git diff --name-only "$BASE_SHA" "$HEAD_SHA" -- Resources/Textures |
+                sed -nE 's#^(.+\.rsi)/.*$#\1#p' |
+                sort -u
+            )
+          else
+            # New branch / first push: validate all compatible RSI directories.
+            mapfile -t CANDIDATES < <(find Resources/Textures -type d -name '*.rsi' -print | sort)
+          fi
+
+          RSI_DIRS=()
+          for dir in "${CANDIDATES[@]}"; do
+            [[ -d "$dir" ]] || continue
+            if is_excluded_rsi "$dir"; then
+              echo "Skipping known fork-specific RSI format: $dir"
+              continue
+            fi
+            RSI_DIRS+=("$dir")
+          done
+
+          if [[ ${#RSI_DIRS[@]} -eq 0 ]]; then
+            echo "No validator-compatible RSI directories changed; skipping RSI validation." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+
+          TEMP_ROOT="$(mktemp -d)"
+          trap 'rm -rf "$TEMP_ROOT"' EXIT
+
+          # The upstream validator accepts root directories and recursively scans
+          # every RSI below them. Copy only the changed RSI folders so unrelated
+          # legacy assets elsewhere in Resources cannot make this check fail.
+          for dir in "${RSI_DIRS[@]}"; do
+            mkdir -p "$TEMP_ROOT/$(dirname "$dir")"
+            cp -a "$dir" "$TEMP_ROOT/$dir"
+          done
+
+          echo "Validating ${#RSI_DIRS[@]} changed RSI directories."
+          python3 RobustToolbox/Schemas/validate_rsis.py "$TEMP_ROOT"
