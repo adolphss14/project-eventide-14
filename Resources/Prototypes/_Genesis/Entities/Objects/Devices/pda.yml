@@ -47,29 +47,6 @@
 
 - type: entity
   parent: BasePDA
-  id: MagistratPDA
-  name: magistrat PDA
-  description: Corporation and profit are best friends.
-  components:
-  - type: Sprite
-    sprite: _Genesis/Objects/Devices/pda.rsi
-  - type: Pda
-    id: MagistratIDCard
-    penSlot:
-      startingItem: PenCap
-      priority: -1
-      whitelist:
-        tags:
-        - Write
-  - type: PdaBorderColor
-    borderColor: "#6f6192"
-    accentHColor: "#2851A4"
-  - type: Icon
-    sprite: _Genesis/Objects/Devices/pda.rsi
-    state: pda-magistrat
-
-- type: entity
-  parent: BasePDA
   id: RoboticistPDA
   name: roboticist PDA
   description: It's covered in something sticky.

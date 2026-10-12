@@ -63,18 +63,6 @@
       - state: green
       - state: centcomoperator
 
-- type: entity
-  id: SpawnPointMagistrat
-  parent: SpawnPointJobBase
-  name: magistrat
-  components:
-  - type: SpawnPoint
-    job_id: Magistrat
-  - type: Sprite
-    sprite: _Genesis/Markers/jobs.rsi
-    layers:
-      - state: green
-      - state: magistrat
 
 - type: entity
   id: SpawnPointSeniorSalvage

@@ -1,0 +1,10 @@
+ent-ExpensiveLighter = expensive lighter
+    .desc = An expensive metal lighter. It looks too badass for you. Put it back.
+ent-ExpensiveLighterDetective = expensive lighter
+    .desc = The lighter smells of whiskey. Oily fingerprints are clearly visible on its olive case, and its wooden base and top are heavily worn.
+ent-ExpensiveLighterNanotrasen = expensive lighter
+    .desc = A lighter awarded only to the best in their field at NanoTrasen. The back is engraved with: "For 10 shifts without incidents."
+ent-ExpensiveLighterShield = expensive lighter
+    .desc = A bright blue lighter, the same color as its current owner at the bar. It bears a white shield heading into the sunset—much like its owner's career.
+ent-ExpensiveLighterSyndicate = expensive lighter
+    .desc = Used by hardened Syndicate agents. Show off your style and hatred of NanoTrasen with this lighter!

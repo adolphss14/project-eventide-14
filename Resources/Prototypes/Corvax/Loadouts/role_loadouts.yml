@@ -16,10 +16,14 @@
   id: JobMagistrate
   groups:
   - Inventory # Corvax-Loadouts
+  - GroupTankHarness
   - MagistrateHead
   - MagistrateJumpsuit
+  - LawyerNeck
   - MagistrateOuterClothing
   - CommonBackpack
+  - Glasses
+  - AssistiveItems
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
@@ -82,7 +86,7 @@
   - BrigmedicBackpack
   - BrigmedicOuterClothing
   - BrigmedicShoes
-  - SurvivalMedical
+  - SurvivalBrigmedic
   - Trinkets
   - GroupSpeciesBreathTool
 

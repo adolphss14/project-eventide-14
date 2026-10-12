@@ -1,0 +1,12 @@
+ent-AirlockClown = clown airlock
+    .desc = { ent-Airlock.desc }
+    .suffix = Clown
+ent-AirlockClownLocked = { ent-AirlockClown }
+    .desc = { ent-Airlock.desc }
+    .suffix = Clown, Locked
+ent-AirlockExternalEngGlass = { ent-AirlockExternal }
+    .desc = { ent-AirlockExternal.desc }
+    .suffix = External, Engineering, Glass, Locked
+ent-AirlockExternalSecGlass = { ent-AirlockExternal }
+    .desc = { ent-AirlockExternal.desc }
+    .suffix = External, Security, Glass, Locked

@@ -73,6 +73,9 @@
   prefRoles:
   - NukeopsCommander
   spawnerPrototype: SpawnPointNukeopsCommander
+  roleLoadout:
+  - RoleSurvivalNukie
+  - NukeopsCommander
   startingGear: SyndicateCommanderGearFull
   components:
   - type: RandomMetadata
@@ -88,6 +91,9 @@
   prefRoles:
   - NukeopsMedic
   spawnerPrototype: SpawnPointNukeopsMedic
+  roleLoadout:
+  - RoleSurvivalNukie
+  - NukeopsMedic
   startingGear: SyndicateOperativeMedicFull
   components:
   - type: RandomMetadata
@@ -103,6 +109,9 @@
   prefRoles:
   - Nukeops
   spawnerPrototype: SpawnPointNukeopsOperative
+  roleLoadout:
+  - RoleSurvivalNukie
+  - Nukeops
   startingGear: SyndicateOperativeGearFull
   components:
   - type: RandomMetadata

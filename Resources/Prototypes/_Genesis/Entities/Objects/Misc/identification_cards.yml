@@ -26,19 +26,6 @@
 
 - type: entity
   parent: IDCardStandard
-  id: MagistratIDCard
-  name: magistrat ID card
-  components:
-    - type: Sprite
-      sprite: _Genesis/Objects/Misc/id_cards.rsi
-      layers:
-        - state: silver
-        - state: idmagistrat
-    - type: PresetIdCard
-      job: Magistrat
-
-- type: entity
-  parent: IDCardStandard
   id: RoboticistIDCard
   name: ID card roboticist
   components:

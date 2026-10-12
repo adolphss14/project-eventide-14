@@ -33,10 +33,11 @@
     shoes: ClothingShoesBootsLaceup
     neck: ClothingNeckLawyerbadge
     id: MagistratePDA
-    eyes: ClothingEyesGlassesCommand
+    eyes: ClothingEyesGlassesSecurity
     gloves: ClothingHandsGlovesColorWhite
-    ears: ClothingHeadsetMagistrate
-    pocket1: BoxFolderBlackThreePapers
+    ears: ClothingHeadsetAltCommand
+    pocket1: Pen
+    pocket2: BookSpaceLaw
   storage:
     back:
     - Flash

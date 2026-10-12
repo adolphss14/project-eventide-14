@@ -1,2 +1,2 @@
-ent-ClothingOuterArmorBlueshield = vest blueshield
-    .desc = Vest for fucking!
+ent-ClothingOuterArmorBlueShield = BlueShield officer's vest
+    .desc = A protective vest worn by BlueShield officers.

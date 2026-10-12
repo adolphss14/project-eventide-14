@@ -1,0 +1,10 @@
+ent-MobParrotBoss = Boss
+    .desc = Someone's Boss. Lives on the bridge. Has a bad attitude. Unmarried.
+ent-MobParrotKesha = Kesha
+    .desc = A clown's neighbor and apprentice.
+ent-SpawnMobParrotBoss = Spawner for { ent-MobParrotBoss }
+ent-SpawnMobParrotKesha = Spawner for { ent-MobParrotKesha }
+ghost-role-information-boss-description = { ent-MobParrotBoss.desc }
+ghost-role-information-boss-name = { ent-MobParrotBoss }
+ghost-role-information-kesha-description = { ent-MobParrotKesha.desc }
+ghost-role-information-kesha-name = { ent-MobParrotKesha }

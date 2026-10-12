@@ -1,0 +1,17 @@
+criminal-records-ui-cryo-group = Sent to cryo
+criminal-records-ui-delete-dialog = Delete this record?
+criminal-records-ui-flavor-right = Confidential data. Authorized personnel only.
+criminal-records-ui-message-placeholder = Additional information (max. 200 characters)
+criminal-records-ui-no-access = Access denied.
+criminal-records-ui-no-department = No department
+criminal-records-ui-no-status = No status
+criminal-records-ui-unknown = Unknown
+criminal-records-ui-unknown-job = Unknown job
+criminal-records-ui-window-search-placeholder = Search...
+criminal-status-cooldown-popup = You are trying to add records too frequently.
+criminal-status-execute = Execute
+criminal-status-execute-report = {$target} has been sentenced to execution! Reason: {$reason}
+criminal-status-monitor = Monitor
+criminal-status-search = Search
+criminal-status-wanted = Wanted
+criminal-status-wanted-report = {$target} has been wanted! Reason: {$reason}

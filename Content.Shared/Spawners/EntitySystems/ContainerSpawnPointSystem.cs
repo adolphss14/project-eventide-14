@@ -21,6 +21,12 @@ public sealed partial class ContainerSpawnPointSystem : EntitySystem
         if (args.SpawnResult != null)
             return;
 
+        // alwaysUseSpawner jobs must use their own job spawn point, even if the
+        // selected lobby preference is Cryosleep. Do not let a cryo container
+        // consume their spawn event before SpawnPointSystem can handle it.
+        if (ProtoMan.Resolve(args.Job, out var alwaysSpawnerJob) && alwaysSpawnerJob.AlwaysUseSpawner)
+            return;
+
         // If it's just a spawn pref check if it's for cryo (silly).
         if (args.HumanoidCharacterProfile?.SpawnPriority != SpawnPriorityPreference.Cryosleep &&
             (!ProtoMan.Resolve(args.Job, out var jobProto) || jobProto.JobEntity == null))
@@ -45,7 +51,9 @@ public sealed partial class ContainerSpawnPointSystem : EntitySystem
                 continue;
             }
 
-            if (_gameTicker.RunLevel == GameRunLevel.InRound && spawnPoint.SpawnType == SpawnPointType.LateJoin)
+            if (_gameTicker.RunLevel == GameRunLevel.InRound &&
+                spawnPoint.SpawnType == SpawnPointType.LateJoin &&
+                (spawnPoint.Job == null || spawnPoint.Job == args.Job))
             {
                 possibleContainers.Add((uid, spawnPoint, container, xform));
             }

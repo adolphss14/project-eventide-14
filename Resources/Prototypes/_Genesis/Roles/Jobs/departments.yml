@@ -8,13 +8,4 @@
   - BlueShield
   - JediNT # By Space Stories Reworked by _Genesis
 
-- type: department
-  id: Law
-  name: department-Law
-  description: department-Law-description
-  color: "#FF5297"
-  primary: false
-  roles:
-  - Magistrat
-  - IAA
-  - Lawyer
+

@@ -13,6 +13,15 @@ public sealed partial class SpawnPointComponent : Component, ISpawnPoint
     [DataField("job_id")]
     public ProtoId<JobPrototype>? Job;
 
+    // Genesis-Start
+    /// <summary>
+    /// Departments allowed to use this spawn point. Use this instead of job_id to
+    /// share a late-join location across a whole department.
+    /// </summary>
+    [DataField("departments")]
+    public List<ProtoId<DepartmentPrototype>> Departments = new();
+    // Genesis-End
+
     /// <summary>
     /// The type of spawn point.
     /// </summary>

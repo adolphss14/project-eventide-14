@@ -344,19 +344,6 @@
   - MedicalBelt
   - CMOWebbing
 
-# Law
-- type: loadoutGroup
-  id: MagistratHead
-  name: loadout-group-head
-  minLimit: 0
-  loadouts:
-  - MagistratHead
-
-- type: loadoutGroup
-  id: MagistratOuterClothing
-  name: loadout-group-outerclothing
-  loadouts:
-  - MagistratOuterClothing
 
 # Senior
 - type: loadoutGroup

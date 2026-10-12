@@ -8,6 +8,8 @@
     centcomm:
       stationProto: NanotrasenCentralCommand
       components:
+        - type: StationSpawning
+          use_job_spawn_points_for_late_join: true
         - type: StationNameSetup
           mapNameTemplate: '{0} Central Command {1}'
           nameGenerator:

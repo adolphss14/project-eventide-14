@@ -1,0 +1,12 @@
+ent-ClothingOuterHardsuitUSSP = USSP combat hardsuit
+    .desc = This hardsuit is known for its simplicity, light weight, reliability, and effective life-support system.
+    .suffix = USSP
+ent-ClothingHeadHelmetHardsuitUSSP = USSP combat hardsuit helmet
+    .desc = Heavy and with a narrow field of view, but extremely reliable and durable.
+    .suffix = USSP
+ent-ClothingHeadsetUSSP = USSP headset
+    .desc = You can hear the spirit of communism through it.
+    .suffix = USSP
+ent-ClothingBackpackUSSP = USSP backpack
+    .desc = The standard backpack of the USSP Red Army.
+    .suffix = USSP

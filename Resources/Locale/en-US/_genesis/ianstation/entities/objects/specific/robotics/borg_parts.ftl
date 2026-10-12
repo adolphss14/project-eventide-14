@@ -1,0 +1,12 @@
+ent-HeadBorgSB = security officer cyborg head
+    .desc = { ent-BaseBorgHead.desc }
+ent-LeftArmBorgSB = security officer cyborg left arm
+    .desc = { ent-BaseBorgArmLeft.desc }
+ent-LeftLegBorgSB = security officer cyborg left leg
+    .desc = { ent-BaseBorgLegLeft.desc }
+ent-RightArmBorgSB = security officer cyborg right arm
+    .desc = { ent-BaseBorgArmRight.desc }
+ent-RightLegBorgSB = security officer cyborg right leg
+    .desc = { ent-BaseBorgLegRight.desc }
+ent-TorsoBorgSB = security officer cyborg torso
+    .desc = { ent-BaseBorgTorso.desc }

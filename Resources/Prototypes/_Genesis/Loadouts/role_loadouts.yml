@@ -3,6 +3,7 @@
   id: JobBlueShield
   groups:
   - GroupTankHarness
+  - SurvivalBlueShield
   - BlueShieldHead
   - BlueShieldNeck
   - BlueShieldJumpsuit
@@ -174,20 +175,6 @@
   - CentComGloves
   - CentComBackpack
   - CentComOuterClothing
-  - Trinkets
-  - GroupSpeciesBreathTool
-
-# Law
-- type: roleLoadout
-  id: JobMagistrat
-  groups:
-  - GroupTankHarness
-  - MagistratHead
-  - LawyerNeck
-  - LawyerJumpsuit
-  - CommonBackpack
-  - MagistratOuterClothing
-  - Survival
   - Trinkets
   - GroupSpeciesBreathTool
 

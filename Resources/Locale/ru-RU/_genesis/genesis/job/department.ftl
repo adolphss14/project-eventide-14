@@ -1,2 +1,2 @@
-department-Law = Юридический отдел
+department-CentComSpecialists = Специалисты Центрального командования
 department-PlanetPrison = Планетарная тюрьма

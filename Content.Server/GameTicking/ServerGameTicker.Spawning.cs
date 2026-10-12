@@ -274,7 +274,12 @@ namespace Content.Server.GameTicking
 
             _ghostGoLobby.MarkCharacterUsed(originalCharacter); // Corvax-GoLobby
 
-            DoSpawn(player, character, station, jobId, silent, out var mob, out var jobPrototype, out var jobName);
+            // Genesis-Edit: A configured station with no valid spawn point must not crash or spawn the player elsewhere.
+            if (!DoSpawn(player, character, station, jobId, silent, out var mob, out var jobPrototype, out var jobName))
+            {
+                JoinAsObserver(player);
+                return;
+            }
 
             if (jobPrototype.AlwaysUseSpawner)
                 lateJoin = false;
@@ -350,7 +355,7 @@ namespace Content.Server.GameTicking
         /// <summary>
         /// Creates a mob on the specified station, creates the new mind, equips job-specific starting gear and loadout
         /// </summary>
-        public void DoSpawn(
+        public bool DoSpawn(
             ICommonSession player,
             HumanoidCharacterProfile character,
             EntityUid station,
@@ -360,17 +365,26 @@ namespace Content.Server.GameTicking
             out JobPrototype jobPrototype,
             out string jobName)
         {
-            PlayerJoinGame(player, silent);
-
             var data = player.ContentData();
 
             DebugTools.AssertNotNull(data);
 
             jobPrototype = ProtoMan.Index<JobPrototype>(jobId);
 
+            // Genesis-Start
+            // Fail safely when the configured station has no applicable spawn point for this role.
             var mobMaybe = _stationSpawning.SpawnPlayerCharacterOnStation(station, jobId, character);
-            DebugTools.AssertNotNull(mobMaybe);
-            mob = mobMaybe!.Value;
+            if (mobMaybe is not { Valid: true })
+            {
+                Log.Error($"Failed to spawn player {player} as {jobId}: station {ToPrettyString(station)} has no valid spawn point.");
+                mob = EntityUid.Invalid;
+                jobName = jobPrototype.LocalizedName;
+                return false;
+            }
+
+            mob = mobMaybe.Value;
+            PlayerJoinGame(player, silent);
+            // Genesis-End
 
             var newMind = Mind.CreateMind(data.UserId, Name(mob));
             Mind.SetUserId(newMind, data.UserId);
@@ -382,6 +396,7 @@ namespace Content.Server.GameTicking
             Role.MindAddJobRole(newMind, silent: silent, jobPrototype: jobId);
             jobName = _jobs.MindTryGetJobName(newMind);
             _admin.UpdatePlayerList(player);
+            return true;
         }
 
         public void Respawn(ICommonSession player)

@@ -1,0 +1,10 @@
+accent-words-ferret-1 = Eeeeeep!
+accent-words-ferret-2 = Duk-duk-duk-duk!
+accent-words-ferret-3 = Eeeep!
+accent-words-ferret-4 = Shhhhh!
+accent-words-possum-1 = Hssss!
+accent-words-possum-2 = Hssssssss!
+accent-words-raccoon-1 = Grrrr!
+accent-words-raccoon-2 = Urrrr!
+accent-words-sloth-1 = Uuuuu!
+accent-words-sloth-2 = Aaaaa!
