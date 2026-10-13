@@ -9,14 +9,14 @@
 
 - type: loadoutGroup
   id: MagistrateHead
-  name: loadout-group-magistrate-head
+  name: loadout-group-head
   loadouts:
   - MagistrateHeadPwig
   - MagistrateHeadPwigFancy
 
 - type: loadoutGroup
   id: MagistrateJumpsuit
-  name: loadout-group-magistrate-jumpsuit
+  name: loadout-group-jumpsuit
   loadouts:
   - MagistrateJumpsuit
   - MagistrateJumpskirt
@@ -24,7 +24,7 @@
 
 - type: loadoutGroup
   id: MagistrateOuterClothing
-  name: loadout-group-magistrate-outerclothing
+  name: loadout-group-outerclothing
   loadouts:
   - MagistrateOuterClothingRobe
   - MagistrateOuterClothingRobeAlt
@@ -34,7 +34,7 @@
 # Engineering
 - type: loadoutGroup
   id: ChiefEngineerBackpack
-  name: loadout-group-chief-engineer-backpack
+  name: loadout-group-backpack
   loadouts:
   - ChiefEngineerBackpack
   - ChiefEngineerSatchel
@@ -42,20 +42,20 @@
 
 - type: loadoutGroup
   id: SeniorEngineerHead
-  name: loadout-group-senior-engineer-head
+  name: loadout-group-head
   loadouts:
   - SeniorEngineerBeret
 
 - type: loadoutGroup
   id: SeniorEngineerJumpsuit
-  name: loadout-group-senior-engineer-jumpsuit
+  name: loadout-group-jumpsuit
   loadouts:
   - JumpsuitSeniorEngineer
   - JumpskirtSeniorEngineer
 
 - type: loadoutGroup
   id: SeniorEngineerBackpack
-  name: loadout-group-senior-engineer-backpack
+  name: loadout-group-backpack
   loadouts:
   - StationEngineerBackpack
   - StationEngineerSatchel
@@ -66,7 +66,7 @@
 
 - type: loadoutGroup
   id: SeniorEngineerOuterClothing
-  name: loadout-group-senior-engineer-outerclothing
+  name: loadout-group-outerclothing
   minLimit: 0
   loadouts:
   - StationEngineerOuterVest
@@ -75,7 +75,7 @@
 
 - type: loadoutGroup
   id: SeniorEngineerShoes
-  name: loadout-group-senior-engineer-shoes
+  name: loadout-group-shoes
   loadouts:
   - WorkBoots
   - EngineeringWinterBoots
@@ -83,21 +83,21 @@
 # Science
 - type: loadoutGroup
   id: SeniorResearcherHead
-  name: loadout-group-senior-researcher-head
+  name: loadout-group-head
   minLimit: 0
   loadouts:
   - ScientificBeret
 
 - type: loadoutGroup
   id: SeniorResearcherJumpsuit
-  name: loadout-group-senior-researcher-jumpsuit
+  name: loadout-group-jumpsuit
   loadouts:
   - JumpsuitSeniorResearcher
   - JumpskirtSeniorResearcher
 
 - type: loadoutGroup
   id: SeniorResearcherBackpack
-  name: loadout-group-senior-researcher-backpack
+  name: loadout-group-backpack
   loadouts:
   - ScientistBackpack
   - ScientistSatchel
@@ -105,14 +105,14 @@
 
 - type: loadoutGroup
   id: SeniorResearcherOuterClothing
-  name: loadout-group-senior-researcher-outerclothing
+  name: loadout-group-outerclothing
   minLimit: 0
   loadouts:
   - SeniorResearcherLabCoat
 
 - type: loadoutGroup
   id: SeniorResearcherShoes
-  name: loadout-group-senior-researcher-shoes
+  name: loadout-group-shoes
   loadouts:
   - WhiteShoes
   - BlackShoes
@@ -120,7 +120,7 @@
 
 - type: loadoutGroup
   id: SeniorResearcherGloves
-  name: loadout-group-senior-researcher-gloves
+  name: loadout-group-gloves
   minLimit: 0
   loadouts:
   - LatexGloves
@@ -130,27 +130,27 @@
 # Security
 - type: loadoutGroup
   id: PilotHead
-  name: loadout-group-pilot-head
+  name: loadout-group-head
   minLimit: 0
   loadouts:
   - SecurityPilotBeret
 
 - type: loadoutGroup
   id: PilotJumpsuit
-  name: loadout-group-pilot-jumpsuit
+  name: loadout-group-jumpsuit
   loadouts:
   - JumpsuitPilot
   - JumpskirtPilot
 
 - type: loadoutGroup
   id: PilotOuterClothing
-  name: loadout-group-pilot-outerclothing
+  name: loadout-group-outerclothing
   loadouts:
   - OuterWinterPilot
 
 - type: loadoutGroup
   id: BrigmedicHead
-  name: loadout-group-brigmedic-head
+  name: loadout-group-head
   loadouts:
   - BrigmedicSecurityHat
   - BrigmedicHat
@@ -158,21 +158,21 @@
 
 - type: loadoutGroup
   id: BrigmedicMask
-  name: loadout-group-brigmedic-mask
+  name: loadout-group-mask
   loadouts:
   - BrigmedicGasSecurity
   - BrigmedicMedicalSecurity
 
 - type: loadoutGroup
   id: BrigmedicJumpsuit
-  name: loadout-group-brigmedic-jumpsuit
+  name: loadout-group-jumpsuit
   loadouts:
   - BrigmedicJumpsuit
   - BrigmedicJumpskirt
 
 - type: loadoutGroup
   id: BrigmedicGloves
-  name: loadout-group-brigmedic-gloves
+  name: loadout-group-gloves
   loadouts:
   - BrigmedicGlovesLatex
   - BrigmedicGlovesNitrile
@@ -180,7 +180,7 @@
 
 - type: loadoutGroup
   id: BrigmedicBackpack
-  name: loadout-group-brigmedic-backpack
+  name: loadout-group-backpack
   loadouts:
   - BrigmedicBackpack
   - BrigmedicSatchel
@@ -198,7 +198,7 @@
 
 - type: loadoutGroup
   id: BrigmedicShoes
-  name: loadout-group-brigmedic-shoes
+  name: loadout-group-shoes
   loadouts:
   - BrigmedicJackSec
   - BrigmedicCombat
@@ -206,7 +206,7 @@
 
 - type: loadoutGroup
   id: SeniorOfficerHead
-  name: loadout-group-senior-officer-head
+  name: loadout-group-head
   minLimit: 0
   loadouts:
   - SecurityBeret
@@ -214,14 +214,14 @@
 
 - type: loadoutGroup
   id: SeniorOfficerJumpsuit
-  name: loadout-group-senior-officer-jumpsuit
+  name: loadout-group-jumpsuit
   loadouts:
   - JumpsuitSeniorOfficer
   - JumpskirtSeniorOfficer
 
 - type: loadoutGroup
   id: SeniorOfficerBackpack
-  name: loadout-group-senior-officer-backpack
+  name: loadout-group-backpack
   loadouts:
   - SecurityBackpack
   - SecuritySatchel
@@ -229,14 +229,14 @@
 
 - type: loadoutGroup
   id: SeniorOfficerBelt
-  name: loadout-group-senior-officer-belt
+  name: loadout-group-belt
   loadouts:
   - SecurityBelt
   - SecurityWebbing
 
 - type: loadoutGroup
   id: SeniorOfficerOuterClothing
-  name: loadout-group-senior-officer-outerclothing
+  name: loadout-group-outerclothing
   loadouts:
   - ArmorVestSec # Corvax
   - ArmorVest
@@ -245,7 +245,7 @@
 
 - type: loadoutGroup
   id: SeniorOfficerShoes
-  name: loadout-group-senior-officer-shoes
+  name: loadout-group-shoes
   loadouts:
   - JackSecBoots # Corvax
   - JackBoots
@@ -254,28 +254,28 @@
 # Medical
 - type: loadoutGroup
   id: SeniorPhysicianHead
-  name: loadout-group-senior-physician-head
+  name: loadout-group-head
   minLimit: 0
   loadouts:
   - SeniorPhysicianBeret
 
 - type: loadoutGroup
   id: SeniorPhysicianJumpsuit
-  name: loadout-group-senior-physician-jumpsuit
+  name: loadout-group-jumpsuit
   loadouts:
   - JumpsuitSeniorPhysician
   - JumpskirtSeniorPhysician
 
 - type: loadoutGroup
   id: SeniorPhysicianOuterClothing
-  name: loadout-group-senior-physician-outerclothing
+  name: loadout-group-outerclothing
   minLimit: 0
   loadouts:
   - SeniorPhysicianLabCoat
 
 - type: loadoutGroup
   id: SeniorPhysicianBackpack
-  name: loadout-group-senior-physician-backpack
+  name: loadout-group-backpack
   loadouts:
   - MedicalDoctorBackpack
   - MedicalDoctorSatchel
@@ -283,7 +283,7 @@
 
 - type: loadoutGroup
   id: SeniorPhysicianShoes
-  name: loadout-group-senior-physician-shoes
+  name: loadout-group-shoes
   loadouts:
   - WhiteShoes
   - MedicalWinterBoots
