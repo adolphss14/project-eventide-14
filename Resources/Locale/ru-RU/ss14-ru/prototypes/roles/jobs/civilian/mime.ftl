@@ -1,2 +1,1 @@
-ent-ActionMimeInvisibleWall = Создать невидимую стену
-    .desc = Создаёт перед вами невидимую стену, если хватает места.
+# ent-ActionMimeInvisibleWall is defined in Resources/Locale/ru-RU/abilities/mime.ftl.
