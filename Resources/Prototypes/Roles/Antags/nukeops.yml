@@ -154,8 +154,7 @@
     id: SyndiOperativePDA
     pocket2: PlushieCarp
     belt: ClothingBeltMilitaryWebbing
-  inhand:
-  #- MedicHardsuitCaseSyndicate
+  # No inhand key here: a comment-only inhand block becomes YAML null and breaks inheritance.
   storage:
     back:
     - WeaponPistolViper
