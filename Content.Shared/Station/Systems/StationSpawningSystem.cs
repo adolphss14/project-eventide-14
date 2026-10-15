@@ -110,19 +110,19 @@ public sealed partial class StationSpawningSystem : EntitySystem
     /// <see cref="EquipStartingGear(Robust.Shared.GameObjects.EntityUid,System.Nullable{Robust.Shared.Prototypes.ProtoId{Content.Shared.Roles.StartingGearPrototype}},bool)"/>
     /// </summary>
     [PublicAPI]
-    public void EquipStartingGear(EntityUid entity, ProtoId<StartingGearPrototype>? startingGear, bool raiseEvent = true)
+    public void EquipStartingGear(EntityUid entity, ProtoId<StartingGearPrototype>? startingGear, bool raiseEvent = true, bool equipStorage = true)
     {
         ProtoMan.Resolve(startingGear, out var gearProto);
-        EquipStartingGear(entity, gearProto, raiseEvent);
+        EquipStartingGear(entity, gearProto, raiseEvent, equipStorage);
     }
 
     /// <summary>
     /// <see cref="EquipStartingGear(Robust.Shared.GameObjects.EntityUid,System.Nullable{Robust.Shared.Prototypes.ProtoId{Content.Shared.Roles.StartingGearPrototype}},bool)"/>
     /// </summary>
     [PublicAPI]
-    public void EquipStartingGear(EntityUid entity, StartingGearPrototype? startingGear, bool raiseEvent = true)
+    public void EquipStartingGear(EntityUid entity, StartingGearPrototype? startingGear, bool raiseEvent = true, bool equipStorage = true)
     {
-        EquipStartingGear(entity, (IEquipmentLoadout?) startingGear, raiseEvent);
+        EquipStartingGear(entity, (IEquipmentLoadout?) startingGear, raiseEvent, equipStorage);
     }
 
     /// <summary>
@@ -131,8 +131,9 @@ public sealed partial class StationSpawningSystem : EntitySystem
     /// <param name="entity">Entity to load out.</param>
     /// <param name="startingGear">Starting gear to use.</param>
     /// <param name="raiseEvent">Should we raise the event for equipped. Set to false if you will call this manually</param>
+    /// <param name="equipStorage">Whether to insert storage contents immediately or defer them until after role loadout selection.</param>
     [PublicAPI]
-    public void EquipStartingGear(EntityUid entity, IEquipmentLoadout? startingGear, bool raiseEvent = true)
+    public void EquipStartingGear(EntityUid entity, IEquipmentLoadout? startingGear, bool raiseEvent = true, bool equipStorage = true)
     {
         if (startingGear == null)
             return;
@@ -167,35 +168,43 @@ public sealed partial class StationSpawningSystem : EntitySystem
             }
         }
 
-        if (startingGear.Storage.Count > 0)
-        {
-            var coords = _xformSystem.GetMapCoordinates(entity);
-            _inventoryQuery.TryComp(entity, out var inventoryComp);
-
-            foreach (var (slotName, entProtos) in startingGear.Storage)
-            {
-                if (entProtos.Count == 0)
-                    continue;
-
-                if (inventoryComp != null &&
-                    _inventory.TryGetSlotEntity(entity, slotName, out var slotEnt, inventoryComponent: inventoryComp) &&
-                    _storageQuery.TryComp(slotEnt, out var storage))
-                {
-
-                    foreach (var entProto in entProtos)
-                    {
-                        var spawnedEntity = Spawn(entProto, coords);
-
-                        _storage.Insert(slotEnt.Value, spawnedEntity, out _, storageComp: storage, playSound: false);
-                    }
-                }
-            }
-        }
+        if (equipStorage)
+            EquipStartingGearStorage(entity, startingGear);
 
         if (raiseEvent)
         {
             var ev = new StartingGearEquippedEvent(entity);
             RaiseLocalEvent(entity, ref ev);
+        }
+    }
+
+    /// <summary>
+    /// Inserts starting-gear storage contents after the final backpack/storage slots have been equipped.
+    /// </summary>
+    [PublicAPI]
+    public void EquipStartingGearStorage(EntityUid entity, IEquipmentLoadout? startingGear)
+    {
+        if (startingGear == null || startingGear.Storage.Count == 0)
+            return;
+
+        var coords = _xformSystem.GetMapCoordinates(entity);
+        _inventoryQuery.TryComp(entity, out var inventoryComp);
+
+        foreach (var (slotName, entProtos) in startingGear.Storage)
+        {
+            if (entProtos.Count == 0)
+                continue;
+
+            if (inventoryComp != null &&
+                _inventory.TryGetSlotEntity(entity, slotName, out var slotEnt, inventoryComponent: inventoryComp) &&
+                _storageQuery.TryComp(slotEnt, out var storage))
+            {
+                foreach (var entProto in entProtos)
+                {
+                    var spawnedEntity = Spawn(entProto, coords);
+                    _storage.Insert(slotEnt.Value, spawnedEntity, out _, storageComp: storage, playSound: false);
+                }
+            }
         }
     }
 

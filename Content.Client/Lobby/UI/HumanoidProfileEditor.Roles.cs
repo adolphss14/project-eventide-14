@@ -2,6 +2,7 @@ using System.Linq;
 using System.Numerics;
 using Content.Client.Lobby.UI.Loadouts;
 using Content.Client.Lobby.UI.Roles;
+using Content.Shared.Antag;
 using Content.Shared.Clothing;
 using Content.Shared.Preferences;
 using Content.Shared.Preferences.Loadouts;
@@ -305,6 +306,13 @@ public sealed partial class HumanoidProfileEditor
     public void RefreshAntags()
     {
         AntagList.RemoveAllChildren();
+
+        // Only show loadout controls for roleLoadouts actually referenced by an antagonist specifier.
+        var supportedAntagLoadouts = _prototypeManager.EnumeratePrototypes<AntagSpecifierPrototype>()
+            .Where(specifier => specifier.RoleLoadout != null)
+            .SelectMany(specifier => specifier.RoleLoadout!)
+            .Select(roleLoadout => roleLoadout.Id)
+            .ToHashSet();
         var items = new[]
         {
             ("humanoid-profile-editor-antag-preference-yes-button", 0),
@@ -354,18 +362,18 @@ public sealed partial class HumanoidProfileEditor
 
             antagContainer.AddChild(selector);
 
-            // Genesis-Start: Enable antagonist loadout editing only when a matching roleLoadout prototype exists.
-            var antagLoadoutButton = new Button()
+            // Genesis-Start: Show loadout editing only for referenced antagonist roleLoadouts that offer gear or name customization.
+            if (supportedAntagLoadouts.Contains(antag.ID)
+                && _prototypeManager.TryIndex<RoleLoadoutPrototype>(antag.ID, out var antagRoleLoadoutProto)
+                && (antagRoleLoadoutProto.Groups.Count > 0 || antagRoleLoadoutProto.CanCustomizeName))
             {
-                Disabled = true,
-                Text = Loc.GetString("loadout-window"),
-                HorizontalAlignment = HAlignment.Right,
-                Margin = new Thickness(3f, 0f, 0f, 0f),
-            };
+                var antagLoadoutButton = new Button()
+                {
+                    Text = Loc.GetString("loadout-window"),
+                    HorizontalAlignment = HAlignment.Right,
+                    Margin = new Thickness(3f, 0f, 0f, 0f),
+                };
 
-            if (_prototypeManager.TryIndex<RoleLoadoutPrototype>(antag.ID, out var antagRoleLoadoutProto))
-            {
-                antagLoadoutButton.Disabled = false;
                 antagLoadoutButton.OnPressed += _ =>
                 {
                     if (Profile is null || _playerManager.LocalSession is not { } session)
@@ -382,9 +390,9 @@ public sealed partial class HumanoidProfileEditor
 
                     OpenLoadout(null, loadout, antagRoleLoadoutProto, Loc.GetString(antag.Name));
                 };
-            }
 
-            antagContainer.AddChild(antagLoadoutButton);
+                antagContainer.AddChild(antagLoadoutButton);
+            }
             // Genesis-End
 
             AntagList.AddChild(antagContainer);

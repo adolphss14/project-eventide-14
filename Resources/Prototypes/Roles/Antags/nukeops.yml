@@ -129,6 +129,8 @@
   id: LoneOp
   spawnerPrototype: SpawnPointLoneNukeOperative
   pickPlayer: false
+  roleLoadout:
+  - Nukeops # Reuse the selected operative kit and name.
   startingGear: SyndicateLoneOperativeGearFull
   components:
   - type: RandomMetadata
@@ -142,8 +144,8 @@
 - type: startingGear
   id: SyndicateOperativeGearFullNoUplink
   equipment:
-    jumpsuit: ClothingUniformJumpsuitOperative
-    back: ClothingBackpackDuffelSyndicate
+    #jumpsuit: ClothingUniformJumpsuitOperative
+    #back: ClothingBackpackDuffelSyndicate
     mask: ClothingMaskGasSyndicate
     eyes: ClothingEyesHudSyndicate
     ears: ClothingHeadsetAltSyndicate
@@ -153,7 +155,7 @@
     pocket2: PlushieCarp
     belt: ClothingBeltMilitaryWebbing
   inhand:
-  - MedicHardsuitCaseSyndicate
+  #- MedicHardsuitCaseSyndicate
   storage:
     back:
     - WeaponPistolViper
@@ -181,12 +183,11 @@
   id: SyndicateCommanderGearFull
   parent: SyndicateOperativeGearFull
   equipment:
-    id: SyndiCommanderPDA
+    #id: SyndiCommanderPDA
     neck: SyndicateWhistle
   inhand:
-  - !Remove MedicHardsuitCaseSyndicate
   - NukeOpsDeclarationOfWar
-  - CommanderHardsuitCaseSyndicate
+  #- CommanderHardsuitCaseSyndicate
 
 - type: chameleonOutfit
   id: NukeopsCommanderOutfit

@@ -62,7 +62,8 @@ public sealed partial class LoadoutWindow : FancyWindow
         if (proto.Groups.Count == 0)
         {
             LoadoutGroupsContainer.Visible = false;
-            SetSize = Vector2.Zero;
+            // Keep the name editor visible for roles whose loadout only customizes the name.
+            SetSize = new Vector2(800, 128);
         }
         else
         {

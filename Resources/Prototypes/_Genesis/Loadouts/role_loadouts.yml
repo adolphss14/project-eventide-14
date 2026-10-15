@@ -253,6 +253,7 @@
 # NukeOps
 - type: roleLoadout
   id: Nukeops
+  canCustomizeName: true # Empty name keeps the antagonist's RandomMetadata-generated name.
   groups:
   - NukeOpsJumpsuit
   - NukeOpsBackpack
@@ -266,12 +267,12 @@
 
 - type: roleLoadout
   id: NukeopsMedic
+  canCustomizeName: true # Empty name keeps the antagonist's RandomMetadata-generated name.
   groups:
   - NukeOpsJumpsuit
   - NukeOpsBackpack
   - NukeOpsMedicOuterClothing
   - NukeOpsMedicBelt
-  - NukeOpsPDA
   - Trinkets
   - SurvivalSyndicate # Genesis-Edit
   - GroupSpeciesBreathTool # Genesis-Edit
@@ -279,6 +280,7 @@
 
 - type: roleLoadout
   id: NukeopsCommander
+  canCustomizeName: true # Empty name keeps the antagonist's RandomMetadata-generated name.
   groups:
   - NukeOpsJumpsuit
   - NukeOpsBackpack
