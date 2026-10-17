@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Content.Server.Connection.Whitelist;
 using Content.Server.Connection.Whitelist.Conditions;
 using Content.Server.Database;
+using Content.Server.Players.Whitelist;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Players.PlayTimeTracking;
@@ -15,6 +16,8 @@ namespace Content.Server.Connection;
 /// </summary>
 public sealed partial class ConnectionManager
 {
+    [Dependency] private WhitelistManager _whitelistManager = default!;
+
     private PlayerConnectionWhitelistPrototype[]? _whitelists;
 
     private void InitializeWhitelist()

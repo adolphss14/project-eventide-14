@@ -150,36 +150,56 @@ public sealed partial class LoadoutSystem : EntitySystem
         RoleLoadout? selectedLoadout = null,
         HumanoidCharacterProfile? selectedProfile = null)
     {
-        // Select starting gear once. Equip its worn/in-hand items now, but defer storage insertion
-        // until the role loadout has supplied the player's chosen backpack.
+        // Resolve the base gear once, but don't equip it until the role loadout is known.
+        // That lets the selected role loadout win for overlapping inventory slots.
         StartingGearPrototype? selectedStartingGear = null;
         if (startingGear is { Count: > 0 })
-        {
             selectedStartingGear = ProtoMan.Index<StartingGearPrototype>(_random.Pick(startingGear));
-            _station.EquipStartingGear(uid, selectedStartingGear, raiseEvent: false, equipStorage: false);
-        }
+
+        var profile = selectedProfile ?? GetProfile(uid);
 
         if (loadoutGroups == null || loadoutGroups.Count == 0)
         {
             if (selectedStartingGear != null)
-                _station.EquipStartingGearStorage(uid, selectedStartingGear);
+                _station.EquipStartingGear(uid, selectedStartingGear, raiseEvent: false);
 
             GearEquipped(uid);
             return;
+        }
+
+        // Antagonist spawners don't pass the selected profile loadout explicitly.
+        // Pick the saved selection matching one of the loadouts this specifier permits.
+        if (selectedLoadout == null && profile != null)
+        {
+            foreach (var roleLoadoutId in loadoutGroups)
+            {
+                if (!profile.Loadouts.TryGetValue(roleLoadoutId.Id, out var savedLoadout))
+                    continue;
+
+                selectedLoadout = savedLoadout;
+                break;
+            }
         }
 
         // Only use a saved selection if this antag explicitly allows that role loadout.
         var useSelectedLoadout = selectedLoadout != null && loadoutGroups.Contains(selectedLoadout.Role);
         var id = useSelectedLoadout ? selectedLoadout!.Role : _random.Pick(loadoutGroups);
         var proto = ProtoMan.Index(id);
-        var profile = selectedProfile ?? GetProfile(uid);
         var loadout = useSelectedLoadout ? selectedLoadout!.Clone() : new RoleLoadout(id);
 
         // Preserve saved choices and fill any newly added groups; non-player/default loadouts start clean.
         loadout.SetDefault(profile, _actors.GetSession(uid), ProtoMan, force: !useSelectedLoadout);
+
+        // Apply the player's selected role loadout first so it has priority over the
+        // antagonist's fallback starting gear (for example, belt and ID card).
         _station.EquipRoleLoadout(uid, loadout, proto);
 
-        // The backpack from the role loadout now exists, so starting-gear storage can be filled safely.
+        // Fill only slots not claimed by the selected role loadout. StationSpawningSystem
+        // also checks actual slot occupancy, so fallback gear cannot replace a selected item.
+        if (selectedStartingGear != null)
+            _station.EquipStartingGear(uid, selectedStartingGear, raiseEvent: false, equipStorage: false, selectedRoleLoadout: loadout);
+
+        // The selected backpack now exists, so starting-gear storage can be filled safely.
         if (selectedStartingGear != null)
             _station.EquipStartingGearStorage(uid, selectedStartingGear);
 

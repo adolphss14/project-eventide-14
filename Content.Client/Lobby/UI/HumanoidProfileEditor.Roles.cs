@@ -115,6 +115,11 @@ public sealed partial class HumanoidProfileEditor
         UpdateJobPriorities();
     }
 
+    private static bool HasConfigurableLoadout(RoleLoadoutPrototype roleLoadoutProto)
+    {
+        return roleLoadoutProto.Groups.Count > 0 || roleLoadoutProto.CanCustomizeName;
+    }
+
     /// <summary>
     /// Refreshes all job selectors.
     /// </summary>
@@ -262,20 +267,19 @@ public sealed partial class HumanoidProfileEditor
                     HorizontalAlignment = HAlignment.Right,
                     VerticalAlignment = VAlignment.Center,
                     Margin = new Thickness(3f, 3f, 0f, 0f),
+                    Disabled = true,
                 };
 
                 var collection = IoCManager.Instance!;
                 var protoManager = collection.Resolve<IPrototypeManager>();
 
-                // If no loadout found then disabled button
-                if (!protoManager.TryIndex<RoleLoadoutPrototype>(LoadoutSystem.GetJobPrototype(job.ID), out var roleLoadoutProto))
+                // Keep the button in every profession row, but only enable a real editor.
+                if (protoManager.TryIndex<RoleLoadoutPrototype>(
+                        LoadoutSystem.GetJobPrototype(job.ID), out var roleLoadoutProto)
+                    && HasConfigurableLoadout(roleLoadoutProto))
                 {
-                    loadoutWindowBtn.Disabled = true;
-                }
-                // else
-                else
-                {
-                    loadoutWindowBtn.OnPressed += args =>
+                    loadoutWindowBtn.Disabled = false;
+                    loadoutWindowBtn.OnPressed += _ =>
                     {
                         RoleLoadout? loadout = null;
 
@@ -362,18 +366,21 @@ public sealed partial class HumanoidProfileEditor
 
             antagContainer.AddChild(selector);
 
-            // Genesis-Start: Show loadout editing only for referenced antagonist roleLoadouts that offer gear or name customization.
+            // Keep the loadout control visible for every antagonist preference.
+            // Roles without a matching configurable RoleLoadoutPrototype stay disabled.
+            var antagLoadoutButton = new Button()
+            {
+                Text = Loc.GetString("loadout-window"),
+                HorizontalAlignment = HAlignment.Right,
+                Margin = new Thickness(3f, 0f, 0f, 0f),
+                Disabled = true,
+            };
+
             if (supportedAntagLoadouts.Contains(antag.ID)
                 && _prototypeManager.TryIndex<RoleLoadoutPrototype>(antag.ID, out var antagRoleLoadoutProto)
-                && (antagRoleLoadoutProto.Groups.Count > 0 || antagRoleLoadoutProto.CanCustomizeName))
+                && HasConfigurableLoadout(antagRoleLoadoutProto))
             {
-                var antagLoadoutButton = new Button()
-                {
-                    Text = Loc.GetString("loadout-window"),
-                    HorizontalAlignment = HAlignment.Right,
-                    Margin = new Thickness(3f, 0f, 0f, 0f),
-                };
-
+                antagLoadoutButton.Disabled = false;
                 antagLoadoutButton.OnPressed += _ =>
                 {
                     if (Profile is null || _playerManager.LocalSession is not { } session)
@@ -390,9 +397,9 @@ public sealed partial class HumanoidProfileEditor
 
                     OpenLoadout(null, loadout, antagRoleLoadoutProto, Loc.GetString(antag.Name));
                 };
-
-                antagContainer.AddChild(antagLoadoutButton);
             }
+
+            antagContainer.AddChild(antagLoadoutButton);
             // Genesis-End
 
             AntagList.AddChild(antagContainer);

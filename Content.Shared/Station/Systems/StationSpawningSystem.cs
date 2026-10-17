@@ -120,9 +120,9 @@ public sealed partial class StationSpawningSystem : EntitySystem
     /// <see cref="EquipStartingGear(Robust.Shared.GameObjects.EntityUid,System.Nullable{Robust.Shared.Prototypes.ProtoId{Content.Shared.Roles.StartingGearPrototype}},bool)"/>
     /// </summary>
     [PublicAPI]
-    public void EquipStartingGear(EntityUid entity, StartingGearPrototype? startingGear, bool raiseEvent = true, bool equipStorage = true)
+    public void EquipStartingGear(EntityUid entity, StartingGearPrototype? startingGear, bool raiseEvent = true, bool equipStorage = true, RoleLoadout? selectedRoleLoadout = null)
     {
-        EquipStartingGear(entity, (IEquipmentLoadout?) startingGear, raiseEvent, equipStorage);
+        EquipStartingGear(entity, (IEquipmentLoadout?) startingGear, raiseEvent, equipStorage, selectedRoleLoadout);
     }
 
     /// <summary>
@@ -133,7 +133,7 @@ public sealed partial class StationSpawningSystem : EntitySystem
     /// <param name="raiseEvent">Should we raise the event for equipped. Set to false if you will call this manually</param>
     /// <param name="equipStorage">Whether to insert storage contents immediately or defer them until after role loadout selection.</param>
     [PublicAPI]
-    public void EquipStartingGear(EntityUid entity, IEquipmentLoadout? startingGear, bool raiseEvent = true, bool equipStorage = true)
+    public void EquipStartingGear(EntityUid entity, IEquipmentLoadout? startingGear, bool raiseEvent = true, bool equipStorage = true, RoleLoadout? selectedRoleLoadout = null)
     {
         if (startingGear == null)
             return;
@@ -144,6 +144,19 @@ public sealed partial class StationSpawningSystem : EntitySystem
         {
             foreach (var slot in slotDefinitions)
             {
+                if (selectedRoleLoadout != null)
+                {
+                    // Don't spawn base-gear items into slots reserved by the selected loadout.
+                    if (!string.IsNullOrEmpty(GetGearForSlot(selectedRoleLoadout, slot.Name)))
+                        continue;
+
+                    // The selected loadout is applied before fallback gear. Never force-equip a
+                    // fallback item over an already occupied slot, because force would drop the
+                    // selected item at the player's feet.
+                    if (_inventory.TryGetSlotEntity(entity, slot.Name, out _))
+                        continue;
+                }
+
                 var equipmentStr = startingGear.GetGear(slot.Name);
                 if (!string.IsNullOrEmpty(equipmentStr))
                 {
@@ -228,10 +241,20 @@ public sealed partial class StationSpawningSystem : EntitySystem
             foreach (var items in group.Value)
             {
                 if (!ProtoMan.Resolve(items.Prototype, out var loadoutPrototype))
-                    return null;
+                    continue;
+
+                // A loadout can provide equipment indirectly through its StartingGear prototype.
+                // Reserve those slots too, otherwise base antagonist gear can be force-equipped first
+                // and then dropped on the floor when this selected loadout is applied.
+                if (ProtoMan.Resolve(loadoutPrototype.StartingGear, out var startingGear))
+                {
+                    var startingGearItem = startingGear.GetGear(slot);
+                    if (!string.IsNullOrEmpty(startingGearItem))
+                        return startingGearItem;
+                }
 
                 var gear = ((IEquipmentLoadout) loadoutPrototype).GetGear(slot);
-                if (gear != string.Empty)
+                if (!string.IsNullOrEmpty(gear))
                     return gear;
             }
         }

@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Content.Server.Chat.Managers;
 using Content.Server.Database;
+using Content.Server.Players.Whitelist;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Players;
@@ -26,6 +27,7 @@ namespace Content.Server.Administration.Managers
     {
         [Dependency] private IPlayerManager _playerManager = default!;
         [Dependency] private IServerDbManager _dbManager = default!;
+        [Dependency] private WhitelistManager _whitelistManager = default!;
         [Dependency] private IConfigurationManager _cfg = default!;
         [Dependency] private IServerNetManager _netMgr = default!;
         [Dependency] private IConGroupController _conGroup = default!;
@@ -436,6 +438,9 @@ namespace Content.Server.Administration.Managers
 
             if (promoteHost)
             {
+                // Local hosts and players promoted with promotehost should also be whitelisted.
+                await _whitelistManager.AddWhitelistAsync(session.UserId);
+
                 var data = new AdminData
                 {
                     Title = Loc.GetString("admin-manager-admin-data-host-title"),
