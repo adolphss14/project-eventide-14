@@ -58727,7 +58727,7 @@ entities:
       pos: -10.5,-23.5
     - type: FaxMachine
       name: Старший инженер
-      destinationAddress: Старший инженер
+      destinationName: Старший инженер
   - uid: 7424
     components:
     - type: Transform
@@ -58735,7 +58735,7 @@ entities:
       pos: 36.5,-6.5
     - type: FaxMachine
       name: Квартирмейстер
-      destinationAddress: Квартирмейстер
+      destinationName: Квартирмейстер
   - uid: 7425
     components:
     - type: Transform
@@ -58743,7 +58743,7 @@ entities:
       pos: 8.5,-18.5
     - type: FaxMachine
       name: Глава персонала
-      destinationAddress: Глава персонала
+      destinationName: Глава персонала
   - uid: 7426
     components:
     - type: Transform
@@ -58751,7 +58751,7 @@ entities:
       pos: 18.5,-23.5
     - type: FaxMachine
       name: Агент внутренних дел
-      destinationAddress: Агент внутренних дел
+      destinationName: Агент внутренних дел
   - uid: 7427
     components:
     - type: Transform
@@ -58759,7 +58759,7 @@ entities:
       pos: -70.5,37.5
     - type: FaxMachine
       name: '[Не пишите сюда пожалуйста]'
-      destinationAddress: '[Не пишите сюда пожалуйста]'
+      destinationName: '[Не пишите сюда пожалуйста]'
   - uid: 7428
     components:
     - type: Transform
@@ -58767,7 +58767,7 @@ entities:
       pos: 36.5,-24.5
     - type: FaxMachine
       name: Глава службы безопасности
-      destinationAddress: Глава службы безопасности
+      destinationName: Глава службы безопасности
   - uid: 7429
     components:
     - type: Transform
@@ -58780,7 +58780,7 @@ entities:
       pos: 27.5,-36.5
     - type: FaxMachine
       name: Детектив
-      destinationAddress: Детектив
+      destinationName: Детектив
   - uid: 7431
     components:
     - type: Transform
@@ -58788,7 +58788,7 @@ entities:
       pos: 12.5,40.5
     - type: FaxMachine
       name: Библиотекарь
-      destinationAddress: Библиотекарь
+      destinationName: Библиотекарь
   - uid: 7432
     components:
     - type: Transform
@@ -58796,7 +58796,7 @@ entities:
       pos: 11.5,37.5
     - type: FaxMachine
       name: Общественный
-      destinationAddress: Общественный
+      destinationName: Общественный
   - uid: 7433
     components:
     - type: MetaData
@@ -58839,7 +58839,7 @@ entities:
       pos: -3.5,-5.5
     - type: FaxMachine
       name: Капитан
-      destinationAddress: Капитан
+      destinationName: Капитан
   - uid: 7436
     components:
     - type: Transform
@@ -58847,7 +58847,7 @@ entities:
       pos: 9.5,-8.5
     - type: FaxMachine
       name: Конференц-зал
-      destinationAddress: Конференц-зал
+      destinationName: Конференц-зал
 - proto: FenceMetalCorner
   entities:
   - uid: 7437

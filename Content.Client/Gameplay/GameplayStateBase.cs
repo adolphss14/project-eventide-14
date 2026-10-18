@@ -239,9 +239,18 @@ namespace Content.Client.Gameplay
                 var transformSystem = _entitySystemManager.GetEntitySystem<SharedTransformSystem>();
                 var mapSystem = _entitySystemManager.GetEntitySystem<MapSystem>();
 
-                coordinates = mapSystem.TryFindGridAt(mousePosWorld, out var uid, out _) ?
-                    mapSystem.MapToGrid(uid, mousePosWorld) :
-                    transformSystem.ToCoordinates(mousePosWorld);
+                // Viewport input can arrive before a valid map is attached (for example, during respawn).
+                // Avoid resolving coordinates for Nullspace or an unknown map id.
+                if (!mapSystem.TryGetMap(mousePosWorld.MapId, out _))
+                {
+                    coordinates = EntityCoordinates.Invalid;
+                }
+                else
+                {
+                    coordinates = mapSystem.TryFindGridAt(mousePosWorld, out var uid, out _) ?
+                        mapSystem.MapToGrid(uid, mousePosWorld) :
+                        transformSystem.ToCoordinates(mousePosWorld);
+                }
             }
             else
             {

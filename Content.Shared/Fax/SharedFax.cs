@@ -15,6 +15,7 @@ public sealed class FaxUiState : BoundUserInterfaceState
     public string DeviceName { get; }
     public Dictionary<DeviceAddress, string> AvailablePeers { get; }
     public DeviceAddress? DestinationAddress { get; }
+    public string? DestinationName { get; }
     public bool IsPaperInserted { get; }
     public bool CanSend { get; }
     public bool CanCopy { get; }
@@ -24,7 +25,8 @@ public sealed class FaxUiState : BoundUserInterfaceState
         bool canSend,
         bool canCopy,
         bool isPaperInserted,
-        DeviceAddress? destAddress)
+        DeviceAddress? destAddress,
+        string? destName)
     {
         DeviceName = deviceName;
         AvailablePeers = peers;
@@ -32,6 +34,7 @@ public sealed class FaxUiState : BoundUserInterfaceState
         CanSend = canSend;
         CanCopy = canCopy;
         DestinationAddress = destAddress;
+        DestinationName = destName;
     }
 }
 

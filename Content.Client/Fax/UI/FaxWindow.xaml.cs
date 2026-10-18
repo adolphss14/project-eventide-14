@@ -63,22 +63,30 @@ public sealed partial class FaxWindow : DefaultWindow
             PeerSelector.Disabled = false;
         }
 
-        // always must be selected destination
-        if (state.DestinationAddress == null && state.AvailablePeers.Count != 0)
-        {
-            PeerSelected?.Invoke(state.AvailablePeers.First().Key);
-            return;
-        }
-
         if (state.AvailablePeers.Count != 0)
         {
             PeerSelector.Clear();
+            DeviceAddress? destinationByName = null;
 
             foreach (var (address, name) in state.AvailablePeers)
             {
                 var id = AddPeerSelect(name, address);
                 if (address == state.DestinationAddress)
                     PeerSelector.Select(id);
+                else if (state.DestinationAddress == null &&
+                         state.DestinationName != null &&
+                         string.Equals(name, state.DestinationName, StringComparison.OrdinalIgnoreCase))
+                    destinationByName = address;
+            }
+
+            // Older saved maps stored the recipient name in destinationAddress.
+            // Keep that selection after the saved field is migrated to destinationName.
+            if (state.DestinationAddress == null)
+            {
+                if (destinationByName.HasValue)
+                    PeerSelected?.Invoke(destinationByName.Value);
+                else if (state.DestinationName == null)
+                    PeerSelected?.Invoke(state.AvailablePeers.First().Key);
             }
         }
     }

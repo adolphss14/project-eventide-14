@@ -76186,7 +76186,6 @@ entities:
     - type: FaxMachine
       name: Мостик
     - type: DeviceNetwork
-      address: Мостик
   - uid: 8494
     components:
     - type: Transform

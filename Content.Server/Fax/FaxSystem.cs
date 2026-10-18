@@ -356,7 +356,7 @@ public sealed partial class FaxSystem : EntitySystem
         var canCopy = isPaperInserted &&
                       component.SendTimeoutRemaining <= 0 &&
                       component.InsertingTimeRemaining <= 0;
-        var state = new FaxUiState(component.FaxName, component.KnownFaxes, canSend, canCopy, isPaperInserted, component.DestinationFaxAddress);
+        var state = new FaxUiState(component.FaxName, component.KnownFaxes, canSend, canCopy, isPaperInserted, component.DestinationFaxAddress, component.DestinationFaxName);
         _userInterface.SetUiState(uid, FaxUiKey.Key, state);
     }
 

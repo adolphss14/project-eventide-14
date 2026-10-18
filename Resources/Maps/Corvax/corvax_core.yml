@@ -75916,7 +75916,7 @@ entities:
       pos: -4.5,-26.5
     - type: FaxMachine
       name: Engineering
-      destinationAddress: Engineering
+      destinationName: Engineering
   - uid: 998
     components:
     - type: Transform
@@ -75924,7 +75924,7 @@ entities:
       pos: 17.5,-20.5
     - type: FaxMachine
       name: Atmospherics
-      destinationAddress: Atmospherics
+      destinationName: Atmospherics
   - uid: 4498
     components:
     - type: Transform
@@ -75932,7 +75932,7 @@ entities:
       pos: -50.5,-15.5
     - type: FaxMachine
       name: Lawyer
-      destinationAddress: Lawyer
+      destinationName: Lawyer
   - uid: 4655
     components:
     - type: Transform
@@ -75940,7 +75940,7 @@ entities:
       pos: -54.5,-29.5
     - type: FaxMachine
       name: Reporter
-      destinationAddress: Reporter
+      destinationName: Reporter
   - uid: 5155
     components:
     - type: Transform
@@ -75948,7 +75948,7 @@ entities:
       pos: -9.5,29.5
     - type: FaxMachine
       name: Security
-      destinationAddress: Security
+      destinationName: Security
   - uid: 5422
     components:
     - type: Transform
@@ -75956,7 +75956,7 @@ entities:
       pos: -26.5,-36.5
     - type: FaxMachine
       name: Chapel
-      destinationAddress: Chapel
+      destinationName: Chapel
   - uid: 5568
     components:
     - type: Transform
@@ -75964,7 +75964,7 @@ entities:
       pos: 28.5,11.5
     - type: FaxMachine
       name: Cargo
-      destinationAddress: Cargo
+      destinationName: Cargo
   - uid: 5699
     components:
     - type: Transform
@@ -75972,7 +75972,7 @@ entities:
       pos: 33.5,15.5
     - type: FaxMachine
       name: Quartermaster
-      destinationAddress: Quartermaster
+      destinationName: Quartermaster
   - uid: 5753
     components:
     - type: Transform
@@ -75985,7 +75985,7 @@ entities:
       pos: 57.5,-11.5
     - type: FaxMachine
       name: Science
-      destinationAddress: Science
+      destinationName: Science
   - uid: 7442
     components:
     - type: Transform
@@ -75993,7 +75993,7 @@ entities:
       pos: 70.5,-20.5
     - type: FaxMachine
       name: Research Director
-      destinationAddress: Research Director
+      destinationName: Research Director
   - uid: 8346
     components:
     - type: Transform
@@ -76001,7 +76001,7 @@ entities:
       pos: -17.5,-17.5
     - type: FaxMachine
       name: Library
-      destinationAddress: Library
+      destinationName: Library
   - uid: 9182
     components:
     - type: Transform
@@ -76009,7 +76009,7 @@ entities:
       pos: -25.5,25.5
     - type: FaxMachine
       name: Detective
-      destinationAddress: Detective
+      destinationName: Detective
   - uid: 16527
     components:
     - type: Transform
@@ -76017,7 +76017,7 @@ entities:
       pos: 44.5,-32.5
     - type: FaxMachine
       name: Bridge
-      destinationAddress: Bridge
+      destinationName: Bridge
   - uid: 20485
     components:
     - type: Transform
@@ -76025,7 +76025,7 @@ entities:
       pos: 50.5,-5.5
     - type: FaxMachine
       name: Medical
-      destinationAddress: Medical
+      destinationName: Medical
   - uid: 20494
     components:
     - type: Transform
@@ -76033,7 +76033,7 @@ entities:
       pos: 41.5,-23.5
     - type: FaxMachine
       name: Head of Personel
-      destinationAddress: Head of Personnel
+      destinationName: Head of Personnel
 - proto: FaxMachineCaptain
   entities:
   - uid: 13489

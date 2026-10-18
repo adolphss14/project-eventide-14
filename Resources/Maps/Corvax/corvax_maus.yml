@@ -67588,7 +67588,7 @@ entities:
       pos: -1.5,-40.5
     - type: FaxMachine
       name: Кабинет квартирмейстера
-      destinationAddress: Кабинет КМ
+      destinationName: Кабинет КМ
   - uid: 8125
     components:
     - type: Transform
@@ -67596,7 +67596,7 @@ entities:
       pos: -21.5,-3.5
     - type: FaxMachine
       name: Кабинет главы службы безопасности
-      destinationAddress: Кабинет ГСБ
+      destinationName: Кабинет ГСБ
   - uid: 8126
     components:
     - type: Transform
@@ -67604,7 +67604,7 @@ entities:
       pos: -28.5,-16.5
     - type: FaxMachine
       name: Кабинет главы персонала
-      destinationAddress: Кабинет главы персонала
+      destinationName: Кабинет главы персонала
   - uid: 8127
     components:
     - type: Transform
@@ -67612,7 +67612,7 @@ entities:
       pos: -69.5,-30.5
     - type: FaxMachine
       name: Кабинет главного врача
-      destinationAddress: Кабинет Главного Врача
+      destinationName: Кабинет Главного Врача
   - uid: 8128
     components:
     - type: Transform
@@ -67620,7 +67620,7 @@ entities:
       pos: -51.5,-51.5
     - type: FaxMachine
       name: Библиотека
-      destinationAddress: Библиотека
+      destinationName: Библиотека
   - uid: 8129
     components:
     - type: Transform
@@ -67628,7 +67628,7 @@ entities:
       pos: -22.5,-26.5
     - type: FaxMachine
       name: Кабинет агента внутренних дел
-      destinationAddress: Кабинет агента внутренних дел
+      destinationName: Кабинет агента внутренних дел
   - uid: 8130
     components:
     - type: Transform
@@ -67636,7 +67636,7 @@ entities:
       pos: -32.5,-14.5
     - type: FaxMachine
       name: Мостик
-      destinationAddress: Конференц-зал
+      destinationName: Конференц-зал
   - uid: 8131
     components:
     - type: Transform
@@ -67644,7 +67644,7 @@ entities:
       pos: -39.5,-65.5
     - type: FaxMachine
       name: Научный отдел
-      destinationAddress: Научный Отдел
+      destinationName: Научный Отдел
   - uid: 8132
     components:
     - type: Transform
@@ -67652,7 +67652,7 @@ entities:
       pos: -33.5,-61.5
     - type: FaxMachine
       name: Кабинет научного руководителя
-      destinationAddress: кабинет НР
+      destinationName: кабинет НР
   - uid: 8133
     components:
     - type: Transform
@@ -67667,7 +67667,7 @@ entities:
       pos: -53.5,-18.5
     - type: FaxMachine
       name: Кабинет старшего инженера
-      destinationAddress: Кабинет Старшего Инженера
+      destinationName: Кабинет Старшего Инженера
 - proto: FaxMachineCaptain
   entities:
   - uid: 8135
@@ -67677,7 +67677,7 @@ entities:
       pos: -39.5,-12.5
     - type: FaxMachine
       name: Кабинет капитана
-      destinationAddress: Кабинет капитана
+      destinationName: Кабинет капитана
 - proto: FenceMetalBroken
   entities:
   - uid: 18943
