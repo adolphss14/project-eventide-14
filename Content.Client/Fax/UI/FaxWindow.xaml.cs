@@ -79,8 +79,7 @@ public sealed partial class FaxWindow : DefaultWindow
                     destinationByName = address;
             }
 
-            // Older saved maps stored the recipient name in destinationAddress.
-            // Keep that selection after the saved field is migrated to destinationName.
+            // Resolve the configured destination name after network discovery.
             if (state.DestinationAddress == null)
             {
                 if (destinationByName.HasValue)
