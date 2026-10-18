@@ -102,7 +102,7 @@
   storage:
     back:
     - BoxSurvivalEngineering
-    - trayScanner
+    - TRayScanner
     - RCD
     - RCDAmmo
     - RCDAmmo
@@ -365,7 +365,7 @@
   storage:
     back:
     - BoxSurvivalEngineering
-    - trayScanner
+    - TRayScanner
     - RCD
     - RCDAmmo
     - RCDAmmo
@@ -628,7 +628,7 @@
   storage:
     back:
     - BoxSurvivalEngineering
-    - trayScanner
+    - TRayScanner
     - RCD
     - RCDAmmo
     - RCDAmmo
@@ -891,7 +891,7 @@
   storage:
     back:
     - BoxSurvivalEngineering
-    - trayScanner
+    - TRayScanner
     - RCD
     - RCDAmmo
     - RCDAmmo
