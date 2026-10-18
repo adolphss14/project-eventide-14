@@ -10,16 +10,6 @@ public sealed partial class WirelessNetworkSystem : EntitySystem
     [Dependency] private EntityQuery<WirelessNetworkComponent> _wirelessQuery;
 
     [SubscribeLocalEvent]
-    private void OnLegacyWirelessNetworkMapInit(Entity<WirelessNetworkConnectionComponent> ent, ref MapInitEvent args)
-    {
-        var wireless = EnsureComp<WirelessNetworkComponent>(ent.Owner);
-        wireless.Range = ent.Comp.Range;
-
-        // Convert older saved maps to the current component name and schema at load time.
-        RemCompDeferred<WirelessNetworkConnectionComponent>(ent.Owner);
-    }
-
-    [SubscribeLocalEvent]
     private void OnBeforePacketSent(Entity<WirelessNetworkComponent> ent, ref BeforePacketSentEvent args)
     {
         var ownPosition = args.SenderPosition;
