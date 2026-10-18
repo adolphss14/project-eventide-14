@@ -134,7 +134,8 @@ namespace Content.Server.GameTicking
             EntityUid station,
             string? jobId = null,
             bool lateJoin = true,
-            bool silent = false)
+            bool silent = false,
+            bool allowUsedCharacter = false)
         {
             var character = GetPlayerProfile(player);
 
@@ -151,7 +152,7 @@ namespace Content.Server.GameTicking
                     return;
             }
 
-            SpawnPlayer(player, character, station, jobId, lateJoin, silent);
+            SpawnPlayer(player, character, station, jobId, lateJoin, silent, allowUsedCharacter);
         }
 
         private void SpawnPlayer(ICommonSession player,
@@ -159,14 +160,16 @@ namespace Content.Server.GameTicking
             EntityUid station,
             string? jobId = null,
             bool lateJoin = true,
-            bool silent = false)
+            bool silent = false,
+            bool allowUsedCharacter = false)
         {
             // Can't spawn players with a dummy ticker!
             if (DummyTicker)
                 return;
 
             // Corvax-GoLobby-start
-            if (_ghostGoLobby.IsCharacterUsed(character))
+            // Genesis-Edit: Forced respawn may reuse the current profile; normal spawns still enforce GoLobby uniqueness.
+            if (!allowUsedCharacter && _ghostGoLobby.IsCharacterUsed(character))
             {
                 _chatManager.DispatchServerMessage(player, Loc.GetString("ghost-go-lobby-used"));
                 return;
@@ -405,9 +408,14 @@ namespace Content.Server.GameTicking
             Admin.Add(LogType.Respawn, LogImpact.Medium, $"Player {player} was respawned.");
 
             if (LobbyEnabled)
+            {
                 PlayerJoinLobby(player);
+            }
             else
-                SpawnPlayer(player, EntityUid.Invalid);
+            {
+                // Genesis-Edit: With the lobby disabled, an admin respawn directly spawns the selected profile.
+                SpawnPlayer(player, EntityUid.Invalid, allowUsedCharacter: true);
+            }
         }
 
         /// <inheritdoc/>
