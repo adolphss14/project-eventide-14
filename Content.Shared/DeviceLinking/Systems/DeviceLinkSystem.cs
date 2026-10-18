@@ -150,7 +150,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         {
             if (_deviceLinkSinkQuery.TryGetComponent(sinkUid, out var sink))
                 RemoveSinkFromSourceInternal(source, (sinkUid, sink));
-            else
+            else if (_net.IsServer)
                 Log.Error($"Device source {ToPrettyString(source)} links to invalid entity: {ToPrettyString(sinkUid)}");
         }
     }
@@ -165,7 +165,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         {
             if (_deviceLinkSourceQuery.TryComp(sourceUid, out var source))
                 RemoveSinkFromSourceInternal((sourceUid, source), sink);
-            else if (!EntityManager.ShuttingDown)
+            else if (_net.IsServer && !EntityManager.ShuttingDown)
                 Log.Error($"Device sink {ToPrettyString(sink)} source list contains invalid entity: {ToPrettyString(sourceUid)}");
         }
     }
