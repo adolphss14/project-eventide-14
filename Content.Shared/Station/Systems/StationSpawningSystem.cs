@@ -316,6 +316,8 @@ public sealed partial class StationSpawningSystem : EntitySystem
         if (ProtoMan.Resolve(jobPrototype.Icon, out var jobIcon))
             _cardSystem.TryChangeJobIcon(cardId, jobIcon, card);
 
+        _cardSystem.TryChangeJobDepartment(cardId, jobPrototype, card);
+
         var extendedAccess = false;
         if (station != null)
         {
