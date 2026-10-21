@@ -39,5 +39,3 @@ ent-ClothingHeadHatCentcomConsultantCap = фуражка консультант�
 ent-ClothingHeadHatBlueShieldBeret = берет офицера «Синий Щит»
     .desc = Берет для офицера «Синий Щит».
 
-ent-ClothingHeadHatCaptainBeret = берет капитана
-    .desc = Берет для капитана.
