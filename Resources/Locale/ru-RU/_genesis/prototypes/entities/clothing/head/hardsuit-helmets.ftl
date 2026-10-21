@@ -117,3 +117,6 @@ ent-ClothingHeadHelmetHardsuitERTOperativeAlpha1 = шлем скафандра �
     .desc = Специальный шлем скафандра, который носят бойцы отряда быстрого реагирования.
 ent-ClothingHeadHelmetHardsuitERTLeaderTay39 = шлем командира ОБР «Тай-39»
     .desc = Специальный шлем скафандра, который носят бойцы отряда быстрого реагирования.
+
+ent-ClothingHeadHelmetHardsuitSSSP = шлем боевого скафандра СССП
+    .desc = Внутри пахнет Лениным и висит портрет Маркса.

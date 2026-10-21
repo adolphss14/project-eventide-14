@@ -5,3 +5,8 @@ ent-ModuleSec = cyborg security module
 ent-BorgModuleMiningCombat = combat mining cyborg module
 ent-BorgModuleJetpack = jetpack cyborg module
 ent-BorgModuleStandard = fire extinguisher cyborg module
+
+ent-BorgModuleArrest = cyborg arrest module
+    .desc = { ent-BaseBorgModule.desc }
+ent-BorgModuleCombat = cyborg combat module
+    .desc = { ent-BaseBorgModule.desc }

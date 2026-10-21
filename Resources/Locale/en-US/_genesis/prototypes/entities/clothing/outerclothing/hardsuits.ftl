@@ -117,3 +117,6 @@ ent-ClothingOuterHardsuitStormtrooper = stormtrooper hardsuit
 ent-ClothingOuterHardsuitDeathsquadOfficer = Death Squad officer hardsuit
     .desc = { ent-ClothingOuterHardsuitDeathsquad.desc }
     .suffix = { "" }
+
+ent-ClothingOuterHardsuitSSSP = USSP combat hardsuit
+    .desc = How has it not fallen apart yet?

@@ -117,3 +117,6 @@ ent-ClothingOuterHardsuitStormtrooper = скафандр штурмовика
 ent-ClothingOuterHardsuitDeathsquadOfficer = скафандр офицера эскадрона
     .desc = { ent-ClothingOuterHardsuitDeathsquad.desc }
     .suffix = { "" }
+
+ent-ClothingOuterHardsuitSSSP = боевой скафандр СССП
+    .desc = Как он ещё не развалился?

@@ -5,3 +5,8 @@ ent-ModuleSec = модуль безопасности киборга
 ent-BorgModuleMiningCombat = боевой шахтёрский модуль киборга
 ent-BorgModuleJetpack = модуль реактивного ранца киборга
 ent-BorgModuleStandard = модуль огнетушителя киборга
+
+ent-BorgModuleArrest =  модуль ареста киборга
+    .desc = { ent-BaseBorgModule.desc }
+ent-BorgModuleCombat = боевой модуль киборга
+    .desc = { ent-BaseBorgModule.desc }

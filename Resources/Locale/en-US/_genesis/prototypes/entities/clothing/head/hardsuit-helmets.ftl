@@ -117,3 +117,6 @@ ent-ClothingHeadHelmetHardsuitERTLeaderTay39 = ERT leader hardsuit helmet
 ent-ClothingHeadHelmetHardsuitDeathsquadOfficer = Death Squad officer hardsuit helmet
     .desc = { ent-ClothingHeadHelmetHardsuitDeathsquad.desc }
     .suffix = { "" }
+
+ent-ClothingHeadHelmetHardsuitSSSP = USSP combat hardsuit helmet
+    .desc = It smells of Lenin, and there's a portrait of Marx inside.
