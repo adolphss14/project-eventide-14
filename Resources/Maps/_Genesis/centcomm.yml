@@ -27,7 +27,7 @@ tilemap:
   16: FloorGold
   47: FloorGrass
   54: FloorGreenCircuit
-  2: FloorHydro
+  2: FloorSteel
   60: FloorKitchen
   61: FloorLaundry
   62: FloorLino
