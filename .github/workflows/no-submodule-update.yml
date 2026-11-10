@@ -22,15 +22,42 @@ jobs:
 
       - name: Check changed files
         shell: pwsh
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
-          $changedFiles = @(git diff --name-only "${{ github.event.pull_request.base.sha }}" "${{ github.event.pull_request.head.sha }}")
+          $changedFiles = @(git diff --name-only $env:BASE_SHA $env:HEAD_SHA)
 
           if ($changedFiles.Count -eq 1 -and $changedFiles[0] -eq "RobustToolbox") {
             Write-Host "Only RobustToolbox was changed; allowing standalone submodule update."
             exit 0
           }
 
-          Write-Host "RobustToolbox was updated alongside other files:"
+          # An upstream sync is the one legitimate case where the engine gitlink
+          # must move together with the source tree. Allow it only when the PR
+          # contains a real two-parent merge based directly on its current base,
+          # and the resulting gitlink exactly matches the merge's second parent.
+          $mergeCommits = @(git rev-list --min-parents=2 --max-count=50 $env:HEAD_SHA)
+          foreach ($mergeCommit in $mergeCommits) {
+            $parentsLine = (git show -s --format=%P $mergeCommit | Out-String).Trim()
+            $parents = @($parentsLine -split '\s+')
+            if ($parents.Count -lt 2 -or $parents[0] -ne $env:BASE_SHA) {
+              continue
+            }
+
+            $resultEngine = (git ls-tree $env:HEAD_SHA -- RobustToolbox | Out-String).Trim()
+            $baseEngine = (git ls-tree $env:BASE_SHA -- RobustToolbox | Out-String).Trim()
+            $sourceEngine = (git ls-tree $parents[1] -- RobustToolbox | Out-String).Trim()
+
+            if ($resultEngine -and $sourceEngine -and
+                $resultEngine -eq $sourceEngine -and
+                $resultEngine -ne $baseEngine) {
+              Write-Host "Allowing verified upstream merge with its matching RobustToolbox revision."
+              exit 0
+            }
+          }
+
+          Write-Host "RobustToolbox was updated alongside unrelated files without a verified upstream merge:"
           foreach ($file in $changedFiles) {
             Write-Host " - $file"
           }
