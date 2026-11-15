@@ -2,7 +2,6 @@
   "version": 1,
   "license": "CC-BY-NC-SA-3.0",
   "copyright": "mirrorcult, texturized by aexxie, slat overlays made by SeaWyrm",
-  "copyright": "WalterJe",
   "size": {
     "x": 32,
     "y": 32
@@ -207,31 +206,31 @@
       "name": "verticalslats_continuous_full"
     },
     {
-       "name": "verticalslats_continuous_inner_w"
+      "name": "verticalslats_continuous_inner_w"
     },
     {
-       "name": "verticalslats_continuous_inner_e"
+      "name": "verticalslats_continuous_inner_e"
     },
     {
-       "name": "verticalslats_continuous_outer_w"
+      "name": "verticalslats_continuous_outer_w"
     },
     {
-       "name": "verticalslats_continuous_outer_e"
+      "name": "verticalslats_continuous_outer_e"
     },
     {
       "name": "verticalslats_bordered_full"
     },
     {
-       "name": "verticalslats_bordered_inner_w"
+      "name": "verticalslats_bordered_inner_w"
     },
     {
-       "name": "verticalslats_bordered_inner_e"
+      "name": "verticalslats_bordered_inner_e"
     },
     {
-       "name": "verticalslats_bordered_outer_w"
+      "name": "verticalslats_bordered_outer_w"
     },
     {
-       "name": "verticalslats_bordered_outer_e"
+      "name": "verticalslats_bordered_outer_e"
     },
     {
       "name": "horizontalslats_continuous_full"
