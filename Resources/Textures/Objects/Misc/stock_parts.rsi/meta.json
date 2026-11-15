@@ -11,7 +11,16 @@
             "name": "micro_mani"
         },
         {
-            "name": "scan_module"
+            "name": "scan_module",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
         }
     ]
 }

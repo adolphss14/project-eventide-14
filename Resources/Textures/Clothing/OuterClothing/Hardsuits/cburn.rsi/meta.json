@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Made by 𝘽𝙚𝙡𝙖𝙮#7441. Vox state made by Flareguy for SS14, resprite by pyfya (discord) for Space Station 14 server Мёртвый Космос",
+  "copyright": "Made by 𝘽𝙚𝙡𝙖𝙮#7441. Vox state made by Flareguy for SS14, resprite by pyfya (discord) for Space Station 14 server Мёртвый Космос. Reptilian tail sprites by Tiniest Shark (GitHub), as credited by Space-Wizards.",
   "size": {
     "x": 32,
     "y": 32
@@ -24,6 +24,10 @@
     },
     {
       "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "equipped-OUTERCLOTHING-reptilian",
       "directions": 4
     }
   ]

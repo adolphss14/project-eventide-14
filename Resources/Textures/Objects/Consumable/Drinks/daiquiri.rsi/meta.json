@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "license": "CC-BY-SA-4.0",
-  "copyright": "by ko4erga (discord)",
   "size": {
     "x": 32,
     "y": 32
   },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by RedBookcase on Github. | Additional Eventide attribution retained: by ko4erga (discord)",
   "states": [
     {
       "name": "icon"

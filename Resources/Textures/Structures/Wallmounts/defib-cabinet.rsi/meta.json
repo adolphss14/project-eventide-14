@@ -1,23 +1,27 @@
 {
   "version": 1,
-  "license": "CC0-1.0",
-  "copyright": "by Ko4erga (discord) and modified 'fill.png' by EmoGarbage",
+  "license": "CC-BY-SA-3.0",
+  "copyright": "By AftrLite (GitHub) | Additional Eventide attribution retained: by Ko4erga (discord) and modified 'fill.png' by EmoGarbage",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "closed"
+      "name": "closed",
+      "directions": 4
     },
     {
-      "name": "fill"
+      "name": "fill",
+      "directions": 4
     },
     {
-      "name": "frame"
+      "name": "frame",
+      "directions": 4
     },
     {
-      "name": "open"
+      "name": "open",
+      "directions": 4
     },
     {
       "name": "light"
