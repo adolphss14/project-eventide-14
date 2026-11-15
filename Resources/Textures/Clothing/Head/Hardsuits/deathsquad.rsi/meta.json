@@ -51,6 +51,18 @@
     {
       "name": "equipped-head-light-vulpkanin",
       "directions": 4
+    },
+    {
+      "name": "equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "equipped-HELMET-vox",
+      "directions": 4
+    },
+    {
+      "name": "equipped-HELMET-vulpkanin",
+      "directions": 4
     }
   ]
 }
