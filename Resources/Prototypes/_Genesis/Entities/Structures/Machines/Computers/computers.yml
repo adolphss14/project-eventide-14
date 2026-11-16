@@ -4,16 +4,9 @@
   name: консоль управления шаттлом ПЦК
   description: ПрOZ4италса, нO гдэ? 
   components:
-  - type: Sprite
-    layers:
-    - map: ["computerLayerBody"]
-      state: computer
-    - map: ["computerLayerKeyboard"]
-      state: generic_keyboard
-    - map: ["computerLayerScreen"]
-      state: supply
-    - map: ["computerLayerKeys"]
-      state: tech_key
+  - type: ComputerVisuals
+    stateScreen: supply
+    stateKeys: tech_key
   - type: DroneConsole
     components:
     - type: CentCommShuttle
@@ -30,16 +23,9 @@
   name: консоль управления тюремным шаттлом
   description: Что не ясно? Не пытайся меня открутить ебанат.
   components:
-  - type: Sprite
-    layers:
-    - map: ["computerLayerBody"]
-      state: computer
-    - map: ["computerLayerKeyboard"]
-      state: generic_keyboard
-    - map: ["computerLayerScreen"]
-      state: supply
-    - map: ["computerLayerKeys"]
-      state: tech_key
+  - type: ComputerVisuals
+    stateScreen: supply
+    stateKeys: tech_key
   - type: DroneConsole
     components:
     - type: PrisonShuttle
@@ -74,16 +60,9 @@
   name: консоль управления шатлом службы безопастности
   description: Что не ясно? Не пытайся меня открутить ебанат.
   components:
-  - type: Sprite
-    layers:
-    - map: ["computerLayerBody"]
-      state: computer
-    - map: ["computerLayerKeyboard"]
-      state: generic_keyboard
-    - map: ["computerLayerScreen"]
-      state: supply
-    - map: ["computerLayerKeys"]
-      state: tech_key
+  - type: ComputerVisuals
+    stateScreen: supply
+    stateKeys: tech_key
   - type: DroneConsole
     components:
     - type: SecurityShuttle

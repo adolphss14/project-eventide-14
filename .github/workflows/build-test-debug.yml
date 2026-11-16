@@ -55,6 +55,7 @@ jobs:
 
     - name: Run Content.IntegrationTests
       shell: pwsh
+      timeout-minutes: 30
       run: |
         $env:DOTNET_gcServer=1
         New-Item -ItemType Directory -Force test_results | Out-Null
