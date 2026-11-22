@@ -145,4 +145,23 @@ public sealed class MarkingsViewModelTests
         Assert.That(Model.TrySelectMarking(ArmLeft, HumanoidVisualLayers.LArm, MothLArmDeathhead), Is.True);
         Assert.That(Model.SelectedMarkings(ArmLeft, HumanoidVisualLayers.LArm)![0].MarkingColors[0], Is.EqualTo(Color.AliceBlue));
     }
+
+    [MarkingTest]
+    public void MarkingWithoutPrototypeDoesNotBreakColorMemory()
+    {
+        Model.EnforceLimits = false;
+        var missingId = default(ProtoId<MarkingPrototype>);
+        Model.Markings = new()
+        {
+            [Head] = new()
+            {
+                [HumanoidVisualLayers.HeadTop] = [new Marking(missingId, new[] { Color.AliceBlue })],
+            },
+        };
+
+        Assert.That(
+            Model.TryDeselectMarking(Head, HumanoidVisualLayers.HeadTop, missingId),
+            Is.True);
+        Assert.That(Model.SelectedMarkings(Head, HumanoidVisualLayers.HeadTop), Is.Empty);
+    }
 }

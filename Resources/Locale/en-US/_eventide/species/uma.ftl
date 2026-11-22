@@ -3,7 +3,7 @@ species-description-uma = Uma-musume are a people with distinct equine traits: k
 
 metabolizer-type-uma = Uma
 
-uma-gallop-action-name = Gallop
-uma-gallop-action-description = Briefly boosts running speed. The ability needs time to recover before it can be used again.
+entity-name-ActionUmaGallop = Gallop
+entity-description-ActionUmaGallop = Briefly boosts running speed. The ability needs time to recover before it can be used again.
 
 uma-diet-examine = Umas digest plant-based foods, oats, grains, bread, carrots, and apples more efficiently. Heavy, fatty foods are less filling, while alcohol has a stronger effect.

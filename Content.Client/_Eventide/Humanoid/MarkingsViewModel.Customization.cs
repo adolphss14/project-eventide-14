@@ -85,17 +85,26 @@ public sealed partial class MarkingsViewModel
     /// </summary>
     private List<Color?> GetRememberableColors(Marking marking)
     {
-        var markingPrototype = _prototype.Index(marking.MarkingId);
-        var colors = new List<Color?>(marking.MarkingColors.Count);
+        // A default Marking can have neither a prototype ID nor an initialized color list.
+        // Older profiles can also reference prototypes that are no longer available.
+        var markingColors = marking.MarkingColors ?? Array.Empty<Color>();
+        var colors = new List<Color?>(markingColors.Count);
 
-        for (var i = 0; i < marking.MarkingColors.Count; i++)
+        if (string.IsNullOrEmpty(marking.MarkingId.Id) ||
+            !_prototype.TryIndex(marking.MarkingId, out var markingPrototype))
+        {
+            colors.AddRange(markingColors.Select(color => (Color?) color));
+            return colors;
+        }
+
+        for (var i = 0; i < markingColors.Count; i++)
         {
             var forced = markingPrototype.ForcedColoring ||
                          i < markingPrototype.Sprites.Count && markingPrototype.Sprites[i].ForcedColoring;
             var followsSpeciesSkin = _usesFullColorSkinInput &&
                                      UsesSpeciesSkinColorByDefault(markingPrototype, i);
 
-            colors.Add(forced || followsSpeciesSkin ? null : marking.MarkingColors[i]);
+            colors.Add(forced || followsSpeciesSkin ? null : markingColors[i]);
         }
 
         return colors;
@@ -106,6 +115,11 @@ public sealed partial class MarkingsViewModel
         HumanoidVisualLayers layer,
         Marking marking)
     {
+        // A default ProtoId has no usable key. Its colors can still be handled by
+        // GetRememberableColors, but it must not be inserted into the keyed history.
+        if (string.IsNullOrEmpty(marking.MarkingId.Id))
+            return;
+
         _previousColors[(organ, layer, marking.MarkingId)] = GetRememberableColors(marking);
     }
 
@@ -139,8 +153,11 @@ public sealed partial class MarkingsViewModel
         HumanoidVisualLayers layer,
         ProtoId<MarkingPrototype> markingId)
     {
-        if (!_prototype.TryIndex(markingId, out var markingProto))
+        if (string.IsNullOrEmpty(markingId.Id) ||
+            !_prototype.TryIndex(markingId, out var markingProto))
+        {
             return false;
+        }
 
         if (!_organData.TryGetValue(organ, out var organData) || !_organProfileData.TryGetValue(organ, out var profileData))
             return false;
@@ -173,7 +190,9 @@ public sealed partial class MarkingsViewModel
             // colors between styles (for example, snouts or single body markings).
             RememberMarkingColors(organ, layer, currentMarking);
 
-            if (usesLayerPalette && IsMarkingColorCustomizable(organ, layer, currentMarking.MarkingId))
+            if (usesLayerPalette &&
+                !string.IsNullOrEmpty(currentMarking.MarkingId.Id) &&
+                IsMarkingColorCustomizable(organ, layer, currentMarking.MarkingId))
                 _previousLayerColors[layerKey] = GetRememberableColors(currentMarking);
         }
 
@@ -256,7 +275,9 @@ public sealed partial class MarkingsViewModel
         {
             RememberMarkingColors(organ, layer, removingMarking);
 
-            if (usesLayerPalette && IsMarkingColorCustomizable(organ, layer, markingId))
+            if (usesLayerPalette &&
+                !string.IsNullOrEmpty(markingId.Id) &&
+                IsMarkingColorCustomizable(organ, layer, markingId))
                 _previousLayerColors[(organ, layer)] = GetRememberableColors(removingMarking);
         }
 
@@ -282,7 +303,11 @@ public sealed partial class MarkingsViewModel
         if (markingIdx == -1)
             return;
 
-        var markingProto = _prototype.Index(markingId);
+        if (string.IsNullOrEmpty(markingId.Id) ||
+            !_prototype.TryIndex(markingId, out var markingProto))
+        {
+            return;
+        }
         if (markingProto.ForcedColoring ||
             colorIndex < 0 ||
             colorIndex >= markingProto.Sprites.Count ||
