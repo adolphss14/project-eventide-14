@@ -1,8 +1,6 @@
 - type: entity
   parent: BaseAction
   id: ActionUmaGallop
-  name: uma-gallop-action-name
-  description: uma-gallop-action-description
   components:
   - type: Action
     useDelay: 120

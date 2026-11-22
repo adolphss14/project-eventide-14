@@ -85,8 +85,17 @@ public sealed partial class MarkingsViewModel
     /// </summary>
     private List<Color?> GetRememberableColors(Marking marking)
     {
-        var markingPrototype = _prototype.Index(marking.MarkingId);
         var colors = new List<Color?>(marking.MarkingColors.Count);
+
+        // Saved appearances can contain stale markings whose prototype ID is empty
+        // or whose prototype is no longer available. Preserve their stored colors
+        // without trying to resolve metadata that cannot exist.
+        if (string.IsNullOrEmpty(marking.MarkingId.Id) ||
+            !_prototype.TryIndex(marking.MarkingId, out var markingPrototype))
+        {
+            colors.AddRange(marking.MarkingColors.Select(color => (Color?) color));
+            return colors;
+        }
 
         for (var i = 0; i < marking.MarkingColors.Count; i++)
         {
@@ -106,6 +115,11 @@ public sealed partial class MarkingsViewModel
         HumanoidVisualLayers layer,
         Marking marking)
     {
+        // A default ProtoId has no usable key. Its colors can still be handled by
+        // GetRememberableColors, but it must not be inserted into the keyed history.
+        if (string.IsNullOrEmpty(marking.MarkingId.Id))
+            return;
+
         _previousColors[(organ, layer, marking.MarkingId)] = GetRememberableColors(marking);
     }
 
@@ -139,7 +153,7 @@ public sealed partial class MarkingsViewModel
         HumanoidVisualLayers layer,
         ProtoId<MarkingPrototype> markingId)
     {
-        if (!_prototype.TryIndex(markingId, out var markingProto))
+        if (string.IsNullOrEmpty(markingId.Id) || !_prototype.TryIndex(markingId, out var markingProto))
             return false;
 
         if (!_organData.TryGetValue(organ, out var organData) || !_organProfileData.TryGetValue(organ, out var profileData))
@@ -173,7 +187,9 @@ public sealed partial class MarkingsViewModel
             // colors between styles (for example, snouts or single body markings).
             RememberMarkingColors(organ, layer, currentMarking);
 
-            if (usesLayerPalette && IsMarkingColorCustomizable(organ, layer, currentMarking.MarkingId))
+            if (usesLayerPalette &&
+                !string.IsNullOrEmpty(currentMarking.MarkingId.Id) &&
+                IsMarkingColorCustomizable(organ, layer, currentMarking.MarkingId))
                 _previousLayerColors[layerKey] = GetRememberableColors(currentMarking);
         }
 
@@ -256,7 +272,9 @@ public sealed partial class MarkingsViewModel
         {
             RememberMarkingColors(organ, layer, removingMarking);
 
-            if (usesLayerPalette && IsMarkingColorCustomizable(organ, layer, markingId))
+            if (usesLayerPalette &&
+                !string.IsNullOrEmpty(markingId.Id) &&
+                IsMarkingColorCustomizable(organ, layer, markingId))
                 _previousLayerColors[(organ, layer)] = GetRememberableColors(removingMarking);
         }
 
@@ -282,7 +300,8 @@ public sealed partial class MarkingsViewModel
         if (markingIdx == -1)
             return;
 
-        var markingProto = _prototype.Index(markingId);
+        if (string.IsNullOrEmpty(markingId.Id) || !_prototype.TryIndex(markingId, out var markingProto))
+            return;
         if (markingProto.ForcedColoring ||
             colorIndex < 0 ||
             colorIndex >= markingProto.Sprites.Count ||
