@@ -218,9 +218,19 @@ public sealed partial class HumanoidProfileEditor
     private void SetSpecies(string newSpecies)
     {
         Profile = Profile?.WithSpecies(newSpecies);
+        UpdateMarkingSkinColorMode();
+        UpdateSkinColor();
         OnSkinColorOnValueChanged(); // Species may have special color prefs, make sure to update it.
-        _markingsModel.OrganData = _markingManager.GetMarkingData(newSpecies);
-        _markingsModel.ValidateMarkings();
+        if (Profile is { } profile)
+        {
+            _markingsModel.OrganData = _markingManager.GetMarkingData(newSpecies);
+            _markingsModel.OrganProfileData = _markingManager.GetProfileData(
+                newSpecies,
+                profile.Sex,
+                profile.Appearance.SkinColor,
+                profile.Appearance.EyeColor);
+            _markingsModel.ValidateMarkings();
+        }
         // In case there's job restrictions for the species
         RefreshJobs();
         // In case there's species restrictions for loadouts

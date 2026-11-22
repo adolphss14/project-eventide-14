@@ -224,6 +224,8 @@ public abstract partial class SharedFlashSystem : EntitySystem
         if (attempt.Cancelled)
             return;
 
+        ApplyFlashSensitivity(target, ref flashDuration, ref stunDuration);
+
         // don't paralyze, slowdown or convert to rev if the target is immune to flashes
         if (!_statusEffectsSystem.TryAddStatusEffectDuration(target, FlashedKey, flashDuration))
             return;

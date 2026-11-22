@@ -413,4 +413,6 @@ public sealed partial class HumanoidProfileEditor
             AntagList.AddChild(antagContainer);
         }
     }
+
+
 }

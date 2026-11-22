@@ -36,6 +36,7 @@
 
 - type: loadout
   id: ChaplainNunHood
+  clothingStyle: Feminine
   equipment:
     head: ClothingHeadHatHoodNunHood
 
@@ -95,6 +96,7 @@
 
 - type: loadout
   id: ChaplainNunRobe
+  clothingStyle: Feminine
   equipment:
     outerClothing: ClothingOuterNunRobe
 
@@ -111,11 +113,13 @@
 # Shoes
 - type: loadout
   id: BlackSandals
+  clothingStyle: Feminine
   equipment:
     shoes: ClothingShoesSandalsBlack
 
 - type: loadout
   id: BrownSandals
+  clothingStyle: Feminine
   equipment:
     shoes: ClothingShoesSandalsBrown
 

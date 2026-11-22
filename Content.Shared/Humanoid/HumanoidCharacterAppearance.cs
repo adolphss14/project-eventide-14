@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Numerics;
 using Content.Shared.Body;
 using Content.Shared.Humanoid.Markings;
@@ -127,7 +128,7 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
     /// <param name="baseAppearance">Appearance to base the new appearance on. Values that are not randomized will be taken from this appearance.</param>
     /// <param name="species">Species prototype ID.</param>
     /// <param name="sex">Sex.</param>
-    public static HumanoidCharacterAppearance Random(SpeciesPrototype species, Sex sex, RandomizeCfg? charEditorRandomizeConfig = null, HumanoidCharacterAppearance? baseAppearance = null)
+    public static HumanoidCharacterAppearance Random(SpeciesPrototype species, Sex sex, RandomizeCfg? charEditorRandomizeConfig = null, HumanoidCharacterAppearance? baseAppearance = null, MarkingRandomizationConfig? markingRandomizationConfig = null)
     {
         var random = IoCManager.Resolve<IRobustRandom>();
         var protoMan = IoCManager.Resolve<IPrototypeManager>();
@@ -144,10 +145,7 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
                 ? palette.EyeColor : baseAppearance.EyeColor
         };
 
-        var markings = ((charEditorRandomizeConfig & RandomizeCfg.Markings) != 0 || baseAppearance is null)
-            ? RandomizeMarkings(species, sex, palette, protoMan, random)
-            : baseAppearance.Markings;
-        // TODO if someone really cares they can probably regenerate the old markings with new colors but im too tired to figure that out
+        var markings = RandomizeAppearanceMarkings(species, sex, palette, protoMan, random, charEditorRandomizeConfig, baseAppearance, markingRandomizationConfig);
 
         HumanoidCharacterAppearance appearance = new(
             palette.EyeColor,

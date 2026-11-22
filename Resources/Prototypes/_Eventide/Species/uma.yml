@@ -1,0 +1,7 @@
+- type: species
+  id: Uma
+  name: species-name-uma
+  roundStart: true
+  prototype: MobUma
+  dollPrototype: AppearanceUma
+  skinColoration: HumanToned

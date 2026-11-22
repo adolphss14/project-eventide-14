@@ -171,7 +171,9 @@ public sealed partial class MarkingsViewModel
                 return;
 
             _organData = value;
-            _previousColors.Clear();
+            // Color history is reset explicitly when a different character profile is loaded.
+            // Keep it while changing species/organ data within the same profile so the selected
+            // palette can follow compatible appearance layers.
             OrganDataChanged?.Invoke();
         }
     }
@@ -181,7 +183,16 @@ public sealed partial class MarkingsViewModel
     /// </summary>
     public event Action? OrganDataChanged;
 
-    private readonly Dictionary<ProtoId<MarkingPrototype>, List<Color>> _previousColors = new();
+    private readonly Dictionary<(ProtoId<OrganCategoryPrototype> Organ, HumanoidVisualLayers Layer, ProtoId<MarkingPrototype> Marking), List<Color?>> _previousColors = new();
+
+    // Full-color skin strategies (Hues, clamped HSV/HSL, etc.) are used by species
+    // whose body markings may derive their default color from the chosen body color.
+    private bool _usesFullColorSkinInput;
+
+    public void SetFullColorSkinInput(bool enabled)
+    {
+        _usesFullColorSkinInput = enabled;
+    }
 
     public MarkingsViewModel()
     {
@@ -223,10 +234,10 @@ public sealed partial class MarkingsViewModel
         if (!_prototype.TryIndex(organData.Group, out var groupProto))
             return false;
 
-        if (!groupProto.Appearances.TryGetValue(layer, out var appearance))
-            return true;
+        if (groupProto.Appearances.TryGetValue(layer, out var appearance) && appearance.MatchSkin)
+            return false;
 
-        return !appearance.MatchSkin;
+        return markingProto.Sprites.Any(sprite => !sprite.ForcedColoring);
     }
 
     /// <summary>
@@ -252,60 +263,6 @@ public sealed partial class MarkingsViewModel
     /// </summary>
     /// <inheritdoc cref="IsMarkingSelected" path="param" />
     /// <returns>Whether the marking was successfully added to the set of markings</returns>
-    public bool TrySelectMarking(ProtoId<OrganCategoryPrototype> organ,
-        HumanoidVisualLayers layer,
-        ProtoId<MarkingPrototype> markingId)
-    {
-        if (!_prototype.TryIndex(markingId, out var markingProto))
-            return false;
-
-        if (!_organData.TryGetValue(organ, out var organData) || !_organProfileData.TryGetValue(organ, out var profileData))
-            return false;
-
-        if (!organData.Layers.Contains(layer))
-            return false;
-
-        if (!_prototype.TryIndex(organData.Group, out var groupPrototype))
-            return false;
-
-        if (EnforceGroupAndSexRestrictions && !_marking.CanBeApplied(organData.Group, profileData.Sex, markingProto))
-            return false;
-
-        _markings[organ] = _markings.GetValueOrDefault(organ) ?? [];
-        var organMarkings = _markings[organ];
-        organMarkings[layer] = organMarkings.GetValueOrDefault(layer) ?? [];
-        var layerMarkings = organMarkings[layer];
-
-        var colors = _previousColors.GetValueOrDefault(markingId) ??
-                     MarkingColoring.GetMarkingLayerColors(markingProto, profileData.SkinColor, profileData.EyeColor, layerMarkings);
-        var newMarking = new Marking(markingId, colors) { Forced = AnyEnforcementsLifted };
-
-        var limits = groupPrototype.Limits.GetValueOrDefault(layer);
-        if (limits is null || !EnforceLimits)
-        {
-            layerMarkings.Add(newMarking);
-            MarkingsChanged?.Invoke(organ, layer);
-            return true;
-        }
-
-        if (limits.Limit == 1 && layerMarkings.Count == 1)
-        {
-            layerMarkings.Clear();
-            layerMarkings.Add(newMarking);
-            MarkingsChanged?.Invoke(organ, layer);
-            return true;
-        }
-
-        if (layerMarkings.Count < limits.Limit)
-        {
-            layerMarkings.Add(newMarking);
-            MarkingsChanged?.Invoke(organ, layer);
-            return true;
-        }
-
-        return false;
-    }
-
     /// <summary>
     /// Returns the list of currently selected markings for the layer on the given organ
     /// </summary>
@@ -325,74 +282,12 @@ public sealed partial class MarkingsViewModel
     /// </summary>
     /// <inheritdoc cref="IsMarkingSelected" path="param" />
     /// <returns>Whether the marking was successfully removed from the set of markings</returns>
-    public bool TryDeselectMarking(ProtoId<OrganCategoryPrototype> organ,
-        HumanoidVisualLayers layer,
-        ProtoId<MarkingPrototype> markingId)
-    {
-        if (!_organData.TryGetValue(organ, out var organData))
-            return false;
-
-        if (!organData.Layers.Contains(layer))
-            return false;
-
-        if (!_prototype.TryIndex(organData.Group, out var groupPrototype))
-            return false;
-
-        var limits = groupPrototype.Limits.GetValueOrDefault(layer);
-
-        _markings[organ] = _markings.GetValueOrDefault(organ) ?? [];
-        var organMarkings = _markings[organ];
-        organMarkings[layer] = organMarkings.GetValueOrDefault(layer) ?? [];
-        var layerMarkings = organMarkings[layer];
-
-        var count = layerMarkings.Count(marking => marking.MarkingId == markingId);
-        if (count == 0)
-            return false;
-
-        if (EnforceLimits && limits is not null && limits.Required && (layerMarkings.Count - count) <= 0)
-            return false;
-
-        if (layerMarkings.Find(marking => marking.MarkingId == markingId) is { } removingMarking)
-        {
-            _previousColors[removingMarking.MarkingId] = removingMarking.MarkingColors.ToList();
-        }
-        layerMarkings.RemoveAll(marking => marking.MarkingId == markingId);
-        MarkingsChanged?.Invoke(organ, layer);
-
-        return true;
-    }
-
     /// <summary>
     /// Attempts to set the color of the specified marking at the given index
     /// </summary>
     /// <inheritdoc cref="IsMarkingSelected" path="param" />
     /// <param name="colorIndex">The index within the marking's color array to set</param>
     /// <param name="color">The new color to set</param>
-    public void TrySetMarkingColor(ProtoId<OrganCategoryPrototype> organ,
-        HumanoidVisualLayers layer,
-        ProtoId<MarkingPrototype> markingId,
-        int colorIndex,
-        Color color)
-    {
-        if (!_markings.TryGetValue(organ, out var markingSet))
-            return;
-
-        if (!markingSet.TryGetValue(layer, out var markings))
-            return;
-
-        var markingIdx = markings.FindIndex(it => it.MarkingId == markingId);
-        if (markingIdx == -1)
-            return;
-
-        var markingProto = _prototype.Index(markingId);
-        var newColor = color;
-        if (markingProto.Strategy != null)
-            newColor = markingProto.Strategy.ClosestSkinColor(color);
-
-        markings[markingIdx] = markings[markingIdx].WithColorAt(colorIndex, newColor);
-        MarkingsChanged?.Invoke(organ, layer);
-    }
-
     /// <summary>
     /// Ensures the markings within the model are valid.
     /// </summary>

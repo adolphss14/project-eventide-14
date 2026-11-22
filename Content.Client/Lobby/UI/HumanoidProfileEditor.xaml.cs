@@ -89,6 +89,7 @@ namespace Content.Client.Lobby.UI
             JobRequirementsManager requirements,
             MarkingManager markings)
         {
+            RandomizeLockButton.RandomizeCfg = HumanoidCharacterProfile.RandomizeConfigAll;
             RobustXamlLoader.Load(this);
             _sawmill = logManager.GetSawmill("profile.editor");
             _cfgManager = configurationManager;
@@ -107,6 +108,7 @@ namespace Content.Client.Lobby.UI
             _allowFlavorText = _cfgManager.GetCVar(CCVars.FlavorText);
 
             Markings.SetModel(_markingsModel);
+            _markingsModel.OrganDataChanged += UpdateRandomizerOptions;
 
             ImportButton.OnPressed += args =>
             {
@@ -144,7 +146,7 @@ namespace Content.Client.Lobby.UI
 
             NameEdit.OnTextChanged += args => { SetName(args.Text); };
             NameEdit.IsValid = args => args.Length <= _maxNameLength;
-            RandomizeUnlockedButton.OnPressed += args => { RandomizeProfile(); };
+            InitializeRandomizationControls();
             WarningLabel.SetMarkup($"[color=red]{Loc.GetString("humanoid-profile-editor-naming-rules-warning")}[/color]");
 
             #endregion Name
@@ -375,6 +377,7 @@ namespace Content.Client.Lobby.UI
         public void SetProfile(HumanoidCharacterProfile? profile, int? slot)
         {
             Profile = profile?.Clone();
+            UpdateMarkingSkinColorMode();
             CharacterSlot = slot;
             IsDirty = false;
             JobOverride = null;
@@ -389,6 +392,7 @@ namespace Content.Client.Lobby.UI
             UpdateAgeEdit();
             UpdateEyePickers();
             UpdateSaveButton();
+            _markingsModel.ResetColorMemory();
             UpdateMarkings();
             UpdateTTSVoicesControls(); // Corvax-TTS
 

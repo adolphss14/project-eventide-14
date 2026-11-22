@@ -44,12 +44,15 @@ public sealed class MarkingsViewModelTests
     public ProtoId<SpeciesPrototype> TestSpecies = "Moth";
     public ProtoId<OrganCategoryPrototype> Head = "Head";
     public ProtoId<OrganCategoryPrototype> Torso = "Torso";
+    public ProtoId<OrganCategoryPrototype> ArmLeft = "ArmLeft";
     public ProtoId<MarkingPrototype> MothAntennasCharred = "MothAntennasCharred";
     public ProtoId<MarkingPrototype> MothChestCharred = "MothChestCharred";
     public ProtoId<MarkingPrototype> MothChestDeathhead = "MothChestDeathhead";
     public ProtoId<MarkingPrototype> MothChestFan = "MothChestFan";
     public ProtoId<MarkingPrototype> LizardHornsCurled = "LizardHornsCurled";
     public ProtoId<MarkingPrototype> MothAntennasDefault = "MothAntennasDefault";
+    public ProtoId<MarkingPrototype> MothLArmCharred = "MothLArmCharred";
+    public ProtoId<MarkingPrototype> MothLArmDeathhead = "MothLArmDeathhead";
 
     public TestPair Pair = default!;
     public RobustIntegrationTest.ClientIntegrationInstance Client => Pair.Client;
@@ -132,5 +135,14 @@ public sealed class MarkingsViewModelTests
         Assert.That(Model.TrySelectMarking(Head, HumanoidVisualLayers.HeadTop, MothAntennasDefault), Is.True);
 
         Assert.That(Model.SelectedMarkings(Head, HumanoidVisualLayers.HeadTop)![0].MarkingColors[0], Is.EqualTo(Color.AliceBlue));
+    }
+
+    [MarkingTest]
+    public void SingleSlotLayerPaletteIsSharedByEveryAppearanceCategory()
+    {
+        Assert.That(Model.TrySelectMarking(ArmLeft, HumanoidVisualLayers.LArm, MothLArmCharred), Is.True);
+        Model.TrySetMarkingColor(ArmLeft, HumanoidVisualLayers.LArm, MothLArmCharred, 0, Color.AliceBlue);
+        Assert.That(Model.TrySelectMarking(ArmLeft, HumanoidVisualLayers.LArm, MothLArmDeathhead), Is.True);
+        Assert.That(Model.SelectedMarkings(ArmLeft, HumanoidVisualLayers.LArm)![0].MarkingColors[0], Is.EqualTo(Color.AliceBlue));
     }
 }
