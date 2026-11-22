@@ -85,26 +85,26 @@ public sealed partial class MarkingsViewModel
     /// </summary>
     private List<Color?> GetRememberableColors(Marking marking)
     {
-        var colors = new List<Color?>(marking.MarkingColors.Count);
+        // A default Marking can have neither a prototype ID nor an initialized color list.
+        // Older profiles can also reference prototypes that are no longer available.
+        var markingColors = marking.MarkingColors ?? Array.Empty<Color>();
+        var colors = new List<Color?>(markingColors.Count);
 
-        // Saved appearances can contain stale markings whose prototype ID is empty
-        // or whose prototype is no longer available. Preserve their stored colors
-        // without trying to resolve metadata that cannot exist.
         if (string.IsNullOrEmpty(marking.MarkingId.Id) ||
             !_prototype.TryIndex(marking.MarkingId, out var markingPrototype))
         {
-            colors.AddRange(marking.MarkingColors.Select(color => (Color?) color));
+            colors.AddRange(markingColors.Select(color => (Color?) color));
             return colors;
         }
 
-        for (var i = 0; i < marking.MarkingColors.Count; i++)
+        for (var i = 0; i < markingColors.Count; i++)
         {
             var forced = markingPrototype.ForcedColoring ||
                          i < markingPrototype.Sprites.Count && markingPrototype.Sprites[i].ForcedColoring;
             var followsSpeciesSkin = _usesFullColorSkinInput &&
                                      UsesSpeciesSkinColorByDefault(markingPrototype, i);
 
-            colors.Add(forced || followsSpeciesSkin ? null : marking.MarkingColors[i]);
+            colors.Add(forced || followsSpeciesSkin ? null : markingColors[i]);
         }
 
         return colors;
@@ -153,8 +153,11 @@ public sealed partial class MarkingsViewModel
         HumanoidVisualLayers layer,
         ProtoId<MarkingPrototype> markingId)
     {
-        if (string.IsNullOrEmpty(markingId.Id) || !_prototype.TryIndex(markingId, out var markingProto))
+        if (string.IsNullOrEmpty(markingId.Id) ||
+            !_prototype.TryIndex(markingId, out var markingProto))
+        {
             return false;
+        }
 
         if (!_organData.TryGetValue(organ, out var organData) || !_organProfileData.TryGetValue(organ, out var profileData))
             return false;
@@ -300,8 +303,11 @@ public sealed partial class MarkingsViewModel
         if (markingIdx == -1)
             return;
 
-        if (string.IsNullOrEmpty(markingId.Id) || !_prototype.TryIndex(markingId, out var markingProto))
+        if (string.IsNullOrEmpty(markingId.Id) ||
+            !_prototype.TryIndex(markingId, out var markingProto))
+        {
             return;
+        }
         if (markingProto.ForcedColoring ||
             colorIndex < 0 ||
             colorIndex >= markingProto.Sprites.Count ||

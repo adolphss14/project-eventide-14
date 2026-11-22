@@ -145,6 +145,7 @@ public sealed class MarkingsViewModelTests
         Assert.That(Model.TrySelectMarking(ArmLeft, HumanoidVisualLayers.LArm, MothLArmDeathhead), Is.True);
         Assert.That(Model.SelectedMarkings(ArmLeft, HumanoidVisualLayers.LArm)![0].MarkingColors[0], Is.EqualTo(Color.AliceBlue));
     }
+
     [MarkingTest]
     public void MarkingWithoutPrototypeDoesNotBreakColorMemory()
     {
@@ -163,5 +164,4 @@ public sealed class MarkingsViewModelTests
             Is.True);
         Assert.That(Model.SelectedMarkings(Head, HumanoidVisualLayers.HeadTop), Is.Empty);
     }
-
 }
