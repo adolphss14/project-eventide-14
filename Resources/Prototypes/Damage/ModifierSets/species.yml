@@ -35,6 +35,8 @@
   coefficients: # To be decided
     Poison: 1
 
+
+
 # Vulps get more heat damage because fur
 - type: damageModifierSet
   id: Vulpkanin

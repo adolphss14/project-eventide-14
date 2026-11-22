@@ -1,17 +1,20 @@
 # Head
 - type: loadout
   id: DetectiveFedora
+  clothingStyle: Masculine
   equipment:
     head: ClothingHeadHatFedoraBrown
 
 - type: loadout
   id: DetectiveFedoraGrey
+  clothingStyle: Masculine
   equipment:
     head: ClothingHeadHatFedoraGrey
 
 # Neck
 - type: loadout
   id: DetectiveTie
+  clothingStyle: Masculine
   equipment:
     neck: ClothingNeckTieDet
 
@@ -44,10 +47,12 @@
 
 - type: loadout
   id: DetectiveCoat
+  clothingStyle: Masculine
   equipment:
     outerClothing: ClothingOuterCoatDetectiveLoadout
 
 - type: loadout
   id: DetectiveCoatGrey
+  clothingStyle: Masculine
   equipment:
     outerClothing: ClothingOuterCoatDetectiveLoadoutGrey

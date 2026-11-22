@@ -1,3 +1,4 @@
+using System;
 using System.Numerics;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
@@ -31,19 +32,23 @@ public sealed partial class RandomizeLockButton : BoxContainer
     /// </summary>
     public static HumanoidCharacterProfile.RandomizeCfg RandomizeCfg = HumanoidCharacterProfile.RandomizeConfigAll;
 
+    public event Action<bool>? RandomizationEnabledChanged;
+
+    public void SetLocked(bool locked)
+    {
+        LockButton.Pressed = locked;
+    }
+
     public RandomizeLockButton()
     {
         RobustXamlLoader.Load(this);
-
-        // Ensure we reset this value to default every time the button is created
-        // Otherwise toggling, disconnecting and reconnecting will leave the cfg in an inconsistent state
-        RandomizeCfg = HumanoidCharacterProfile.RandomizeConfigAll;
 
         LockButton.OnToggled += args => HandleToggle(args.Pressed);
     }
 
     private void HandleToggle(bool toggle)
     {
+        RandomizationEnabledChanged?.Invoke(!toggle);
         if (For == default)
             return;
         if (toggle)

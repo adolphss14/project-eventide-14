@@ -29,6 +29,7 @@
 
 - type: loadout
   id: NurseHat
+  clothingStyle: Feminine
   equipment:
     head: ClothingHeadNurseHat
 

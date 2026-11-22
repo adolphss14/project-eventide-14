@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Project Eventide custom UMA customization textures",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "ears_uma_inner",
+      "directions": 4
+    },
+    {
+      "name": "ears_uma_outer",
+      "directions": 4
+    }
+  ]
+}

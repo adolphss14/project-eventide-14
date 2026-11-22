@@ -232,38 +232,6 @@ namespace Content.Shared.Preferences
         }
 
         /// <summary>
-        /// An enum defining randomizable values in character editor.
-        /// </summary>
-        [Flags]
-        public enum RandomizeCfg
-        {
-            // profile
-            None = 0,
-            Name = 1 << 0,
-            Species = 1 << 1,
-            Age = 1 << 2,
-            Sex = 1 << 3,
-            Gender = 1 << 4,
-            // appearance
-            Eyes = 1 << 5,
-            Skin = 1 << 6,
-            Markings = 1 << 7,
-        }
-
-        /// <summary>
-        /// A randomize config that covers all possible values (including appearance).
-        /// </summary>
-        public const RandomizeCfg RandomizeConfigAll =
-            RandomizeCfg.Name
-            | RandomizeCfg.Species
-            | RandomizeCfg.Age
-            | RandomizeCfg.Sex
-            | RandomizeCfg.Gender
-            | RandomizeCfg.Eyes
-            | RandomizeCfg.Skin
-            | RandomizeCfg.Markings;
-
-        /// <summary>
         /// Picks a random species from roundstart species.
         /// <param name="ignoredSpecies">Species to exclude from randomizer.</param>
         /// </summary>
@@ -357,43 +325,6 @@ namespace Content.Shared.Preferences
                 config ^= RandomizeCfg.Species;
             }
             var profile = Random(config, baseProfile);
-            return profile;
-        }
-
-        /// <summary>
-        /// Generates a randomized character profile with selective randomizing.
-        /// </summary>
-        /// <param name="randomizeCfg">Which values to randomize.</param>
-        /// <param name="baseProfile">Profile to base the new profile on. Values that are not randomized will be taken from this profile.</param>
-        /// <returns>A new character profile with selected values randomized</returns>
-        public static HumanoidCharacterProfile Random(RandomizeCfg randomizeCfg, HumanoidCharacterProfile baseProfile)
-        {
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-
-            var profile = new HumanoidCharacterProfile();
-            if ((randomizeCfg & RandomizeCfg.Species) != 0)
-            {
-                profile.Species = RandomSpecies();
-            }
-            else
-            {
-                profile.Species = DefaultSpecies;
-                if (prototypeManager.HasIndex(baseProfile.Species))
-                {
-                    profile.Species = baseProfile.Species;
-                }
-            }
-            var speciesProto = prototypeManager.Index(profile.Species);
-
-            profile.Sex = (randomizeCfg & RandomizeCfg.Sex) != 0 ? RandomSex(speciesProto) : baseProfile.Sex;
-            profile.Voice = speciesProto.DefaultSoundsBySex[(int)profile.Sex];
-            profile.Gender = (randomizeCfg & RandomizeCfg.Gender) != 0 ? RandomGender(profile.Sex) : baseProfile.Gender;
-            profile.Name = (randomizeCfg & RandomizeCfg.Name) != 0 ? RandomName(speciesProto, profile.Gender) : baseProfile.Name;
-            profile.Age = (randomizeCfg & RandomizeCfg.Age) != 0 ? RandomAge(speciesProto) : baseProfile.Age;
-            profile.TTSVoice = (randomizeCfg & RandomizeCfg.Age) != 0 ? RandomTTS(profile.Voice) : baseProfile.TTSVoice; // Corvax-TTS
-
-            profile.Appearance = HumanoidCharacterAppearance.Random(speciesProto, profile.Sex, randomizeCfg, baseProfile.Appearance);
-
             return profile;
         }
 

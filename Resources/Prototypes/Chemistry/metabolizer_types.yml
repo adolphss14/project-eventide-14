@@ -17,6 +17,8 @@
   id: Human
   name: metabolizer-type-human
 
+
+
 - type: metabolizerType
   id: Slime
   name: metabolizer-type-slime

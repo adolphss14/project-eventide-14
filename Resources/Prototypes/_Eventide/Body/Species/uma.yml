@@ -1,0 +1,103 @@
+# Uma share a familiar bipedal frame, but have distinctive equine musculature and physiology.
+- type: markingsGroup
+  parent: Human
+  id: Uma
+  limits:
+    enum.HumanoidVisualLayers.HeadTop:
+      limit: 1
+      required: true
+      default: [UmaEarsDefault]
+    enum.HumanoidVisualLayers.Tail:
+      limit: 1
+      required: true
+      default: [UmaTailDefault]
+
+- type: entity
+  parent: AppearanceHuman
+  id: AppearanceUma
+  categories: [ HideSpawnMenu ]
+  name: uma appearance
+  components:
+  - type: InitialBody
+    organs:
+      Torso: OrganUmaTorso
+      Head: OrganUmaHead
+      ArmLeft: OrganHumanArmLeft
+      ArmRight: OrganHumanArmRight
+      HandRight: OrganHumanHandRight
+      HandLeft: OrganHumanHandLeft
+      LegLeft: OrganHumanLegLeft
+      LegRight: OrganHumanLegRight
+      FootLeft: OrganHumanFootLeft
+      FootRight: OrganHumanFootRight
+      Brain: OrganHumanBrain
+      Eyes: OrganHumanEyes
+      Tongue: OrganHumanTongue
+      Appendix: OrganHumanAppendix
+      Ears: OrganHumanEars
+      Lungs: OrganHumanLungs
+      Heart: OrganHumanHeart
+      Stomach: OrganUmaStomach
+      Liver: OrganHumanLiver
+      Kidneys: OrganHumanKidneys
+  - type: HumanoidProfile
+    species: Uma
+
+- type: entity
+  parent: [AppearanceUma, BaseSpeciesMobOrganic]
+  id: MobUma
+  name: Urist Equus
+  components:
+  - type: UmaDiet
+  - type: UmaStability
+    knockdownResistanceChance: 0.12
+  - type: FlashSensitivity
+    durationMultiplier: 1.25
+  - type: MovementSpeedModifier
+    baseSprintSpeed: 5.1
+  - type: Damageable
+    damageModifierSet: Uma
+  - type: TemperatureDamage
+    coldDamageThreshold: 250
+    coldDamage:
+      types:
+        Cold: 0.9
+  - type: DamageOnHighSpeedImpact
+    damage:
+      types:
+        Blunt: 4.5
+  - type: ActionGrant
+    actions:
+    - ActionUmaGallop
+
+- type: entity
+  parent: OrganHumanStomach
+  id: OrganUmaStomach
+  components:
+  - type: Stomach
+    specialDigestible:
+      tags:
+      - Ruminant
+    isSpecialDigestibleExclusive: false
+  - type: Metabolizer
+    metabolizerTypes: [ Human, Uma ]
+
+- type: entity
+  parent: OrganHumanHead
+  id: OrganUmaHead
+  components:
+  - type: VisualOrganMarkings
+    hideableLayers:
+    - enum.HumanoidVisualLayers.Hair
+    - enum.HumanoidVisualLayers.Snout
+    - enum.HumanoidVisualLayers.FacialHair
+    markingData:
+      group: Uma
+
+- type: entity
+  parent: OrganHumanTorso
+  id: OrganUmaTorso
+  components:
+  - type: VisualOrganMarkings
+    markingData:
+      group: Uma

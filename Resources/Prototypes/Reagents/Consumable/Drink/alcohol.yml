@@ -188,6 +188,15 @@
           inverted: true
       - !type:Drunk
         boozePower: 2
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [ Uma ]
+          inverted: true
+      - !type:Drunk
+        boozePower: 2.7
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [ Uma ]
 
 - type: reagent
   id: Gin

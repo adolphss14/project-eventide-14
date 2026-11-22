@@ -124,10 +124,9 @@ public sealed partial class MarkingManager
             if (whitelisted)
                 return false;
         }
-        else
+        else if (!IsGroupWhitelisted(prototype, group))
         {
-            if (!prototype.GroupWhitelist.Contains(group))
-                return false;
+            return false;
         }
 
         return prototype.SexRestriction == null || prototype.SexRestriction == sex;
