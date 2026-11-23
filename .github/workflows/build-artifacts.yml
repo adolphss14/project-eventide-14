@@ -9,14 +9,14 @@ permissions:
   contents: read
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  group: \${{ github.workflow }}-\${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
-  build:
-    name: Build Server and Client
+  server:
+    name: Server packages (Windows, Linux, macOS)
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 120
 
     steps:
       - name: Checkout repository
@@ -39,8 +39,9 @@ jobs:
       - name: Build packaging tool
         run: dotnet build Content.Packaging --configuration Release --no-restore /m
 
-      # Keep the same practical platform set as the Workbench artifact pipeline.
-      - name: Package server (Windows x64 and Linux x64)
+      # Content.Packaging already defines these RIDs, including both macOS architectures.
+      # Each server archive is a server package and never includes the client.
+      - name: Package server for all supported desktop platforms
         run: >
           dotnet run --project Content.Packaging
           --configuration Release
@@ -48,30 +49,87 @@ jobs:
           server
           --platform win-x64
           --platform linux-x64
+          --platform linux-arm64
+          --platform osx-x64
+          --platform osx-arm64
 
-      # The packaging command wipes release/ by default. Keep the server ZIPs.
-      # Keep the engine/content resource bundle as a separate build output.
-      - name: Package client resources
-        run: >
-          dotnet run --project Content.Packaging
-          --configuration Release
-          --no-build --
-          client
-          --no-wipe-release
+      - name: Verify server packages
+        shell: bash
+        run: |
+          set -euo pipefail
+          for rid in win-x64 linux-x64 linux-arm64 osx-x64 osx-arm64; do
+            test -s "release/SS14.Server_\${rid}.zip"
+          done
+          ls -lh release/SS14.Server_*.zip
 
-      # This is the launchable development client, not the ACZ resource bundle.
-      # Build it without FullRelease so Content.Client.exe and its dependency DLLs
-      # are emitted into bin/Content.Client.
-      - name: Restore runnable Windows client
-        run: dotnet restore Content.Client/Content.Client.csproj --runtime win-x64
+      - name: Upload server packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: SS14.Server_\${{ github.sha }}
+          path: |
+            release/SS14.Server_win-x64.zip
+            release/SS14.Server_linux-x64.zip
+            release/SS14.Server_linux-arm64.zip
+            release/SS14.Server_osx-x64.zip
+            release/SS14.Server_osx-arm64.zip
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 14
 
-      - name: Build runnable Windows client
+  client:
+    name: Client package (\${{ matrix.rid }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - rid: win-x64
+            target_os: Windows
+            runner: ubuntu-latest
+            apphost: Content.Client.exe
+          - rid: linux-x64
+            target_os: Linux
+            runner: ubuntu-latest
+            apphost: Content.Client
+          - rid: linux-arm64
+            target_os: Linux
+            runner: ubuntu-latest
+            apphost: Content.Client
+          - rid: osx-x64
+            target_os: MacOS
+            runner: macos-15-intel
+            apphost: Content.Client
+          - rid: osx-arm64
+            target_os: MacOS
+            runner: macos-15
+            apphost: Content.Client
+    runs-on: \${{ matrix.runner }}
+    timeout-minutes: 120
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          submodules: recursive
+          fetch-depth: 1
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Run repository build setup
+        run: python3 RUN_THIS.py
+
+      - name: Restore client dependencies
+        run: dotnet restore Content.Client/Content.Client.csproj --runtime \${{ matrix.rid }}
+
+      - name: Build runnable client
         run: >
           dotnet build Content.Client/Content.Client.csproj
           --configuration Release
           --no-restore
-          /p:TargetOs=Windows
-          /p:RuntimeIdentifier=win-x64
+          /p:TargetOs=\${{ matrix.target_os }}
+          /p:RuntimeIdentifier=\${{ matrix.rid }}
           /p:AppendRuntimeIdentifierToOutputPath=false
           /p:SelfContained=false
           /p:FullRelease=false
@@ -82,13 +140,14 @@ jobs:
         run: |
           set -euo pipefail
           CLIENT_DIR="bin/Content.Client"
+          APPHOST="\${{ matrix.apphost }}"
 
-          test -s "$CLIENT_DIR/Content.Client.exe"
-          for assembly in \
-            Content.Client.dll \
-            Content.Shared.dll \
-            Content.Shared.Database.dll \
-            Content.Corvax.Interfaces.Client.dll \
+          test -s "$CLIENT_DIR/$APPHOST"
+          for assembly in \\
+            Content.Client.dll \\
+            Content.Shared.dll \\
+            Content.Shared.Database.dll \\
+            Content.Corvax.Interfaces.Client.dll \\
             Content.Corvax.Interfaces.Shared.dll; do
             test -s "$CLIENT_DIR/$assembly" || {
               echo "::error::Missing required client assembly: $CLIENT_DIR/$assembly"
@@ -100,55 +159,47 @@ jobs:
           cp -a "$CLIENT_DIR" release/local-client/bin/Content.Client
           cp -a Resources release/local-client/Resources
 
-          cat > release/local-client/run_client.bat <<'EOF'
+          if [[ "\${{ matrix.rid }}" == "win-x64" ]]; then
+            cat > release/local-client/run_client.bat <<'EOF'
           @echo off
-          cd /d "%~dp0bin\Content.Client"
+          cd /d "%~dp0bin\\Content.Client"
           Content.Client.exe
           pause
           EOF
+          else
+            chmod +x "release/local-client/bin/Content.Client/$APPHOST"
+            cat > release/local-client/run_client.sh <<'EOF'
+          #!/usr/bin/env bash
+          set -e
+          SCRIPT_DIR="$(cd -- "$(dirname -- "$0")" && pwd)"
+          cd "$SCRIPT_DIR/bin/Content.Client"
+          exec ./Content.Client
+          EOF
+            chmod +x release/local-client/run_client.sh
+          fi
 
-          cat > release/local-client/README.txt <<'EOF'
-          EVENTIDE LOCAL CLIENT (Windows x64)
+          cat > release/local-client/README.txt <<EOF
+          EVENTIDE LOCAL CLIENT (\${{ matrix.rid }})
 
           1. Extract the complete archive, preserving its folders.
-          2. Run run_client.bat.
-          3. Start the matching SS14.Server_win-x64 package separately.
+          2. Windows: run run_client.bat.
+             Linux/macOS: run ./run_client.sh.
+          3. Start the matching SS14.Server package separately.
           4. In the client, use Direct Connect and enter: localhost:1212
 
           Keep the Resources folder beside the bin folder.
-          This is a local development client build, not the launcher's Content ZIP.
-          Requires the .NET 10 Desktop Runtime.
+          This is a runnable Content.Client build, not the launcher's resource-only Content ZIP.
+          Requires the .NET 10 runtime for this platform.
           EOF
 
-          (cd release/local-client && zip -qr ../SS14.Client_win-x64.zip .)
-          test -s release/SS14.Client_win-x64.zip
+          (cd release/local-client && zip -qr "../SS14.Client_\${{ matrix.rid }}.zip" .)
+          test -s "release/SS14.Client_\${{ matrix.rid }}.zip"
 
-      - name: Verify generated packages
-        shell: bash
-        run: |
-          set -euo pipefail
-          test -s release/SS14.Server_win-x64.zip
-          test -s release/SS14.Server_linux-x64.zip
-          test -s release/SS14.Client.zip
-          test -s release/SS14.Client_win-x64.zip
-          ls -lh release/SS14.Server_*.zip release/SS14.Client*.zip
-
-      - name: Upload server artifact
+      - name: Upload client package
         uses: actions/upload-artifact@v4
         with:
-          name: SS14.Server_${{ github.sha }}
-          path: |
-            release/SS14.Server_win-x64.zip
-            release/SS14.Server_linux-x64.zip
-          if-no-files-found: error
-          compression-level: 0
-          retention-days: 14
-
-      - name: Upload client artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: SS14.Client_${{ github.sha }}
-          path: release/SS14.Client_win-x64.zip
+          name: SS14.Client_\${{ matrix.rid }}_\${{ github.sha }}
+          path: release/SS14.Client_\${{ matrix.rid }}.zip
           if-no-files-found: error
           compression-level: 0
           retention-days: 14
