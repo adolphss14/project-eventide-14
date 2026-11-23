@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: \${{ github.workflow }}-\${{ github.event.pull_request.number || github.ref }}
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -58,14 +58,14 @@ jobs:
         run: |
           set -euo pipefail
           for rid in win-x64 linux-x64 linux-arm64 osx-x64 osx-arm64; do
-            test -s "release/SS14.Server_\${rid}.zip"
+            test -s "release/SS14.Server_${rid}.zip"
           done
           ls -lh release/SS14.Server_*.zip
 
       - name: Upload server packages
         uses: actions/upload-artifact@v4
         with:
-          name: SS14.Server_\${{ github.sha }}
+          name: SS14.Server_${{ github.sha }}
           path: |
             release/SS14.Server_win-x64.zip
             release/SS14.Server_linux-x64.zip
@@ -77,7 +77,7 @@ jobs:
           retention-days: 14
 
   client:
-    name: Client package (\${{ matrix.rid }})
+    name: Client package (${{ matrix.rid }})
     strategy:
       fail-fast: false
       matrix:
@@ -102,7 +102,7 @@ jobs:
             target_os: MacOS
             runner: macos-15
             apphost: Content.Client
-    runs-on: \${{ matrix.runner }}
+    runs-on: ${{ matrix.runner }}
     timeout-minutes: 120
 
     steps:
@@ -121,15 +121,15 @@ jobs:
         run: python3 RUN_THIS.py
 
       - name: Restore client dependencies
-        run: dotnet restore Content.Client/Content.Client.csproj --runtime \${{ matrix.rid }}
+        run: dotnet restore Content.Client/Content.Client.csproj --runtime ${{ matrix.rid }}
 
       - name: Build runnable client
         run: >
           dotnet build Content.Client/Content.Client.csproj
           --configuration Release
           --no-restore
-          /p:TargetOs=\${{ matrix.target_os }}
-          /p:RuntimeIdentifier=\${{ matrix.rid }}
+          /p:TargetOs=${{ matrix.target_os }}
+          /p:RuntimeIdentifier=${{ matrix.rid }}
           /p:AppendRuntimeIdentifierToOutputPath=false
           /p:SelfContained=false
           /p:FullRelease=false
@@ -140,14 +140,14 @@ jobs:
         run: |
           set -euo pipefail
           CLIENT_DIR="bin/Content.Client"
-          APPHOST="\${{ matrix.apphost }}"
+          APPHOST="${{ matrix.apphost }}"
 
           test -s "$CLIENT_DIR/$APPHOST"
-          for assembly in \\
-            Content.Client.dll \\
-            Content.Shared.dll \\
-            Content.Shared.Database.dll \\
-            Content.Corvax.Interfaces.Client.dll \\
+          for assembly in \
+            Content.Client.dll \
+            Content.Shared.dll \
+            Content.Shared.Database.dll \
+            Content.Corvax.Interfaces.Client.dll \
             Content.Corvax.Interfaces.Shared.dll; do
             test -s "$CLIENT_DIR/$assembly" || {
               echo "::error::Missing required client assembly: $CLIENT_DIR/$assembly"
@@ -159,10 +159,10 @@ jobs:
           cp -a "$CLIENT_DIR" release/local-client/bin/Content.Client
           cp -a Resources release/local-client/Resources
 
-          if [[ "\${{ matrix.rid }}" == "win-x64" ]]; then
+          if [[ "${{ matrix.rid }}" == "win-x64" ]]; then
             cat > release/local-client/run_client.bat <<'EOF'
           @echo off
-          cd /d "%~dp0bin\\Content.Client"
+          cd /d "%~dp0bin\Content.Client"
           Content.Client.exe
           pause
           EOF
@@ -179,7 +179,7 @@ jobs:
           fi
 
           cat > release/local-client/README.txt <<EOF
-          EVENTIDE LOCAL CLIENT (\${{ matrix.rid }})
+          EVENTIDE LOCAL CLIENT (${{ matrix.rid }})
 
           1. Extract the complete archive, preserving its folders.
           2. Windows: run run_client.bat.
@@ -192,14 +192,14 @@ jobs:
           Requires the .NET 10 runtime for this platform.
           EOF
 
-          (cd release/local-client && zip -qr "../SS14.Client_\${{ matrix.rid }}.zip" .)
-          test -s "release/SS14.Client_\${{ matrix.rid }}.zip"
+          (cd release/local-client && zip -qr "../SS14.Client_${{ matrix.rid }}.zip" .)
+          test -s "release/SS14.Client_${{ matrix.rid }}.zip"
 
       - name: Upload client package
         uses: actions/upload-artifact@v4
         with:
-          name: SS14.Client_\${{ matrix.rid }}_\${{ github.sha }}
-          path: release/SS14.Client_\${{ matrix.rid }}.zip
+          name: SS14.Client_${{ matrix.rid }}_${{ github.sha }}
+          path: release/SS14.Client_${{ matrix.rid }}.zip
           if-no-files-found: error
           compression-level: 0
           retention-days: 14
