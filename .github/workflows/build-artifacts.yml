@@ -133,7 +133,6 @@ jobs:
           /p:AppendRuntimeIdentifierToOutputPath=false
           /p:SelfContained=false
           /p:FullRelease=false
-          /m
 
       - name: Assemble runnable client package
         shell: bash
