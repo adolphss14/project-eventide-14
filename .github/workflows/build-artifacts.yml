@@ -50,13 +50,65 @@ jobs:
           --platform linux-x64
 
       # The packaging command wipes release/ by default. Keep the server ZIPs.
-      - name: Package client
+      # This is the launchable development client, not the ACZ resource bundle.
+      # Build it without FullRelease so Content.Client.exe and its dependency DLLs
+      # are emitted into bin/Content.Client.
+      - name: Build runnable Windows client
         run: >
-          dotnet run --project Content.Packaging
+          dotnet build Content.Client/Content.Client.csproj
           --configuration Release
-          --no-build --
-          client
-          --no-wipe-release
+          --no-restore
+          /p:TargetOs=Windows
+          /p:RuntimeIdentifier=win-x64
+          /p:SelfContained=false
+          /p:FullRelease=false
+          /m
+
+      - name: Assemble runnable client package
+        shell: bash
+        run: |
+          set -euo pipefail
+          CLIENT_DIR="bin/Content.Client"
+
+          test -s "$CLIENT_DIR/Content.Client.exe"
+          for assembly in \
+            Content.Client.dll \
+            Content.Shared.dll \
+            Content.Shared.Database.dll \
+            Content.Corvax.Interfaces.Client.dll \
+            Content.Corvax.Interfaces.Shared.dll; do
+            test -s "$CLIENT_DIR/$assembly" || {
+              echo "::error::Missing required client assembly: $CLIENT_DIR/$assembly"
+              exit 1
+            }
+          done
+
+          mkdir -p release/local-client/bin
+          cp -a "$CLIENT_DIR" release/local-client/bin/Content.Client
+          cp -a Resources release/local-client/Resources
+
+          cat > release/local-client/run_client.bat <<'EOF'
+          @echo off
+          cd /d "%~dp0bin\Content.Client"
+          Content.Client.exe
+          pause
+          EOF
+
+          cat > release/local-client/README.txt <<'EOF'
+          EVENTIDE LOCAL CLIENT (Windows x64)
+
+          1. Extract the complete archive, preserving its folders.
+          2. Run run_client.bat.
+          3. Start the matching SS14.Server_win-x64 package separately.
+          4. In the client, use Direct Connect and enter: localhost:1212
+
+          Keep the Resources folder beside the bin folder.
+          This is a local development client build, not the launcher's Content ZIP.
+          Requires the .NET 10 Desktop Runtime.
+          EOF
+
+          (cd release/local-client && zip -qr ../SS14.Client_win-x64.zip .)
+          test -s release/SS14.Client_win-x64.zip
 
       - name: Verify generated packages
         shell: bash
@@ -65,7 +117,8 @@ jobs:
           test -s release/SS14.Server_win-x64.zip
           test -s release/SS14.Server_linux-x64.zip
           test -s release/SS14.Client.zip
-          ls -lh release/SS14.Server_*.zip release/SS14.Client.zip
+          test -s release/SS14.Client_win-x64.zip
+          ls -lh release/SS14.Server_*.zip release/SS14.Client*.zip
 
       - name: Upload server artifact
         uses: actions/upload-artifact@v4
@@ -82,7 +135,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: SS14.Client_${{ github.sha }}
-          path: release/SS14.Client.zip
+          path: release/SS14.Client_win-x64.zip
           if-no-files-found: error
           compression-level: 0
           retention-days: 14
