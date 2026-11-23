@@ -50,9 +50,21 @@ jobs:
           --platform linux-x64
 
       # The packaging command wipes release/ by default. Keep the server ZIPs.
+      # Keep the engine/content resource bundle as a separate build output.
+      - name: Package client resources
+        run: >
+          dotnet run --project Content.Packaging
+          --configuration Release
+          --no-build --
+          client
+          --no-wipe-release
+
       # This is the launchable development client, not the ACZ resource bundle.
       # Build it without FullRelease so Content.Client.exe and its dependency DLLs
       # are emitted into bin/Content.Client.
+      - name: Restore runnable Windows client
+        run: dotnet restore Content.Client/Content.Client.csproj --runtime win-x64
+
       - name: Build runnable Windows client
         run: >
           dotnet build Content.Client/Content.Client.csproj
@@ -60,6 +72,7 @@ jobs:
           --no-restore
           /p:TargetOs=Windows
           /p:RuntimeIdentifier=win-x64
+          /p:AppendRuntimeIdentifierToOutputPath=false
           /p:SelfContained=false
           /p:FullRelease=false
           /m
