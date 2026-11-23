@@ -100,7 +100,9 @@ jobs:
             apphost: Content.Client
           - rid: osx-arm64
             target_os: MacOS
-            runner: macos-15
+            # Cross-build the ARM64 apphost from the already-working Intel macOS
+            # runner; this avoids the currently stalled macOS ARM64 runner pool.
+            runner: macos-15-intel
             apphost: Content.Client
     runs-on: ${{ matrix.runner }}
     timeout-minutes: 120
