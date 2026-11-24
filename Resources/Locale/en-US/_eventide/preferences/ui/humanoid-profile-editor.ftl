@@ -1,5 +1,5 @@
 # Character randomization settings
-humanoid-profile-editor-randomize-name-now-tooltip = Randomize the character's name
+humanoid-profile-editor-randomize-name-now-tooltip = Generate another name using the selected first-name and surname options
 humanoid-profile-editor-randomizer-settings-tooltip = Randomization settings
 humanoid-profile-editor-randomizer-name-settings = Name
 humanoid-profile-editor-randomizer-appearance-settings = Appearance
@@ -26,6 +26,9 @@ humanoid-profile-editor-randomize-tail = Tail, wings and additional parts
 humanoid-profile-editor-randomize-tail-color = Tail, wings and additional parts color
 humanoid-profile-editor-randomize-body-markings = Body markings and wings
 humanoid-profile-editor-randomize-body-markings-color = Body markings and wings color
+
+humanoid-profile-editor-randomizer-preferences-settings = Preferences
+humanoid-profile-editor-randomizer-marking-layers = Marking styles and colors
 
 # Per-layer appearance randomization controls
 humanoid-profile-editor-randomizer-layer-style = Style: { $layer }
