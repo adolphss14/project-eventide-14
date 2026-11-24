@@ -66,4 +66,6 @@ public sealed partial class HumanoidProfileEditor
 
         SetProfile(Profile, CharacterSlot);
         SetDirty();
-    }}
+    }
+}
+

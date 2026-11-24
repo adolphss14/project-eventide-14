@@ -113,7 +113,15 @@ public sealed partial class HumanoidProfileEditor
                             .ToList();
 
                         if (neutralCandidates.Count > 0)
+                        {
                             candidates = neutralCandidates;
+                        }
+                        else
+                        {
+                            // No compatible variant exists for this slot. Keep the current selection
+                            // rather than silently violating the requested style filter.
+                            continue;
+                        }
                     }
                 }
 
