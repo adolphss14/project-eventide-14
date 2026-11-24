@@ -51,8 +51,6 @@ public sealed partial class HumanoidProfileEditor
 
     private static void SyncNameRandomizationFlag()
     {
-        RandomizeLockButton.RandomizeCfg |= HumanoidCharacterProfile.RandomizeCfg.NameParts;
-
         if ((RandomizeLockButton.RandomizeCfg &
              (HumanoidCharacterProfile.RandomizeCfg.FirstName | HumanoidCharacterProfile.RandomizeCfg.LastName)) != 0)
         {
