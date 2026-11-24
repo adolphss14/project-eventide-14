@@ -133,11 +133,11 @@ public sealed partial class HumanoidCharacterProfile
 
                 if (randomizeFirst || randomizeLast)
                 {
-                    var generatedName = SplitName(RandomName(speciesProto, profile.Gender));
-                    var existingName = SplitName(baseProfile.Name);
+                    var generatedName = SplitName(speciesProto, RandomName(speciesProto, profile.Gender));
+                    var existingName = SplitName(speciesProto, baseProfile.Name);
                     var first = randomizeFirst ? generatedName.First : existingName.First;
                     var last = randomizeLast ? generatedName.Last : existingName.Last;
-                    profile.Name = string.Join(" ", new[] { first, last }.Where(part => !string.IsNullOrWhiteSpace(part)));
+                    profile.Name = JoinName(speciesProto, first, last);
                 }
                 else
                 {
@@ -169,12 +169,34 @@ public sealed partial class HumanoidCharacterProfile
             return profile;
         }
 
-        private static (string First, string Last) SplitName(string name)
+        private static (string First, string Last) SplitName(SpeciesPrototype species, string name)
         {
-            var separator = name.IndexOf(' ');
-            return separator < 0
-                ? (name, string.Empty)
-                : (name[..separator], name[(separator + 1)..].Trim());
+            // First-only and compound-first species do not have a surname field.
+            if (species.Naming is SpeciesNaming.First or SpeciesNaming.FirstDashFirst)
+                return (name, string.Empty);
+
+            var separator = species.Naming == SpeciesNaming.TheFirstofLast
+                ? name.IndexOf(" of ", StringComparison.OrdinalIgnoreCase)
+                : name.IndexOf(' ');
+
+            if (separator < 0)
+                return (name, string.Empty);
+
+            var separatorLength = species.Naming == SpeciesNaming.TheFirstofLast ? 4 : 1;
+            return (name[..separator].Trim(), name[(separator + separatorLength)..].Trim());
+        }
+
+        private static string JoinName(SpeciesPrototype species, string first, string last)
+        {
+            if (species.Naming == SpeciesNaming.FirstDashFirst || string.IsNullOrWhiteSpace(last))
+                return first;
+
+            return species.Naming switch
+            {
+                SpeciesNaming.TheFirstofLast => $"{first} of {last}",
+                SpeciesNaming.First => first,
+                _ => $"{first} {last}",
+            };
         }
 
         /// <summary>
@@ -188,12 +210,12 @@ public sealed partial class HumanoidCharacterProfile
 
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             var species = prototypeManager.Index(Species);
-            var generatedName = SplitName(RandomName(species, Gender));
-            var existingName = SplitName(Name);
+            var generatedName = SplitName(species, RandomName(species, Gender));
+            var existingName = SplitName(species, Name);
             var first = firstName ? generatedName.First : existingName.First;
             var last = lastName ? generatedName.Last : existingName.Last;
 
-            return WithName(string.Join(" ", new[] { first, last }.Where(part => !string.IsNullOrWhiteSpace(part))));
+            return WithName(JoinName(species, first, last));
         }
 
 }
