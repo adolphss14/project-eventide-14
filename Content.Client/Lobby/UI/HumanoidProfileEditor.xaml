@@ -43,8 +43,6 @@
                                 HorizontalExpand="True" MinSize="0 180" MaxSize="0 360">
                                 <BoxContainer Orientation="Vertical" Margin="0 6 0 0" HorizontalExpand="True">
                                     <Label Text="{Loc 'humanoid-profile-editor-randomizer-name-settings'}" FontSize="16"/>
-                                    <CheckBox Name="RandomizeNameCheckBox"
-                                              Text="{Loc 'humanoid-profile-editor-name-label'}"/>
                                     <GridContainer Columns="2" HorizontalExpand="True">
                                         <CheckBox Name="RandomizeFirstNameCheckBox"
                                                   Text="{Loc 'humanoid-profile-editor-randomize-first-name'}"/>
