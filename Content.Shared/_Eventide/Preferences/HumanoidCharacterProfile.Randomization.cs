@@ -117,7 +117,9 @@ public sealed partial class HumanoidCharacterProfile
             }
             var speciesProto = prototypeManager.Index(profile.Species);
 
-            profile.Sex = (randomizeCfg & RandomizeCfg.Sex) != 0 ? RandomSex(speciesProto) : baseProfile.Sex;
+            profile.Sex = (randomizeCfg & RandomizeCfg.Sex) != 0 || !speciesProto.Sexes.Contains(baseProfile.Sex)
+                ? RandomSex(speciesProto)
+                : baseProfile.Sex;
             var defaultVoice = speciesProto.DefaultSoundsBySex[(int)profile.Sex];
             profile.Voice = (randomizeCfg & RandomizeCfg.Voice) != 0 && speciesProto.Voices.Count > 0
                 ? random.Pick(speciesProto.Voices)
