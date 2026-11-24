@@ -110,11 +110,12 @@ public sealed partial class HumanoidProfileEditor
     }
     private void UpdateMarkingsRandomizationFlag()
     {
-        var availableLayers = _markingsModel.OrganData.Values
-            .SelectMany(data => data.Layers)
+        var availableLayers = _markingsModel.OrganData
+            .SelectMany(organ => organ.Value.Layers.Select(layer => new MarkingLayerKey(organ.Key, layer)))
             .ToHashSet();
-        var enabled = availableLayers.Any(layer =>
-            _randomizeMarkingStyles.Contains(layer) || _randomizeMarkingColors.Contains(layer));
+
+        var enabled = availableLayers.Any(key =>
+            !_lockedMarkingStyles.Contains(key) || !_lockedMarkingColors.Contains(key));
 
         if (enabled)
             RandomizeLockButton.RandomizeCfg |= HumanoidCharacterProfile.RandomizeCfg.Markings;
