@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Humanoid;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Lobby.UI;
 
