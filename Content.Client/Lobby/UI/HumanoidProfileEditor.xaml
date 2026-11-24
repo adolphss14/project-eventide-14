@@ -64,6 +64,10 @@
                                                   Text="{Loc 'humanoid-profile-editor-skin-color-label'}"/>
                                         <CheckBox Name="RandomizeEyesCheckBox"
                                                   Text="{Loc 'humanoid-profile-editor-eyes-label'}"/>
+                                        <CheckBox Name="RandomizeVoiceCheckBox"
+                                                  Text="{Loc 'humanoid-profile-editor-randomize-voice'}"/>
+                                        <CheckBox Name="RandomizeTTSVoiceCheckBox"
+                                                  Text="{Loc 'humanoid-profile-editor-randomize-tts-voice'}"/>
                                     </GridContainer>
                                     <Label Text="{Loc 'humanoid-profile-editor-randomizer-marking-layers'}"/>
                                     <BoxContainer Name="RandomizeMarkingLayersContainer" Orientation="Vertical" HorizontalExpand="True" />
@@ -81,9 +85,9 @@
                                     </GridContainer>
                                     <CheckBox Name="ConsiderClothingCheckBox"
                                               Text="{Loc 'humanoid-profile-editor-randomizer-consider-clothing'}"/>
-                                    <Label Text="{Loc 'humanoid-profile-editor-randomizer-clothing-style'}"/>
+                                    <Label Name="ClothingStyleLabel" Visible="False" Text="{Loc 'humanoid-profile-editor-randomizer-clothing-style'}"/>
                                     <OptionButton Name="ClothingStyleButton" Visible="False" HorizontalExpand="True"/>
-                                    <Label Text="{Loc 'humanoid-profile-editor-randomizer-uniform-style'}"/>
+                                    <Label Name="UniformStyleLabel" Visible="False" Text="{Loc 'humanoid-profile-editor-randomizer-uniform-style'}"/>
                                     <OptionButton Name="UniformStyleButton" Visible="False" HorizontalExpand="True"/>
                                 </BoxContainer>
                             </ScrollContainer>

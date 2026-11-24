@@ -284,11 +284,14 @@ namespace Content.Shared.Preferences
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             var random = IoCManager.Resolve<IRobustRandom>();
 
-            var voiceId = random.Pick(prototypeManager
-                .EnumeratePrototypes<TTSVoicePrototype>()
-                .Where(o => CanHaveVoice(o, voicePrototype)).ToArray()
-            ).ID;
-            return voiceId;
+            var compatibleVoices = prototypeManager.EnumeratePrototypes<TTSVoicePrototype>()
+                .Where(voice => CanHaveVoice(voice, voicePrototype))
+                .ToArray();
+
+            // A custom voice prototype may have no matching TTS voices. Keep randomization safe.
+            return compatibleVoices.Length == 0
+                ? HumanoidProfileSystem.DefaultVoice
+                : random.Pick(compatibleVoices).ID;
         }
         // Corvax-TTS-End
 

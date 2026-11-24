@@ -50,6 +50,8 @@ public sealed partial class HumanoidCharacterProfile
             Loadouts = 1 << 23,
             // Distinguishes explicit first/last-name toggles from legacy callers that only set Name.
             NameParts = 1 << 24,
+            Voice = 1 << 25,
+            TTSVoice = 1 << 26,
         }
 
         /// <summary>
@@ -80,7 +82,9 @@ public sealed partial class HumanoidCharacterProfile
             | RandomizeCfg.Antags
             | RandomizeCfg.Traits
             | RandomizeCfg.Loadouts
-            | RandomizeCfg.NameParts;
+            | RandomizeCfg.NameParts
+            | RandomizeCfg.Voice
+            | RandomizeCfg.TTSVoice;
 
         /// <summary>
         /// Generates a randomized character profile with selective randomizing.
@@ -91,6 +95,7 @@ public sealed partial class HumanoidCharacterProfile
         public static HumanoidCharacterProfile Random(RandomizeCfg randomizeCfg, HumanoidCharacterProfile baseProfile, MarkingRandomizationConfig? markingRandomizationConfig = null)
         {
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            var random = IoCManager.Resolve<IRobustRandom>();
 
             // Start from the existing profile so job, antagonist, trait and loadout preferences survive appearance randomization.
             var profile = new HumanoidCharacterProfile(baseProfile);
@@ -109,7 +114,10 @@ public sealed partial class HumanoidCharacterProfile
             var speciesProto = prototypeManager.Index(profile.Species);
 
             profile.Sex = (randomizeCfg & RandomizeCfg.Sex) != 0 ? RandomSex(speciesProto) : baseProfile.Sex;
-            profile.Voice = speciesProto.DefaultSoundsBySex[(int)profile.Sex];
+            var defaultVoice = speciesProto.DefaultSoundsBySex[(int)profile.Sex];
+            profile.Voice = (randomizeCfg & RandomizeCfg.Voice) != 0 && speciesProto.Voices.Count > 0
+                ? random.Pick(speciesProto.Voices)
+                : speciesProto.Voices.Contains(baseProfile.Voice) ? baseProfile.Voice : defaultVoice;
             profile.Gender = (randomizeCfg & RandomizeCfg.Gender) != 0 ? RandomGender(profile.Sex) : baseProfile.Gender;
             if ((randomizeCfg & RandomizeCfg.Name) != 0)
             {
@@ -136,7 +144,19 @@ public sealed partial class HumanoidCharacterProfile
                 profile.Name = baseProfile.Name;
             }
             profile.Age = (randomizeCfg & RandomizeCfg.Age) != 0 ? RandomAge(speciesProto) : baseProfile.Age;
-            profile.TTSVoice = (randomizeCfg & RandomizeCfg.Age) != 0 ? RandomTTS(profile.Voice) : baseProfile.TTSVoice; // Corvax-TTS
+            if ((randomizeCfg & RandomizeCfg.TTSVoice) != 0)
+            {
+                profile.TTSVoice = RandomTTS(profile.Voice);
+            }
+            else if (prototypeManager.TryIndex<TTSVoicePrototype>(baseProfile.TTSVoice, out var existingTtsVoice) &&
+                     CanHaveVoice(existingTtsVoice, profile.Voice))
+            {
+                profile.TTSVoice = baseProfile.TTSVoice;
+            }
+            else
+            {
+                profile.TTSVoice = HumanoidProfileSystem.DefaultSexVoice[profile.Sex];
+            }
 
             profile.Appearance = HumanoidCharacterAppearance.Random(speciesProto, profile.Sex, randomizeCfg, baseProfile.Appearance, markingRandomizationConfig);
 

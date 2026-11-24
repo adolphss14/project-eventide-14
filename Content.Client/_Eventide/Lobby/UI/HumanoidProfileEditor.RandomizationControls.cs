@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.Corvax.CCCVars;
 using Content.Shared.Preferences;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Utility;
@@ -76,6 +77,12 @@ public sealed partial class HumanoidProfileEditor
         BindRandomizationFlag(RandomizeGenderCheckBox, HumanoidCharacterProfile.RandomizeCfg.Gender);
         BindRandomizationFlag(RandomizeSkinCheckBox, HumanoidCharacterProfile.RandomizeCfg.Skin);
         BindRandomizationFlag(RandomizeEyesCheckBox, HumanoidCharacterProfile.RandomizeCfg.Eyes);
+        BindRandomizationFlag(RandomizeVoiceCheckBox, HumanoidCharacterProfile.RandomizeCfg.Voice);
+
+        RandomizeTTSVoiceCheckBox.Visible = _cfgManager.GetCVar(CCCVars.TTSEnabled);
+        if (!RandomizeTTSVoiceCheckBox.Visible)
+            RandomizeLockButton.RandomizeCfg &= ~HumanoidCharacterProfile.RandomizeCfg.TTSVoice;
+        BindRandomizationFlag(RandomizeTTSVoiceCheckBox, HumanoidCharacterProfile.RandomizeCfg.TTSVoice);
         BindRandomizationFlag(RandomizeJobsCheckBox, HumanoidCharacterProfile.RandomizeCfg.Jobs);
         BindRandomizationFlag(RandomizeAntagsCheckBox, HumanoidCharacterProfile.RandomizeCfg.Antags);
         BindRandomizationFlag(RandomizeTraitsCheckBox, HumanoidCharacterProfile.RandomizeCfg.Traits);
@@ -83,7 +90,9 @@ public sealed partial class HumanoidProfileEditor
 
         ConsiderClothingCheckBox.OnToggled += args =>
         {
+            ClothingStyleLabel.Visible = args.Pressed;
             ClothingStyleButton.Visible = args.Pressed;
+            UniformStyleLabel.Visible = args.Pressed;
             UniformStyleButton.Visible = args.Pressed;
         };
 
