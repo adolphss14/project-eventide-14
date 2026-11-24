@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Preferences;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Utility;
@@ -75,7 +76,6 @@ public sealed partial class HumanoidProfileEditor
         BindRandomizationFlag(RandomizeGenderCheckBox, HumanoidCharacterProfile.RandomizeCfg.Gender);
         BindRandomizationFlag(RandomizeSkinCheckBox, HumanoidCharacterProfile.RandomizeCfg.Skin);
         BindRandomizationFlag(RandomizeEyesCheckBox, HumanoidCharacterProfile.RandomizeCfg.Eyes);
-        BindRandomizationFlag(RandomizeMarkingsCheckBox, HumanoidCharacterProfile.RandomizeCfg.Markings);
         BindRandomizationFlag(RandomizeJobsCheckBox, HumanoidCharacterProfile.RandomizeCfg.Jobs);
         BindRandomizationFlag(RandomizeAntagsCheckBox, HumanoidCharacterProfile.RandomizeCfg.Antags);
         BindRandomizationFlag(RandomizeTraitsCheckBox, HumanoidCharacterProfile.RandomizeCfg.Traits);
@@ -97,4 +97,18 @@ public sealed partial class HumanoidProfileEditor
         UniformStyleButton.AddItem(Loc.GetString("humanoid-profile-editor-randomizer-uniform-jumpskirt"), 2);
         UniformStyleButton.SelectId(0);
     }
+    private void UpdateMarkingsRandomizationFlag()
+    {
+        var availableLayers = _markingsModel.OrganData.Values
+            .SelectMany(data => data.Layers)
+            .ToHashSet();
+        var enabled = availableLayers.Any(layer =>
+            _randomizeMarkingStyles.Contains(layer) || _randomizeMarkingColors.Contains(layer));
+
+        if (enabled)
+            RandomizeLockButton.RandomizeCfg |= HumanoidCharacterProfile.RandomizeCfg.Markings;
+        else
+            RandomizeLockButton.RandomizeCfg &= ~HumanoidCharacterProfile.RandomizeCfg.Markings;
+    }
+
 }

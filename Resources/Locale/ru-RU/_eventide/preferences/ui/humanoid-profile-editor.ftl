@@ -62,3 +62,13 @@ humanoid-profile-editor-randomizer-layer-handcuffs = Наручники
 humanoid-profile-editor-randomizer-layer-stencilmask = Трафаретная маска
 humanoid-profile-editor-randomizer-layer-ensnare = Сеть / захват
 humanoid-profile-editor-randomizer-layer-fire = Огонь
+
+# Категории слоёв внешности в настройках рандомизатора
+humanoid-profile-editor-randomizer-category-head = Голова
+humanoid-profile-editor-randomizer-category-hair = Волосы и причёска
+humanoid-profile-editor-randomizer-category-body = Тело
+humanoid-profile-editor-randomizer-category-arms = Руки
+humanoid-profile-editor-randomizer-category-legs = Ноги
+humanoid-profile-editor-randomizer-category-tail = Хвост и дополнительные части
+humanoid-profile-editor-randomizer-category-clothing = Нижнее бельё
+humanoid-profile-editor-randomizer-category-other = Прочее

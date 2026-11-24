@@ -62,3 +62,13 @@ humanoid-profile-editor-randomizer-layer-handcuffs = Handcuffs
 humanoid-profile-editor-randomizer-layer-stencilmask = Stencil mask
 humanoid-profile-editor-randomizer-layer-ensnare = Ensnare
 humanoid-profile-editor-randomizer-layer-fire = Fire
+
+# Appearance-layer categories in randomizer settings
+humanoid-profile-editor-randomizer-category-head = Head
+humanoid-profile-editor-randomizer-category-hair = Hair and hairstyle
+humanoid-profile-editor-randomizer-category-body = Body
+humanoid-profile-editor-randomizer-category-arms = Arms
+humanoid-profile-editor-randomizer-category-legs = Legs
+humanoid-profile-editor-randomizer-category-tail = Tail and additional parts
+humanoid-profile-editor-randomizer-category-clothing = Undergarments
+humanoid-profile-editor-randomizer-category-other = Other
