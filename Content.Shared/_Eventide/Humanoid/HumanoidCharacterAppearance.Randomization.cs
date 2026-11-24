@@ -41,8 +41,8 @@ public sealed partial class HumanoidCharacterAppearance
             var randomLayers = randomized.GetValueOrDefault(organ);
             foreach (var layer in Enum.GetValues<HumanoidVisualLayers>())
             {
-                var randomizeStyle = ShouldRandomizeLayer(layer, randomizeCfg, markingRandomizationConfig);
-                var randomizeColor = ShouldRandomizeLayerColor(layer, randomizeCfg, markingRandomizationConfig);
+                var randomizeStyle = ShouldRandomizeLayer(organ, layer, randomizeCfg, markingRandomizationConfig);
+                var randomizeColor = ShouldRandomizeLayerColor(organ, layer, randomizeCfg, markingRandomizationConfig);
                 if (!randomizeStyle && !randomizeColor)
                     continue;
 
@@ -81,13 +81,13 @@ public sealed partial class HumanoidCharacterAppearance
         return markings;
     }
 
-    private static bool ShouldRandomizeLayer(HumanoidVisualLayers layer, RandomizeCfg config, MarkingRandomizationConfig? perLayerConfig)
+    private static bool ShouldRandomizeLayer(ProtoId<OrganCategoryPrototype> organ, HumanoidVisualLayers layer, RandomizeCfg config, MarkingRandomizationConfig? perLayerConfig)
     {
         if ((config & RandomizeCfg.Markings) == 0)
             return false;
 
         if (perLayerConfig != null)
-            return perLayerConfig.StyleLayers.Contains(layer);
+            return perLayerConfig.StyleLayers.Contains(new MarkingLayerKey(organ, layer));
 
         return layer switch
         {
@@ -99,13 +99,13 @@ public sealed partial class HumanoidCharacterAppearance
         };
     }
 
-    private static bool ShouldRandomizeLayerColor(HumanoidVisualLayers layer, RandomizeCfg config, MarkingRandomizationConfig? perLayerConfig)
+    private static bool ShouldRandomizeLayerColor(ProtoId<OrganCategoryPrototype> organ, HumanoidVisualLayers layer, RandomizeCfg config, MarkingRandomizationConfig? perLayerConfig)
     {
         if ((config & RandomizeCfg.Markings) == 0)
             return false;
 
         if (perLayerConfig != null)
-            return perLayerConfig.ColorLayers.Contains(layer);
+            return perLayerConfig.ColorLayers.Contains(new MarkingLayerKey(organ, layer));
 
         return layer switch
         {
