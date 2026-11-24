@@ -52,6 +52,8 @@ public sealed partial class HumanoidCharacterProfile
             NameParts = 1 << 24,
             Voice = 1 << 25,
             TTSVoice = 1 << 26,
+            SpawnPriority = 1 << 27,
+            PreferenceUnavailable = 1 << 28,
         }
 
         /// <summary>
@@ -84,7 +86,9 @@ public sealed partial class HumanoidCharacterProfile
             | RandomizeCfg.Loadouts
             | RandomizeCfg.NameParts
             | RandomizeCfg.Voice
-            | RandomizeCfg.TTSVoice;
+            | RandomizeCfg.TTSVoice
+            | RandomizeCfg.SpawnPriority
+            | RandomizeCfg.PreferenceUnavailable;
 
         /// <summary>
         /// Generates a randomized character profile with selective randomizing.

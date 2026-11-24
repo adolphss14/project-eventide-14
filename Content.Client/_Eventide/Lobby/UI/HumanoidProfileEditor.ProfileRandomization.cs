@@ -1,3 +1,4 @@
+using System;
 using Content.Shared.Preferences;
 using Content.Shared.Preferences.Loadouts;
 using Robust.Shared;
@@ -54,6 +55,12 @@ public sealed partial class HumanoidProfileEditor
 
         if ((config & HumanoidCharacterProfile.RandomizeCfg.Traits) != 0)
             RandomizeTraitPreferences(random);
+
+        if ((config & HumanoidCharacterProfile.RandomizeCfg.SpawnPriority) != 0)
+            Profile = Profile.WithSpawnPriorityPreference(random.Pick(Enum.GetValues<SpawnPriorityPreference>()));
+
+        if ((config & HumanoidCharacterProfile.RandomizeCfg.PreferenceUnavailable) != 0)
+            Profile = Profile.WithPreferenceUnavailable(random.Pick(Enum.GetValues<PreferenceUnavailableMode>()));
 
         if ((config & HumanoidCharacterProfile.RandomizeCfg.Loadouts) != 0)
         {

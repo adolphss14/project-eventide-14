@@ -87,6 +87,8 @@ public sealed partial class HumanoidProfileEditor
         BindRandomizationFlag(RandomizeAntagsCheckBox, HumanoidCharacterProfile.RandomizeCfg.Antags);
         BindRandomizationFlag(RandomizeTraitsCheckBox, HumanoidCharacterProfile.RandomizeCfg.Traits);
         BindRandomizationFlag(RandomizeLoadoutsCheckBox, HumanoidCharacterProfile.RandomizeCfg.Loadouts);
+        BindRandomizationFlag(RandomizeSpawnPriorityCheckBox, HumanoidCharacterProfile.RandomizeCfg.SpawnPriority);
+        BindRandomizationFlag(RandomizePreferenceUnavailableCheckBox, HumanoidCharacterProfile.RandomizeCfg.PreferenceUnavailable);
 
         ConsiderClothingCheckBox.OnToggled += args =>
         {

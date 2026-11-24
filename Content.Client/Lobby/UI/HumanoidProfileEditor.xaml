@@ -82,6 +82,10 @@
                                                   Text="{Loc 'humanoid-profile-editor-traits-tab'}"/>
                                         <CheckBox Name="RandomizeLoadoutsCheckBox"
                                                   Text="{Loc 'humanoid-profile-editor-randomize-loadouts-button'}"/>
+                                        <CheckBox Name="RandomizeSpawnPriorityCheckBox"
+                                                  Text="{Loc 'humanoid-profile-editor-randomizer-spawn-priority'}"/>
+                                        <CheckBox Name="RandomizePreferenceUnavailableCheckBox"
+                                                  Text="{Loc 'humanoid-profile-editor-randomizer-unavailable-preference'}"/>
                                     </GridContainer>
                                     <CheckBox Name="ConsiderClothingCheckBox"
                                               Text="{Loc 'humanoid-profile-editor-randomizer-consider-clothing'}"/>
