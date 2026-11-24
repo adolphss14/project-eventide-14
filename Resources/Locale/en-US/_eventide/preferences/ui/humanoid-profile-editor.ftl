@@ -76,3 +76,6 @@ humanoid-profile-editor-randomizer-category-legs = Legs
 humanoid-profile-editor-randomizer-category-tail = Tail and additional parts
 humanoid-profile-editor-randomizer-category-clothing = Undergarments
 humanoid-profile-editor-randomizer-category-other = Other
+
+# Organ names are supplied by the active species prototype.
+humanoid-profile-editor-randomizer-organ = { $organ }
