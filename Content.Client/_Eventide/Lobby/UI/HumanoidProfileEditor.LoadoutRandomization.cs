@@ -74,7 +74,11 @@ public sealed partial class HumanoidProfileEditor
                     !IsClothingLoadoutGroup(groupId.Id))
                     continue;
 
-                var candidates = groupProto.Loadouts.ToList();
+                // Validate prototypes and role restrictions before applying style filters.
+                // This prevents stale or unavailable loadout IDs from reaching Index() below.
+                var candidates = groupProto.Loadouts
+                    .Where(candidate => loadout.IsValid(Profile, session, candidate, collection, out _))
+                    .ToList();
                 if (candidates.Count == 0)
                     continue;
 
