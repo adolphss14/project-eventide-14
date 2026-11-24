@@ -146,7 +146,7 @@ public sealed partial class HumanoidCharacterProfile
             profile.Age = (randomizeCfg & RandomizeCfg.Age) != 0 ? RandomAge(speciesProto) : baseProfile.Age;
             if ((randomizeCfg & RandomizeCfg.TTSVoice) != 0)
             {
-                profile.TTSVoice = RandomTTS(profile.Voice);
+                profile.TTSVoice = RandomTTS(profile.Voice, profile.Sex);
             }
             else if (prototypeManager.TryIndex<TTSVoicePrototype>(baseProfile.TTSVoice, out var existingTtsVoice) &&
                      CanHaveVoice(existingTtsVoice, profile.Voice))

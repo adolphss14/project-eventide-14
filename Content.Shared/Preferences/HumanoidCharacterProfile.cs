@@ -279,7 +279,7 @@ namespace Content.Shared.Preferences
         }
 
         // Corvax-TTS-Start
-        public static string RandomTTS(ProtoId<EmoteSoundsPrototype> voicePrototype)
+        public static string RandomTTS(ProtoId<EmoteSoundsPrototype> voicePrototype, Sex fallbackSex = Sex.Male)
         {
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             var random = IoCManager.Resolve<IRobustRandom>();
@@ -290,7 +290,7 @@ namespace Content.Shared.Preferences
 
             // A custom voice prototype may have no matching TTS voices. Keep randomization safe.
             return compatibleVoices.Length == 0
-                ? HumanoidProfileSystem.DefaultVoice
+                ? HumanoidProfileSystem.DefaultSexVoice[fallbackSex]
                 : random.Pick(compatibleVoices).ID;
         }
         // Corvax-TTS-End
