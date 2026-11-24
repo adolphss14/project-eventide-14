@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Humanoid;
+using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Lobby.UI;
 
@@ -22,29 +23,31 @@ public sealed partial class HumanoidProfileEditor
         foreach (var layer in layers)
         {
             var layerName = Loc.GetString($"humanoid-profile-editor-randomizer-layer-{layer.ToString().ToLowerInvariant()}");
-            var style = new RandomizeLockButton
+            var style = new CheckBox
             {
-                For = default,
-                LabelText = Loc.GetString("humanoid-profile-editor-randomizer-layer-style", ("layer", layerName)),
+                Text = Loc.GetString("humanoid-profile-editor-randomizer-layer-style", ("layer", layerName)),
+                Pressed = _randomizeMarkingStyles.Contains(layer),
             };
-            style.SetLocked(!_randomizeMarkingStyles.Contains(layer));
-            style.RandomizationEnabledChanged += enabled =>
+            style.OnToggled += args =>
             {
-                if (enabled) _randomizeMarkingStyles.Add(layer);
-                else _randomizeMarkingStyles.Remove(layer);
+                if (args.Pressed)
+                    _randomizeMarkingStyles.Add(layer);
+                else
+                    _randomizeMarkingStyles.Remove(layer);
             };
             RandomizeMarkingLayersContainer.AddChild(style);
 
-            var color = new RandomizeLockButton
+            var color = new CheckBox
             {
-                For = default,
-                LabelText = Loc.GetString("humanoid-profile-editor-randomizer-layer-color", ("layer", layerName)),
+                Text = Loc.GetString("humanoid-profile-editor-randomizer-layer-color", ("layer", layerName)),
+                Pressed = _randomizeMarkingColors.Contains(layer),
             };
-            color.SetLocked(!_randomizeMarkingColors.Contains(layer));
-            color.RandomizationEnabledChanged += enabled =>
+            color.OnToggled += args =>
             {
-                if (enabled) _randomizeMarkingColors.Add(layer);
-                else _randomizeMarkingColors.Remove(layer);
+                if (args.Pressed)
+                    _randomizeMarkingColors.Add(layer);
+                else
+                    _randomizeMarkingColors.Remove(layer);
             };
             RandomizeMarkingLayersContainer.AddChild(color);
         }
