@@ -1,6 +1,6 @@
 humanoid-profile-editor-randomize = Randomize
-humanoid-profile-editor-randomize-unlocked-button = Randomize unlocked
-humanoid-profile-editor-randomize-name-button = Name
+humanoid-profile-editor-randomize-unlocked-button = Randomize
+humanoid-profile-editor-randomize-name-button = Randomize
 humanoid-profile-editor-randomize-species-button = Species
 humanoid-profile-editor-randomize-age-button = Age
 humanoid-profile-editor-randomize-sex-button = Sex
