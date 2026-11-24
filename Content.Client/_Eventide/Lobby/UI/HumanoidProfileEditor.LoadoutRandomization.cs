@@ -22,19 +22,25 @@ public sealed partial class HumanoidProfileEditor
     /// <summary>
     /// Randomizes wearable clothing for preferred jobs and selected antagonist roles.
     /// Uniform style and the style of all other clothing slots are deliberately independent.
+    /// Disabling style filters allows all available clothing variants; it does not disable randomization.
     /// Non-clothing equipment groups are never changed by this option.
     /// </summary>
     private void RandomizeRoleLoadouts(
-        bool considerClothing,
+        bool applyStyleFilters,
         LoadoutClothingStyle clothingStyle,
         UniformRandomizationStyle uniformStyle,
         IRobustRandom random)
     {
-        if (!considerClothing ||
-            Profile is null ||
+        if (Profile is null ||
             _playerManager.LocalSession is not { } session ||
             IoCManager.Instance is not { } collection)
             return;
+
+        if (!applyStyleFilters)
+        {
+            clothingStyle = LoadoutClothingStyle.Any;
+            uniformStyle = UniformRandomizationStyle.Any;
+        }
 
         var roleIds = new HashSet<string>(StringComparer.Ordinal);
 
@@ -166,7 +172,7 @@ public sealed partial class HumanoidProfileEditor
     {
         string[] clothingSlots =
         [
-            "Jumpsuit", "Uniform", "OuterClothing", "Head", "Neck", "Shoes",
+            "Jumpsuit", "Uniform", "OuterClothing", "Head", "Neck", "Shoes", "Back",
             "Gloves", "Mask", "Glasses", "Ears", "Belt", "Wrist"
         ];
 
