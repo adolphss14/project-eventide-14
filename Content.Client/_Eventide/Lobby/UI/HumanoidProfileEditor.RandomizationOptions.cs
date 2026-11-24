@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Humanoid;
-using Content.Shared.Preferences;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Utility;
 
@@ -10,21 +9,26 @@ namespace Content.Client.Lobby.UI;
 
 public sealed partial class HumanoidProfileEditor
 {
-    // Keep settings when changing species; an unavailable layer may return on another species.
-    private readonly HashSet<HumanoidVisualLayers> _randomizeMarkingStyles = Enum.GetValues<HumanoidVisualLayers>().ToHashSet();
-    private readonly HashSet<HumanoidVisualLayers> _randomizeMarkingColors = Enum.GetValues<HumanoidVisualLayers>().ToHashSet();
+    // Store exclusions rather than inclusions: layers discovered for a new species
+    // are enabled by default, while explicit locks survive species changes.
+    private readonly HashSet<MarkingLayerKey> _lockedMarkingStyles = new();
+    private readonly HashSet<MarkingLayerKey> _lockedMarkingColors = new();
 
     private void UpdateRandomizerOptions()
     {
         RandomizeMarkingLayersContainer.RemoveAllChildren();
-        var layers = _markingsModel.OrganData.Values
-            .SelectMany(data => data.Layers)
-            .Distinct()
-            .OrderBy(GetRandomizerCategoryOrder)
-            .ThenBy(layer => (byte) layer);
 
-        foreach (var group in layers.GroupBy(GetRandomizerCategory))
+        foreach (var (organ, organData) in _markingsModel.OrganData
+                     .OrderBy(entry => entry.Key.Id, StringComparer.Ordinal))
         {
+            var layers = organData.Layers
+                .Distinct()
+                .OrderBy(layer => (byte) layer)
+                .ToArray();
+
+            if (layers.Length == 0)
+                continue;
+
             var section = new BoxContainer
             {
                 Orientation = BoxContainer.LayoutOrientation.Vertical,
@@ -32,7 +36,7 @@ public sealed partial class HumanoidProfileEditor
             };
             section.AddChild(new Label
             {
-                Text = Loc.GetString($"humanoid-profile-editor-randomizer-category-{group.Key}"),
+                Text = Loc.GetString("humanoid-profile-editor-randomizer-organ", ("organ", organ.Id)),
             });
 
             var options = new GridContainer
@@ -41,21 +45,23 @@ public sealed partial class HumanoidProfileEditor
                 HorizontalExpand = true,
             };
 
-            foreach (var layer in group)
+            foreach (var layer in layers)
             {
+                var key = new MarkingLayerKey(organ, layer);
                 var layerName = Loc.GetString($"humanoid-profile-editor-randomizer-layer-{layer.ToString().ToLowerInvariant()}");
+
                 var style = new CheckBox
                 {
                     Text = Loc.GetString("humanoid-profile-editor-randomizer-layer-style", ("layer", layerName)),
-                    Pressed = _randomizeMarkingStyles.Contains(layer),
+                    Pressed = !_lockedMarkingStyles.Contains(key),
                     HorizontalExpand = true,
                 };
                 style.OnToggled += args =>
                 {
                     if (args.Pressed)
-                        _randomizeMarkingStyles.Add(layer);
+                        _lockedMarkingStyles.Remove(key);
                     else
-                        _randomizeMarkingStyles.Remove(layer);
+                        _lockedMarkingStyles.Add(key);
 
                     UpdateMarkingsRandomizationFlag();
                 };
@@ -64,15 +70,15 @@ public sealed partial class HumanoidProfileEditor
                 var color = new CheckBox
                 {
                     Text = Loc.GetString("humanoid-profile-editor-randomizer-layer-color", ("layer", layerName)),
-                    Pressed = _randomizeMarkingColors.Contains(layer),
+                    Pressed = !_lockedMarkingColors.Contains(key),
                     HorizontalExpand = true,
                 };
                 color.OnToggled += args =>
                 {
                     if (args.Pressed)
-                        _randomizeMarkingColors.Add(layer);
+                        _lockedMarkingColors.Remove(key);
                     else
-                        _randomizeMarkingColors.Remove(layer);
+                        _lockedMarkingColors.Add(key);
 
                     UpdateMarkingsRandomizationFlag();
                 };
@@ -86,43 +92,14 @@ public sealed partial class HumanoidProfileEditor
         UpdateMarkingsRandomizationFlag();
     }
 
-    private static string GetRandomizerCategory(HumanoidVisualLayers layer)
-    {
-        return layer switch
-        {
-            HumanoidVisualLayers.Hair or HumanoidVisualLayers.FacialHair => "hair",
-            HumanoidVisualLayers.Head or HumanoidVisualLayers.HeadTop or
-                HumanoidVisualLayers.HeadSide or HumanoidVisualLayers.Snout or
-                HumanoidVisualLayers.SnoutCover or HumanoidVisualLayers.Eyes or
-                HumanoidVisualLayers.Eyelids or HumanoidVisualLayers.OverEyes => "head",
-            HumanoidVisualLayers.Chest => "body",
-            HumanoidVisualLayers.RArm or HumanoidVisualLayers.LArm or
-                HumanoidVisualLayers.RHand or HumanoidVisualLayers.LHand => "arms",
-            HumanoidVisualLayers.RLeg or HumanoidVisualLayers.LLeg or
-                HumanoidVisualLayers.RFoot or HumanoidVisualLayers.LFoot => "legs",
-            HumanoidVisualLayers.Tail or HumanoidVisualLayers.TailOverlay => "tail",
-            HumanoidVisualLayers.UndergarmentTop or HumanoidVisualLayers.UndergarmentBottom => "clothing",
-            _ => "other",
-        };
-    }
-
-    private static int GetRandomizerCategoryOrder(HumanoidVisualLayers layer)
-    {
-        return GetRandomizerCategory(layer) switch
-        {
-            "head" => 0,
-            "hair" => 1,
-            "body" => 2,
-            "arms" => 3,
-            "legs" => 4,
-            "tail" => 5,
-            "clothing" => 6,
-            _ => 7,
-        };
-    }
-
     private MarkingRandomizationConfig GetMarkingRandomizationConfig()
     {
-        return new MarkingRandomizationConfig(_randomizeMarkingStyles, _randomizeMarkingColors);
+        var availableLayers = _markingsModel.OrganData
+            .SelectMany(organ => organ.Value.Layers.Select(layer => new MarkingLayerKey(organ.Key, layer)))
+            .ToHashSet();
+
+        return new MarkingRandomizationConfig(
+            availableLayers.Where(key => !_lockedMarkingStyles.Contains(key)).ToHashSet(),
+            availableLayers.Where(key => !_lockedMarkingColors.Contains(key)).ToHashSet());
     }
 }
