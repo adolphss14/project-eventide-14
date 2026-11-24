@@ -101,8 +101,7 @@ jobs:
             apphost: Content.Client
           - rid: osx-arm64
             target_os: MacOS
-            # Cross-build the ARM64 apphost from the already-working Intel macOS
-            # runner; this avoids the currently stalled macOS ARM64 runner pool.
+            # Cross-build the ARM64 apphost from the Intel macOS runner.
             runner: macos-15-intel
             apphost: Content.Client
     runs-on: ${{ matrix.runner }}
@@ -126,11 +125,20 @@ jobs:
       - name: Restore client dependencies
         run: dotnet restore Content.Client/Content.Client.csproj --runtime ${{ matrix.rid }}
 
+      # Serialize MSBuild and disable its persistent build servers. This prevents
+      # concurrent writers from racing while GenerateRuntimeConfigurationFiles
+      # writes Robust.Client.runtimeconfig.json on macOS.
       - name: Build runnable client
+        env:
+          DOTNET_CLI_USE_MSBUILD_SERVER: "0"
         run: >
           dotnet build Content.Client/Content.Client.csproj
           --configuration Release
           --no-restore
+          --disable-build-servers
+          -m:1
+          /nodeReuse:false
+          /p:UseSharedCompilation=false
           /p:TargetOs=${{ matrix.target_os }}
           /p:RuntimeIdentifier=${{ matrix.rid }}
           /p:AppendRuntimeIdentifierToOutputPath=false
@@ -197,11 +205,43 @@ jobs:
           (cd release/local-client && zip -qr "../SS14.Client_${{ matrix.rid }}.zip" .)
           test -s "release/SS14.Client_${{ matrix.rid }}.zip"
 
-      - name: Upload client package
+      - name: Upload platform client package
         uses: actions/upload-artifact@v4
         with:
           name: SS14.Client_${{ matrix.rid }}_${{ github.sha }}
           path: release/SS14.Client_${{ matrix.rid }}.zip
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 14
+
+  client-artifact:
+    name: Combine client packages (Windows, Linux, macOS)
+    needs: client
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Download all platform client packages
+        uses: actions/download-artifact@v4
+        with:
+          pattern: SS14.Client_*_${{ github.sha }}
+          path: client-packages
+          merge-multiple: true
+
+      - name: Verify combined client packages
+        shell: bash
+        run: |
+          set -euo pipefail
+          for rid in win-x64 linux-x64 linux-arm64 osx-x64 osx-arm64; do
+            test -s "client-packages/SS14.Client_${rid}.zip"
+          done
+          ls -lh client-packages/SS14.Client_*.zip
+
+      - name: Upload combined client artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SS14.Client_${{ github.sha }}
+          path: client-packages/SS14.Client_*.zip
           if-no-files-found: error
           compression-level: 0
           retention-days: 14
