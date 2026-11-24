@@ -243,8 +243,14 @@ namespace Content.Shared.Preferences
             var pool = prototypeManager.EnumeratePrototypes<SpeciesPrototype>()
                 .Where(x => ignoredSpecies == null ? x.RoundStart : x.RoundStart && !ignoredSpecies.Contains(x.ID))
                 .ToArray();
-            var species = random.Pick(pool);
-            return species;
+
+            // Misconfigured servers may temporarily have no selectable round-start species.
+            // Fall back to the default species instead of asking the random source to pick
+            // from an empty collection.
+            if (pool.Length == 0)
+                return prototypeManager.Index(DefaultSpecies);
+
+            return random.Pick(pool);
         }
 
         /// <summary>
