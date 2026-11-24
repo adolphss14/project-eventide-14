@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Made by belay5(discord 677967153139548202)",
+  "copyright": "Made by 𝘽𝙚𝙡𝙖𝙮#7441. Vox states by Flareguy for SS14",
   "size": {
     "x": 32,
     "y": 32
@@ -12,6 +12,9 @@
     },
     {
       "name": "icon-unshaded"
+    },
+    {
+      "name": "icon-flash"
     },
     {
       "name": "light-overlay"
@@ -25,47 +28,12 @@
       "directions": 4
     },
     {
-      "name": "equipped-head-light",
-      "directions": 4
-    },
-    {
       "name": "equipped-head-vox",
-      "directions": 4
-    },
-    {
-      "name": "equipped-head-light-vox",
       "directions": 4
     },
     {
       "name": "equipped-head-unshaded-vox",
       "directions": 4
-    },
-    {
-      "name": "equipped-head-reptilian",
-      "directions": 4
-    },
-    {
-      "name": "equipped-head-light-reptilian",
-      "directions": 4
-    },
-    {
-      "name": "equipped-head-unshaded-reptilian",
-      "directions": 4
-    },
-    {
-      "name": "equipped-head-vulpkanin",
-      "directions": 4
-    },
-    {
-      "name": "equipped-head-unshaded-vulpkanin",
-      "directions": 4
-    },
-    {
-      "name": "equipped-head-light-vulpkanin",
-      "directions": 4
-    },
-    {
-      "name": "icon-flash"
     }
   ]
 }
