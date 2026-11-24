@@ -18,15 +18,59 @@ public sealed partial class HumanoidProfileEditor
         };
     }
 
+
+    private void BindNamePartRandomizationFlags()
+    {
+        RandomizeFirstNameCheckBox.Pressed =
+            (RandomizeLockButton.RandomizeCfg & HumanoidCharacterProfile.RandomizeCfg.FirstName) != 0;
+        RandomizeLastNameCheckBox.Pressed =
+            (RandomizeLockButton.RandomizeCfg & HumanoidCharacterProfile.RandomizeCfg.LastName) != 0;
+
+        RandomizeFirstNameCheckBox.OnToggled += args =>
+        {
+            if (args.Pressed)
+                RandomizeLockButton.RandomizeCfg |= HumanoidCharacterProfile.RandomizeCfg.FirstName;
+            else
+                RandomizeLockButton.RandomizeCfg &= ~HumanoidCharacterProfile.RandomizeCfg.FirstName;
+
+            SyncNameRandomizationFlag();
+        };
+
+        RandomizeLastNameCheckBox.OnToggled += args =>
+        {
+            if (args.Pressed)
+                RandomizeLockButton.RandomizeCfg |= HumanoidCharacterProfile.RandomizeCfg.LastName;
+            else
+                RandomizeLockButton.RandomizeCfg &= ~HumanoidCharacterProfile.RandomizeCfg.LastName;
+
+            SyncNameRandomizationFlag();
+        };
+
+        SyncNameRandomizationFlag();
+    }
+
+    private static void SyncNameRandomizationFlag()
+    {
+        RandomizeLockButton.RandomizeCfg |= HumanoidCharacterProfile.RandomizeCfg.NameParts;
+
+        if ((RandomizeLockButton.RandomizeCfg &
+             (HumanoidCharacterProfile.RandomizeCfg.FirstName | HumanoidCharacterProfile.RandomizeCfg.LastName)) != 0)
+        {
+            RandomizeLockButton.RandomizeCfg |= HumanoidCharacterProfile.RandomizeCfg.Name;
+        }
+        else
+        {
+            RandomizeLockButton.RandomizeCfg &= ~HumanoidCharacterProfile.RandomizeCfg.Name;
+        }
+    }
+
     private void InitializeRandomizationControls()
     {
         RandomizeUnlockedButton.OnPressed += _ => RandomizeProfile();
         RandomizeNameButton.OnPressed += _ => RandomizeNameOnly();
         RandomizeSettingsButton.OnPressed += _ => ToggleRandomizationSettings();
 
-        BindRandomizationFlag(RandomizeNameCheckBox, HumanoidCharacterProfile.RandomizeCfg.Name);
-        BindRandomizationFlag(RandomizeFirstNameCheckBox, HumanoidCharacterProfile.RandomizeCfg.FirstName);
-        BindRandomizationFlag(RandomizeLastNameCheckBox, HumanoidCharacterProfile.RandomizeCfg.LastName);
+        BindNamePartRandomizationFlags();
         BindRandomizationFlag(RandomizeSpeciesCheckBox, HumanoidCharacterProfile.RandomizeCfg.Species);
         BindRandomizationFlag(RandomizeAgeCheckBox, HumanoidCharacterProfile.RandomizeCfg.Age);
         BindRandomizationFlag(RandomizeSexCheckBox, HumanoidCharacterProfile.RandomizeCfg.Sex);
