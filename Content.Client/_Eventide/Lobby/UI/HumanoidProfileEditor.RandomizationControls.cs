@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.Humanoid;
 using Content.Shared.Corvax.CCCVars;
 using Content.Shared.Preferences;
 using Robust.Client.UserInterface.Controls;
