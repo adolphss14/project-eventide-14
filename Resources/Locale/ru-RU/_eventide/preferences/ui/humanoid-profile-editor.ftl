@@ -1,5 +1,5 @@
 # Настройки рандомизации персонажа
-humanoid-profile-editor-randomize-name-now-tooltip = Случайно изменить имя
+humanoid-profile-editor-randomize-name-now-tooltip = Создать новое имя с учётом выбранных настроек имени и фамилии
 humanoid-profile-editor-randomizer-settings-tooltip = Настройки рандомизации
 humanoid-profile-editor-randomizer-name-settings = Имя
 humanoid-profile-editor-randomizer-appearance-settings = Внешность
@@ -26,6 +26,9 @@ humanoid-profile-editor-randomize-tail = Хвост, крылья и допол�
 humanoid-profile-editor-randomize-tail-color = Цвет хвоста, крыльев и дополнительных частей
 humanoid-profile-editor-randomize-body-markings = Метки тела и крылья
 humanoid-profile-editor-randomize-body-markings-color = Цвет меток тела и крыльев
+
+humanoid-profile-editor-randomizer-preferences-settings = Предпочтения
+humanoid-profile-editor-randomizer-marking-layers = Стили и цвета внешности
 
 # Настройка стиля и цвета для каждой доступной категории внешности
 humanoid-profile-editor-randomizer-layer-style = Стиль: { $layer }
