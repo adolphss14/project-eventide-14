@@ -13,11 +13,11 @@ public sealed partial class HumanoidProfileEditor
             return;
 
         var config = RandomizeLockButton.RandomizeCfg;
-        if ((config & HumanoidCharacterProfile.RandomizeCfg.Name) == 0)
-            return;
-
         var randomizeFirstName = (config & HumanoidCharacterProfile.RandomizeCfg.FirstName) != 0;
         var randomizeLastName = (config & HumanoidCharacterProfile.RandomizeCfg.LastName) != 0;
+
+        if (!randomizeFirstName && !randomizeLastName)
+            return;
 
         Profile = Profile.RandomizeName(randomizeFirstName, randomizeLastName);
         UpdateNameEdit();
