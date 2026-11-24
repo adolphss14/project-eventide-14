@@ -74,10 +74,10 @@ public sealed partial class HumanoidProfileEditor
                     !IsClothingLoadoutGroup(groupId.Id))
                     continue;
 
-                // Validate prototypes and role restrictions before applying style filters.
-                // This prevents stale or unavailable loadout IDs from reaching Index() below.
+                // Drop stale prototype references before style filters call Index().
+                // Role/points validation is intentionally deferred until the full loadout is assembled.
                 var candidates = groupProto.Loadouts
-                    .Where(candidate => loadout.IsValid(Profile, session, candidate, collection, out _))
+                    .Where(candidate => _prototypeManager.TryIndex(candidate, out _))
                     .ToList();
                 if (candidates.Count == 0)
                     continue;
