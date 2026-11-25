@@ -225,8 +225,8 @@
     sprite: _Genesis/Clothing/OuterClothing/Hardsuits/specialforce.rsi
   - type: Clothing
     sprite: _Genesis/Clothing/OuterClothing/Hardsuits/specialforce.rsi
-    equipSound: /Audio/Backmen/Misc/suit/nominal.ogg
-    unequipSound: /Audio/Backmen/Misc/suit/mechmove03.ogg
+    equipSound: /Audio/Mecha/mechmove03.ogg
+    unequipSound: /Audio/Mecha/mechmove03.ogg
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSpecialForce
 
@@ -276,8 +276,8 @@
     sprite: _Genesis/Clothing/OuterClothing/Hardsuits/RescueTroopsUnits/dungeonmasterhardsuit.rsi
   - type: Clothing
     sprite: _Genesis/Clothing/OuterClothing/Hardsuits/RescueTroopsUnits/dungeonmasterhardsuit.rsi
-    equipSound: /Audio/Backmen/Misc/suit/nominal.ogg
-    unequipSound: /Audio/Backmen/Misc/suit/mechmove03.ogg
+    equipSound: /Audio/Mecha/mechmove03.ogg
+    unequipSound: /Audio/Mecha/mechmove03.ogg
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitRTULeader
 
