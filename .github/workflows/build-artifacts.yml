@@ -78,34 +78,9 @@ jobs:
           retention-days: 14
 
   client:
-    name: Client package (${{ matrix.rid }})
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - rid: win-x64
-            target_os: Windows
-            runner: ubuntu-latest
-            apphost: Content.Client.exe
-          - rid: linux-x64
-            target_os: Linux
-            runner: ubuntu-latest
-            apphost: Content.Client
-          - rid: linux-arm64
-            target_os: Linux
-            runner: ubuntu-latest
-            apphost: Content.Client
-          - rid: osx-x64
-            target_os: MacOS
-            runner: macos-15-intel
-            apphost: Content.Client
-          - rid: osx-arm64
-            target_os: MacOS
-            # Cross-build the ARM64 apphost from the Intel macOS runner.
-            runner: macos-15-intel
-            apphost: Content.Client
-    runs-on: ${{ matrix.runner }}
-    timeout-minutes: 120
+    name: Client packages (Windows, Linux, macOS)
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
 
     steps:
       - name: Checkout repository
@@ -122,74 +97,102 @@ jobs:
       - name: Run repository build setup
         run: python3 RUN_THIS.py
 
-      - name: Restore client dependencies
-        run: dotnet restore Content.Client/Content.Client.csproj --runtime ${{ matrix.rid }}
-
-      # Serialize MSBuild and disable its persistent build servers. This prevents
-      # concurrent writers from racing while GenerateRuntimeConfigurationFiles
-      # writes Robust.Client.runtimeconfig.json on macOS.
-      - name: Build runnable client
+      # Build each RID sequentially in the same job. Runtime-specific apphosts are
+      # supplied by the .NET host packs, so cross-building them does not need a
+      # separate runner or a matrix job for every operating system.
+      - name: Build and package all runnable client platforms
+        shell: bash
         env:
           DOTNET_CLI_USE_MSBUILD_SERVER: "0"
-        run: >
-          dotnet build Content.Client/Content.Client.csproj
-          --configuration Release
-          --no-restore
-          --disable-build-servers
-          -m:1
-          /nodeReuse:false
-          /p:UseSharedCompilation=false
-          /p:TargetOs=${{ matrix.target_os }}
-          /p:RuntimeIdentifier=${{ matrix.rid }}
-          /p:AppendRuntimeIdentifierToOutputPath=false
-          /p:SelfContained=false
-          /p:FullRelease=false
-
-      - name: Assemble runnable client package
-        shell: bash
         run: |
           set -euo pipefail
+
+          CLIENT_PROJECT="Content.Client/Content.Client.csproj"
           CLIENT_DIR="bin/Content.Client"
-          APPHOST="${{ matrix.apphost }}"
+          REQUIRED_ASSEMBLIES=(
+            Content.Client.dll
+            Content.Shared.dll
+            Content.Shared.Database.dll
+            Content.Corvax.Interfaces.Client.dll
+            Content.Corvax.Interfaces.Shared.dll
+          )
 
-          test -s "$CLIENT_DIR/$APPHOST"
-          for assembly in \
-            Content.Client.dll \
-            Content.Shared.dll \
-            Content.Shared.Database.dll \
-            Content.Corvax.Interfaces.Client.dll \
-            Content.Corvax.Interfaces.Shared.dll; do
-            test -s "$CLIENT_DIR/$assembly" || {
-              echo "::error::Missing required client assembly: $CLIENT_DIR/$assembly"
-              exit 1
-            }
-          done
+          for rid in win-x64 linux-x64 linux-arm64 osx-x64 osx-arm64; do
+            case "$rid" in
+              win-x64)
+                target_os="Windows"
+                apphost="Content.Client.exe"
+                ;;
+              linux-x64|linux-arm64)
+                target_os="Linux"
+                apphost="Content.Client"
+                ;;
+              osx-x64|osx-arm64)
+                target_os="MacOS"
+                apphost="Content.Client"
+                ;;
+              *)
+                echo "::error::Unsupported runtime identifier: $rid"
+                exit 1
+                ;;
+            esac
 
-          mkdir -p release/local-client/bin
-          cp -a "$CLIENT_DIR" release/local-client/bin/Content.Client
-          cp -a Resources release/local-client/Resources
+            echo "::group::Build client for $rid ($target_os)"
+            # All RIDs share the repository's configured output path. Remove it
+            # before each build so no apphost or files from a previous RID leak
+            # into the next platform archive.
+            rm -rf "$CLIENT_DIR"
 
-          if [[ "${{ matrix.rid }}" == "win-x64" ]]; then
-            cat > release/local-client/run_client.bat <<'EOF'
+            dotnet restore "$CLIENT_PROJECT" --runtime "$rid"
+
+            dotnet build "$CLIENT_PROJECT" \
+              --configuration Release \
+              --no-restore \
+              --disable-build-servers \
+              -m:1 \
+              /nodeReuse:false \
+              /p:UseSharedCompilation=false \
+              /p:TargetOs="$target_os" \
+              /p:RuntimeIdentifier="$rid" \
+              /p:AppendRuntimeIdentifierToOutputPath=false \
+              /p:SelfContained=false \
+              /p:FullRelease=false
+
+            test -s "$CLIENT_DIR/$apphost"
+            for assembly in "${REQUIRED_ASSEMBLIES[@]}"; do
+              test -s "$CLIENT_DIR/$assembly" || {
+                echo "::error::Missing required client assembly for $rid: $CLIENT_DIR/$assembly"
+                exit 1
+              }
+            done
+
+            PACKAGE_DIR="release/local-client"
+            rm -rf "$PACKAGE_DIR"
+            mkdir -p "$PACKAGE_DIR/bin"
+            cp -a "$CLIENT_DIR" "$PACKAGE_DIR/bin/Content.Client"
+            cp -a Resources "$PACKAGE_DIR/Resources"
+
+            if [[ "$rid" == "win-x64" ]]; then
+              cat > "$PACKAGE_DIR/run_client.bat" <<'EOF'
           @echo off
           cd /d "%~dp0bin\Content.Client"
           Content.Client.exe
           pause
           EOF
-          else
-            chmod +x "release/local-client/bin/Content.Client/$APPHOST"
-            cat > release/local-client/run_client.sh <<'EOF'
+            else
+              chmod +x "$PACKAGE_DIR/bin/Content.Client/$apphost"
+              cat > "$PACKAGE_DIR/run_client.sh" <<'EOF'
           #!/usr/bin/env bash
           set -e
           SCRIPT_DIR="$(cd -- "$(dirname -- "$0")" && pwd)"
           cd "$SCRIPT_DIR/bin/Content.Client"
           exec ./Content.Client
           EOF
-            chmod +x release/local-client/run_client.sh
-          fi
+              chmod +x "$PACKAGE_DIR/run_client.sh"
+            fi
 
-          cat > release/local-client/README.txt <<EOF
-          EVENTIDE LOCAL CLIENT (${{ matrix.rid }})
+            cat > "$PACKAGE_DIR/README.txt" <<EOF
+          EVENTIDE LOCAL CLIENT ($rid)
 
           1. Extract the complete archive, preserving its folders.
           2. Windows: run run_client.bat.
@@ -202,46 +205,25 @@ jobs:
           Requires the .NET 10 runtime for this platform.
           EOF
 
-          (cd release/local-client && zip -qr "../SS14.Client_${{ matrix.rid }}.zip" .)
-          test -s "release/SS14.Client_${{ matrix.rid }}.zip"
+            (cd "$PACKAGE_DIR" && zip -qr "../SS14.Client_${rid}.zip" .)
+            test -s "release/SS14.Client_${rid}.zip"
+            echo "::endgroup::"
+          done
 
-      - name: Upload platform client package
-        uses: actions/upload-artifact@v4
-        with:
-          name: SS14.Client_${{ matrix.rid }}_${{ github.sha }}
-          path: release/SS14.Client_${{ matrix.rid }}.zip
-          if-no-files-found: error
-          compression-level: 0
-          retention-days: 14
-
-  client-artifact:
-    name: Combine client packages (Windows, Linux, macOS)
-    needs: client
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-
-    steps:
-      - name: Download all platform client packages
-        uses: actions/download-artifact@v4
-        with:
-          pattern: SS14.Client_*_${{ github.sha }}
-          path: client-packages
-          merge-multiple: true
-
-      - name: Verify combined client packages
+      - name: Verify all client packages
         shell: bash
         run: |
           set -euo pipefail
           for rid in win-x64 linux-x64 linux-arm64 osx-x64 osx-arm64; do
-            test -s "client-packages/SS14.Client_${rid}.zip"
+            test -s "release/SS14.Client_${rid}.zip"
           done
-          ls -lh client-packages/SS14.Client_*.zip
+          ls -lh release/SS14.Client_*.zip
 
-      - name: Upload combined client artifact
+      - name: Upload client packages
         uses: actions/upload-artifact@v4
         with:
           name: SS14.Client_${{ github.sha }}
-          path: client-packages/SS14.Client_*.zip
+          path: release/SS14.Client_*.zip
           if-no-files-found: error
           compression-level: 0
           retention-days: 14
