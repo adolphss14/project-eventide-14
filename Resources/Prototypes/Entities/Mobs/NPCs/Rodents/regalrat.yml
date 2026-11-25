@@ -128,6 +128,14 @@
   - type: RatKing
     hungerPerArmyUse: 25
     hungerPerDomainUse: 50
+  - type: ActionGrant
+    actions:
+    - ActionRatKingRaiseArmy
+    - ActionRatKingDomain
+    - ActionRatKingOrderStay
+    - ActionRatKingOrderFollow
+    - ActionRatKingOrderCheeseEm
+    - ActionRatKingOrderLoose
   - type: TTS # Corvax-TTS
     voice: Rat
 
