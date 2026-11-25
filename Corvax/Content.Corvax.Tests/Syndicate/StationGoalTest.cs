@@ -190,7 +190,7 @@ public sealed class StationGoalTest : GameTest
 
         // The grid transform coordinates are relative to the parent map, not the grid itself.
         // Spawn at the grid origin so GetOwningStation can resolve the station for this fax.
-        var coords = new EntityCoordinates(grid.Value, System.Numerics.Vector2.Zero);
+        var coords = new Robust.Shared.Map.EntityCoordinates(grid.Value, System.Numerics.Vector2.Zero);
         var fax = entManager.SpawnAttachedTo("FaxMachineCaptain", coords);
         Assert.That(stationSystem.GetOwningStation(fax), Is.EqualTo(station),
             "The spawned fax machine must belong to the station that will receive the goal.");
