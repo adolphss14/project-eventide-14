@@ -22,19 +22,25 @@ public sealed partial class HumanoidProfileEditor
     /// <summary>
     /// Randomizes wearable clothing for preferred jobs and selected antagonist roles.
     /// Uniform style and the style of all other clothing slots are deliberately independent.
+    /// Disabling style filters allows all available clothing variants; it does not disable randomization.
     /// Non-clothing equipment groups are never changed by this option.
     /// </summary>
     private void RandomizeRoleLoadouts(
-        bool considerClothing,
+        bool applyStyleFilters,
         LoadoutClothingStyle clothingStyle,
         UniformRandomizationStyle uniformStyle,
         IRobustRandom random)
     {
-        if (!considerClothing ||
-            Profile is null ||
+        if (Profile is null ||
             _playerManager.LocalSession is not { } session ||
             IoCManager.Instance is not { } collection)
             return;
+
+        if (!applyStyleFilters)
+        {
+            clothingStyle = LoadoutClothingStyle.Any;
+            uniformStyle = UniformRandomizationStyle.Any;
+        }
 
         var roleIds = new HashSet<string>(StringComparer.Ordinal);
 
@@ -68,7 +74,11 @@ public sealed partial class HumanoidProfileEditor
                     !IsClothingLoadoutGroup(groupId.Id))
                     continue;
 
-                var candidates = groupProto.Loadouts.ToList();
+                // Drop stale prototype references before style filters call Index().
+                // Role/points validation is intentionally deferred until the full loadout is assembled.
+                var candidates = groupProto.Loadouts
+                    .Where(candidate => _prototypeManager.TryIndex(candidate, out _))
+                    .ToList();
                 if (candidates.Count == 0)
                     continue;
 
@@ -107,7 +117,15 @@ public sealed partial class HumanoidProfileEditor
                             .ToList();
 
                         if (neutralCandidates.Count > 0)
+                        {
                             candidates = neutralCandidates;
+                        }
+                        else
+                        {
+                            // No compatible variant exists for this slot. Keep the current selection
+                            // rather than silently violating the requested style filter.
+                            continue;
+                        }
                     }
                 }
 
@@ -166,7 +184,7 @@ public sealed partial class HumanoidProfileEditor
     {
         string[] clothingSlots =
         [
-            "Jumpsuit", "Uniform", "OuterClothing", "Head", "Neck", "Shoes",
+            "Jumpsuit", "Uniform", "OuterClothing", "Head", "Neck", "Shoes", "Back",
             "Gloves", "Mask", "Glasses", "Ears", "Belt", "Wrist"
         ];
 

@@ -1,9 +1,12 @@
 - type: entity
   parent: BaseAction
   id: ActionUmaGallop
+  name: action-name-uma-gallop
+  description: action-description-uma-gallop
   components:
   - type: Action
     useDelay: 120
+    raiseOnUser: true
     itemIconStyle: BigAction
     priority: -10
   - type: Sprite

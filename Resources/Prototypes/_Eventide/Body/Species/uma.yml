@@ -6,10 +6,12 @@
     enum.HumanoidVisualLayers.HeadTop:
       limit: 1
       required: true
+      onlyGroupWhitelisted: true
       default: [UmaEarsDefault]
     enum.HumanoidVisualLayers.Tail:
       limit: 1
       required: true
+      onlyGroupWhitelisted: true
       default: [UmaTailDefault]
 
 - type: entity

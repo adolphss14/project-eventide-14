@@ -1,10 +1,14 @@
 # Настройки рандомизации персонажа
-humanoid-profile-editor-randomize-name-now-tooltip = Случайно изменить имя
+humanoid-profile-editor-randomize-name-now-tooltip = Создать новое имя с учётом выбранных настроек имени и фамилии
 humanoid-profile-editor-randomizer-settings-tooltip = Настройки рандомизации
 humanoid-profile-editor-randomizer-name-settings = Имя
 humanoid-profile-editor-randomizer-appearance-settings = Внешность
 humanoid-profile-editor-randomize-loadouts-button = Одежда
-humanoid-profile-editor-randomizer-consider-clothing = Учитывать одежду
+humanoid-profile-editor-randomize-voice = Голос персонажа
+humanoid-profile-editor-randomize-tts-voice = TTS-голос
+humanoid-profile-editor-randomizer-spawn-priority = Приоритет появления
+humanoid-profile-editor-randomizer-unavailable-preference = Если работа недоступна
+humanoid-profile-editor-randomizer-consider-clothing = Применять фильтры стиля
 humanoid-profile-editor-randomizer-clothing-style = Стиль остальной одежды
 humanoid-profile-editor-randomizer-clothing-any = Любой стиль
 humanoid-profile-editor-randomizer-clothing-male = Маскулинная
@@ -26,6 +30,9 @@ humanoid-profile-editor-randomize-tail = Хвост, крылья и допол�
 humanoid-profile-editor-randomize-tail-color = Цвет хвоста, крыльев и дополнительных частей
 humanoid-profile-editor-randomize-body-markings = Метки тела и крылья
 humanoid-profile-editor-randomize-body-markings-color = Цвет меток тела и крыльев
+
+humanoid-profile-editor-randomizer-preferences-settings = Предпочтения
+humanoid-profile-editor-randomizer-marking-layers = Стили и цвета внешности
 
 # Настройка стиля и цвета для каждой доступной категории внешности
 humanoid-profile-editor-randomizer-layer-style = Стиль: { $layer }
@@ -59,3 +66,16 @@ humanoid-profile-editor-randomizer-layer-handcuffs = Наручники
 humanoid-profile-editor-randomizer-layer-stencilmask = Трафаретная маска
 humanoid-profile-editor-randomizer-layer-ensnare = Сеть / захват
 humanoid-profile-editor-randomizer-layer-fire = Огонь
+
+# Категории слоёв внешности в настройках рандомизатора
+humanoid-profile-editor-randomizer-category-head = Голова
+humanoid-profile-editor-randomizer-category-hair = Волосы и причёска
+humanoid-profile-editor-randomizer-category-body = Тело
+humanoid-profile-editor-randomizer-category-arms = Руки
+humanoid-profile-editor-randomizer-category-legs = Ноги
+humanoid-profile-editor-randomizer-category-tail = Хвост и дополнительные части
+humanoid-profile-editor-randomizer-category-clothing = Нижнее бельё
+humanoid-profile-editor-randomizer-category-other = Прочее
+
+# Названия органов берутся из прототипов текущего вида.
+humanoid-profile-editor-randomizer-organ = Орган: { $organ }

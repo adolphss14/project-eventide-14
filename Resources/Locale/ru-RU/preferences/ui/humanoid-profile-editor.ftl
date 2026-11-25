@@ -1,6 +1,6 @@
 humanoid-profile-editor-randomize = Рандомизация
 humanoid-profile-editor-randomize-unlocked-button = Рандомизировать
-humanoid-profile-editor-randomize-name-button = Имя
+humanoid-profile-editor-randomize-name-button = Рандомизировать
 humanoid-profile-editor-randomize-species-button = Вид
 humanoid-profile-editor-randomize-age-button = Возраст
 humanoid-profile-editor-randomize-sex-button = Пол

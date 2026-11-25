@@ -243,8 +243,14 @@ namespace Content.Shared.Preferences
             var pool = prototypeManager.EnumeratePrototypes<SpeciesPrototype>()
                 .Where(x => ignoredSpecies == null ? x.RoundStart : x.RoundStart && !ignoredSpecies.Contains(x.ID))
                 .ToArray();
-            var species = random.Pick(pool);
-            return species;
+
+            // Misconfigured servers may temporarily have no selectable round-start species.
+            // Fall back to the default species instead of asking the random source to pick
+            // from an empty collection.
+            if (pool.Length == 0)
+                return prototypeManager.Index(DefaultSpecies);
+
+            return random.Pick(pool);
         }
 
         /// <summary>
@@ -279,16 +285,19 @@ namespace Content.Shared.Preferences
         }
 
         // Corvax-TTS-Start
-        public static string RandomTTS(ProtoId<EmoteSoundsPrototype> voicePrototype)
+        public static string RandomTTS(ProtoId<EmoteSoundsPrototype> voicePrototype, Sex fallbackSex = Sex.Male)
         {
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             var random = IoCManager.Resolve<IRobustRandom>();
 
-            var voiceId = random.Pick(prototypeManager
-                .EnumeratePrototypes<TTSVoicePrototype>()
-                .Where(o => CanHaveVoice(o, voicePrototype)).ToArray()
-            ).ID;
-            return voiceId;
+            var compatibleVoices = prototypeManager.EnumeratePrototypes<TTSVoicePrototype>()
+                .Where(voice => CanHaveVoice(voice, voicePrototype))
+                .ToArray();
+
+            // A custom voice prototype may have no matching TTS voices. Keep randomization safe.
+            return compatibleVoices.Length == 0
+                ? HumanoidProfileSystem.DefaultSexVoice[fallbackSex]
+                : random.Pick(compatibleVoices).ID;
         }
         // Corvax-TTS-End
 

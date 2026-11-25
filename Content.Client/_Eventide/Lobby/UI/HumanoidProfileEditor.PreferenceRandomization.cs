@@ -91,4 +91,6 @@ public sealed partial class HumanoidProfileEditor
                     Profile = Profile.WithTraitPreference(trait.ID, _prototypeManager);
             }
         }
-    }}
+    }
+}
+

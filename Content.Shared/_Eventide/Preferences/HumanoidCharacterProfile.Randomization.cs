@@ -50,6 +50,10 @@ public sealed partial class HumanoidCharacterProfile
             Loadouts = 1 << 23,
             // Distinguishes explicit first/last-name toggles from legacy callers that only set Name.
             NameParts = 1 << 24,
+            Voice = 1 << 25,
+            TTSVoice = 1 << 26,
+            SpawnPriority = 1 << 27,
+            PreferenceUnavailable = 1 << 28,
         }
 
         /// <summary>
@@ -80,7 +84,11 @@ public sealed partial class HumanoidCharacterProfile
             | RandomizeCfg.Antags
             | RandomizeCfg.Traits
             | RandomizeCfg.Loadouts
-            | RandomizeCfg.NameParts;
+            | RandomizeCfg.NameParts
+            | RandomizeCfg.Voice
+            | RandomizeCfg.TTSVoice
+            | RandomizeCfg.SpawnPriority
+            | RandomizeCfg.PreferenceUnavailable;
 
         /// <summary>
         /// Generates a randomized character profile with selective randomizing.
@@ -91,6 +99,7 @@ public sealed partial class HumanoidCharacterProfile
         public static HumanoidCharacterProfile Random(RandomizeCfg randomizeCfg, HumanoidCharacterProfile baseProfile, MarkingRandomizationConfig? markingRandomizationConfig = null)
         {
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            var random = IoCManager.Resolve<IRobustRandom>();
 
             // Start from the existing profile so job, antagonist, trait and loadout preferences survive appearance randomization.
             var profile = new HumanoidCharacterProfile(baseProfile);
@@ -108,8 +117,13 @@ public sealed partial class HumanoidCharacterProfile
             }
             var speciesProto = prototypeManager.Index(profile.Species);
 
-            profile.Sex = (randomizeCfg & RandomizeCfg.Sex) != 0 ? RandomSex(speciesProto) : baseProfile.Sex;
-            profile.Voice = speciesProto.DefaultSoundsBySex[(int)profile.Sex];
+            profile.Sex = (randomizeCfg & RandomizeCfg.Sex) != 0 || !speciesProto.Sexes.Contains(baseProfile.Sex)
+                ? RandomSex(speciesProto)
+                : baseProfile.Sex;
+            var defaultVoice = speciesProto.DefaultSoundsBySex[(int)profile.Sex];
+            profile.Voice = (randomizeCfg & RandomizeCfg.Voice) != 0 && speciesProto.Voices.Count > 0
+                ? random.Pick(speciesProto.Voices)
+                : speciesProto.Voices.Contains(baseProfile.Voice) ? baseProfile.Voice : defaultVoice;
             profile.Gender = (randomizeCfg & RandomizeCfg.Gender) != 0 ? RandomGender(profile.Sex) : baseProfile.Gender;
             if ((randomizeCfg & RandomizeCfg.Name) != 0)
             {
@@ -119,11 +133,11 @@ public sealed partial class HumanoidCharacterProfile
 
                 if (randomizeFirst || randomizeLast)
                 {
-                    var generatedName = SplitName(RandomName(speciesProto, profile.Gender));
-                    var existingName = SplitName(baseProfile.Name);
+                    var generatedName = SplitName(speciesProto, RandomName(speciesProto, profile.Gender));
+                    var existingName = SplitName(speciesProto, baseProfile.Name);
                     var first = randomizeFirst ? generatedName.First : existingName.First;
                     var last = randomizeLast ? generatedName.Last : existingName.Last;
-                    profile.Name = string.Join(" ", new[] { first, last }.Where(part => !string.IsNullOrWhiteSpace(part)));
+                    profile.Name = JoinName(speciesProto, first, last);
                 }
                 else
                 {
@@ -136,19 +150,53 @@ public sealed partial class HumanoidCharacterProfile
                 profile.Name = baseProfile.Name;
             }
             profile.Age = (randomizeCfg & RandomizeCfg.Age) != 0 ? RandomAge(speciesProto) : baseProfile.Age;
-            profile.TTSVoice = (randomizeCfg & RandomizeCfg.Age) != 0 ? RandomTTS(profile.Voice) : baseProfile.TTSVoice; // Corvax-TTS
+            if ((randomizeCfg & RandomizeCfg.TTSVoice) != 0)
+            {
+                profile.TTSVoice = RandomTTS(profile.Voice, profile.Sex);
+            }
+            else if (prototypeManager.TryIndex<TTSVoicePrototype>(baseProfile.TTSVoice, out var existingTtsVoice) &&
+                     CanHaveVoice(existingTtsVoice, profile.Voice))
+            {
+                profile.TTSVoice = baseProfile.TTSVoice;
+            }
+            else
+            {
+                profile.TTSVoice = HumanoidProfileSystem.DefaultSexVoice[profile.Sex];
+            }
 
             profile.Appearance = HumanoidCharacterAppearance.Random(speciesProto, profile.Sex, randomizeCfg, baseProfile.Appearance, markingRandomizationConfig);
 
             return profile;
         }
 
-        private static (string First, string Last) SplitName(string name)
+        private static (string First, string Last) SplitName(SpeciesPrototype species, string name)
         {
-            var separator = name.IndexOf(' ');
-            return separator < 0
-                ? (name, string.Empty)
-                : (name[..separator], name[(separator + 1)..].Trim());
+            // First-only and compound-first species do not have a surname field.
+            if (species.Naming is SpeciesNaming.First or SpeciesNaming.FirstDashFirst)
+                return (name, string.Empty);
+
+            var separator = species.Naming == SpeciesNaming.TheFirstofLast
+                ? name.IndexOf(" of ", StringComparison.OrdinalIgnoreCase)
+                : name.IndexOf(' ');
+
+            if (separator < 0)
+                return (name, string.Empty);
+
+            var separatorLength = species.Naming == SpeciesNaming.TheFirstofLast ? 4 : 1;
+            return (name[..separator].Trim(), name[(separator + separatorLength)..].Trim());
+        }
+
+        private static string JoinName(SpeciesPrototype species, string first, string last)
+        {
+            if (species.Naming == SpeciesNaming.FirstDashFirst || string.IsNullOrWhiteSpace(last))
+                return first;
+
+            return species.Naming switch
+            {
+                SpeciesNaming.TheFirstofLast => $"{first} of {last}",
+                SpeciesNaming.First => first,
+                _ => $"{first} {last}",
+            };
         }
 
         /// <summary>
@@ -162,12 +210,12 @@ public sealed partial class HumanoidCharacterProfile
 
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             var species = prototypeManager.Index(Species);
-            var generatedName = SplitName(RandomName(species, Gender));
-            var existingName = SplitName(Name);
+            var generatedName = SplitName(species, RandomName(species, Gender));
+            var existingName = SplitName(species, Name);
             var first = firstName ? generatedName.First : existingName.First;
             var last = lastName ? generatedName.Last : existingName.Last;
 
-            return WithName(string.Join(" ", new[] { first, last }.Where(part => !string.IsNullOrWhiteSpace(part))));
+            return WithName(JoinName(species, first, last));
         }
 
 }

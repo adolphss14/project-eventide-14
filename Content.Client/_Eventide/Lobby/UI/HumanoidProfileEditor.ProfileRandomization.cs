@@ -1,3 +1,4 @@
+using System;
 using Content.Shared.Preferences;
 using Content.Shared.Preferences.Loadouts;
 using Robust.Shared;
@@ -13,11 +14,11 @@ public sealed partial class HumanoidProfileEditor
             return;
 
         var config = RandomizeLockButton.RandomizeCfg;
-        if ((config & HumanoidCharacterProfile.RandomizeCfg.Name) == 0)
-            return;
-
         var randomizeFirstName = (config & HumanoidCharacterProfile.RandomizeCfg.FirstName) != 0;
         var randomizeLastName = (config & HumanoidCharacterProfile.RandomizeCfg.LastName) != 0;
+
+        if (!randomizeFirstName && !randomizeLastName)
+            return;
 
         Profile = Profile.RandomizeName(randomizeFirstName, randomizeLastName);
         UpdateNameEdit();
@@ -55,6 +56,12 @@ public sealed partial class HumanoidProfileEditor
         if ((config & HumanoidCharacterProfile.RandomizeCfg.Traits) != 0)
             RandomizeTraitPreferences(random);
 
+        if ((config & HumanoidCharacterProfile.RandomizeCfg.SpawnPriority) != 0)
+            Profile = Profile.WithSpawnPriorityPreference(random.Pick(Enum.GetValues<SpawnPriorityPreference>()));
+
+        if ((config & HumanoidCharacterProfile.RandomizeCfg.PreferenceUnavailable) != 0)
+            Profile = Profile.WithPreferenceUnavailable(random.Pick(Enum.GetValues<PreferenceUnavailableMode>()));
+
         if ((config & HumanoidCharacterProfile.RandomizeCfg.Loadouts) != 0)
         {
             RandomizeRoleLoadouts(
@@ -66,4 +73,6 @@ public sealed partial class HumanoidProfileEditor
 
         SetProfile(Profile, CharacterSlot);
         SetDirty();
-    }}
+    }
+}
+

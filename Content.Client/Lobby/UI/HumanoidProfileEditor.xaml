@@ -16,14 +16,10 @@
                             <BoxContainer Orientation="Horizontal" VerticalExpand="True">
                                 <Label Text="{Loc 'humanoid-profile-editor-name-label'}" />
                                 <LineEdit Name="NameEdit" MinSize="245 0" VerticalAlignment="Center" Margin="5 0 0 0" />
-                            </BoxContainer>
-                            <BoxContainer Orientation="Horizontal" SeparationOverride="4">
-                                <ui:RandomizeLockButton Name="RandomizeNameLockButton" For="Name"
-                                    LabelText="{Loc 'humanoid-profile-editor-randomize-name-button'}" />
-                                <Button Name="RandomizeNameButton" Text="↻"
-                                    ToolTip="{Loc 'humanoid-profile-editor-randomize-name-now-tooltip'}" />
-                                <Button Name="NameRandomizeSettingsButton" Text="⚙"
-                                    ToolTip="{Loc 'humanoid-profile-editor-randomizer-settings-tooltip'}" />
+                                <Button Name="RandomizeNameButton"
+                                        Text="{Loc 'humanoid-profile-editor-randomize-name-button'}"
+                                        ToolTip="{Loc 'humanoid-profile-editor-randomize-name-now-tooltip'}"
+                                        Margin="5 0 0 0" />
                             </BoxContainer>
                             <RichTextLabel Name="WarningLabel" HorizontalExpand="False"
                                             VerticalExpand="True" MaxWidth="425"
@@ -37,44 +33,68 @@
                         <BoxContainer Orientation="Vertical">
                             <Label Text="{Loc 'humanoid-profile-editor-randomize'}" HorizontalAlignment="Center"/>
                             <controls:Separator StyleClasses="LowDivider" Margin="0 10"/>
-                            <GridContainer Columns="2" MinWidth="250" HorizontalExpand="True">
-                                <ui:RandomizeLockButton For="Species" LabelText="{Loc 'humanoid-profile-editor-randomize-species-button'}"/>
-                                <ui:RandomizeLockButton For="Age" LabelText="{Loc 'humanoid-profile-editor-randomize-age-button'}"/>
-                                <ui:RandomizeLockButton For="Sex" LabelText="{Loc 'humanoid-profile-editor-randomize-sex-button'}"/>
-                                <ui:RandomizeLockButton For="Gender" LabelText="{Loc 'humanoid-profile-editor-randomize-gender-button'}"/>
-                                <ui:RandomizeLockButton For="Skin" LabelText="{Loc 'humanoid-profile-editor-randomize-skin-button'}"/>
-                                <ui:RandomizeLockButton For="Eyes" LabelText="{Loc 'humanoid-profile-editor-randomize-eye-button'}"/>
-                                <ui:RandomizeLockButton For="Markings" LabelText="{Loc 'humanoid-profile-editor-randomize-markings-button'}"/>
-                                <ui:RandomizeLockButton For="Jobs" LabelText="{Loc 'humanoid-profile-editor-jobs-tab'}"/>
-                                <ui:RandomizeLockButton For="Antags" LabelText="{Loc 'humanoid-profile-editor-antags-tab'}"/>
-                                <ui:RandomizeLockButton For="Traits" LabelText="{Loc 'humanoid-profile-editor-traits-tab'}"/>
-                                <ui:RandomizeLockButton For="Loadouts" LabelText="{Loc 'humanoid-profile-editor-randomize-loadouts-button'}"/>
-                            </GridContainer>
                             <BoxContainer Orientation="Horizontal" SeparationOverride="4">
                                 <Button Name="RandomizeUnlockedButton" HorizontalExpand="True"
                                     Text="{Loc 'humanoid-profile-editor-randomize-unlocked-button'}"/>
                                 <Button Name="RandomizeSettingsButton" Text="⚙"
                                     ToolTip="{Loc 'humanoid-profile-editor-randomizer-settings-tooltip'}"/>
                             </BoxContainer>
-                            <BoxContainer Name="RandomizationSettingsPanel" Orientation="Vertical"
-                                Visible="False" Margin="0 6 0 0">
-                                <Label Text="{Loc 'humanoid-profile-editor-randomizer-name-settings'}" />
-                                <GridContainer Columns="2" HorizontalExpand="True">
-                                    <ui:RandomizeLockButton Name="RandomizeFirstNameLock" For="FirstName"
-                                        LabelText="{Loc 'humanoid-profile-editor-randomize-first-name'}"/>
-                                    <ui:RandomizeLockButton Name="RandomizeLastNameLock" For="LastName"
-                                        LabelText="{Loc 'humanoid-profile-editor-randomize-last-name'}"/>
-                                </GridContainer>
-                                <controls:Separator StyleClasses="LowDivider" Margin="0 6"/>
-                                <Label Text="{Loc 'humanoid-profile-editor-randomizer-appearance-settings'}" />
-                                <GridContainer Name="RandomizeMarkingLayersContainer" Columns="2" HorizontalExpand="True" />
-                                <CheckBox Name="ConsiderClothingCheckBox"
-                                          Text="{Loc 'humanoid-profile-editor-randomizer-consider-clothing'}"/>
-                                <Label Text="{Loc 'humanoid-profile-editor-randomizer-clothing-style'}"/>
-                                <OptionButton Name="ClothingStyleButton" Visible="False" HorizontalExpand="True"/>
-                                <Label Text="{Loc 'humanoid-profile-editor-randomizer-uniform-style'}"/>
-                                <OptionButton Name="UniformStyleButton" Visible="False" HorizontalExpand="True"/>
-                            </BoxContainer>
+                            <ScrollContainer Name="RandomizationSettingsPanel" Visible="False"
+                                HorizontalExpand="True" MinSize="0 180" MaxSize="0 360">
+                                <BoxContainer Orientation="Vertical" Margin="0 6 0 0" HorizontalExpand="True">
+                                    <Label Text="{Loc 'humanoid-profile-editor-randomizer-name-settings'}"/>
+                                    <GridContainer Columns="2" HorizontalExpand="True">
+                                        <CheckBox Name="RandomizeFirstNameCheckBox"
+                                                  Text="{Loc 'humanoid-profile-editor-randomize-first-name'}"/>
+                                        <CheckBox Name="RandomizeLastNameCheckBox"
+                                                  Text="{Loc 'humanoid-profile-editor-randomize-last-name'}"/>
+                                    </GridContainer>
+                                    <controls:Separator StyleClasses="LowDivider" Margin="0 6"/>
+                                    <Label Text="{Loc 'humanoid-profile-editor-randomizer-appearance-settings'}"/>
+                                    <GridContainer Columns="2" HorizontalExpand="True">
+                                        <CheckBox Name="RandomizeSpeciesCheckBox"
+                                                  Text="{Loc 'humanoid-profile-editor-randomize-species-button'}"/>
+                                        <CheckBox Name="RandomizeAgeCheckBox"
+                                                  Text="{Loc 'humanoid-profile-editor-randomize-age-button'}"/>
+                                        <CheckBox Name="RandomizeSexCheckBox"
+                                                  Text="{Loc 'humanoid-profile-editor-sex-label'}"/>
+                                        <CheckBox Name="RandomizeGenderCheckBox"
+                                                  Text="{Loc 'humanoid-profile-editor-pronouns-label'}"/>
+                                        <CheckBox Name="RandomizeSkinCheckBox"
+                                                  Text="{Loc 'humanoid-profile-editor-skin-color-label'}"/>
+                                        <CheckBox Name="RandomizeEyesCheckBox"
+                                                  Text="{Loc 'humanoid-profile-editor-eyes-label'}"/>
+                                        <CheckBox Name="RandomizeVoiceCheckBox"
+                                                  Text="{Loc 'humanoid-profile-editor-randomize-voice'}"/>
+                                        <CheckBox Name="RandomizeTTSVoiceCheckBox"
+                                                  Text="{Loc 'humanoid-profile-editor-randomize-tts-voice'}"/>
+                                    </GridContainer>
+                                    <Label Text="{Loc 'humanoid-profile-editor-randomizer-marking-layers'}"/>
+                                    <BoxContainer Name="RandomizeMarkingLayersContainer" Orientation="Vertical" HorizontalExpand="True" />
+                                    <controls:Separator StyleClasses="LowDivider" Margin="0 6"/>
+                                    <Label Text="{Loc 'humanoid-profile-editor-randomizer-preferences-settings'}"/>
+                                    <GridContainer Columns="2" HorizontalExpand="True">
+                                        <CheckBox Name="RandomizeJobsCheckBox"
+                                                  Text="{Loc 'humanoid-profile-editor-jobs-tab'}"/>
+                                        <CheckBox Name="RandomizeAntagsCheckBox"
+                                                  Text="{Loc 'humanoid-profile-editor-antags-tab'}"/>
+                                        <CheckBox Name="RandomizeTraitsCheckBox"
+                                                  Text="{Loc 'humanoid-profile-editor-traits-tab'}"/>
+                                        <CheckBox Name="RandomizeLoadoutsCheckBox"
+                                                  Text="{Loc 'humanoid-profile-editor-randomize-loadouts-button'}"/>
+                                        <CheckBox Name="RandomizeSpawnPriorityCheckBox"
+                                                  Text="{Loc 'humanoid-profile-editor-randomizer-spawn-priority'}"/>
+                                        <CheckBox Name="RandomizePreferenceUnavailableCheckBox"
+                                                  Text="{Loc 'humanoid-profile-editor-randomizer-unavailable-preference'}"/>
+                                    </GridContainer>
+                                    <CheckBox Name="ConsiderClothingCheckBox"
+                                              Text="{Loc 'humanoid-profile-editor-randomizer-consider-clothing'}"/>
+                                    <Label Name="ClothingStyleLabel" Visible="False" Text="{Loc 'humanoid-profile-editor-randomizer-clothing-style'}"/>
+                                    <OptionButton Name="ClothingStyleButton" Visible="False" HorizontalExpand="True"/>
+                                    <Label Name="UniformStyleLabel" Visible="False" Text="{Loc 'humanoid-profile-editor-randomizer-uniform-style'}"/>
+                                    <OptionButton Name="UniformStyleButton" Visible="False" HorizontalExpand="True"/>
+                                </BoxContainer>
+                            </ScrollContainer>
                         </BoxContainer>
                     </ui:HighlightedContainer>
                 </BoxContainer>
